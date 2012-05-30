@@ -1,0 +1,153 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/i/378 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Eventual - Easy Event Planning</title>
+    <meta name="description" content="">
+
+    <!-- Mobile viewport optimized: h5bp.com/viewport -->
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+    <link rel="stylesheet" href="css/tagsinput.css">
+    <link rel="stylesheet" href="css/ui-lightness/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+    <!-- All JavaScript at the bottom, except this Modernizr build.
+       Modernizr enables HTML5 elements & feature detects for optimal performance.
+       Create your own custom Modernizr build: www.modernizr.com/download/ -->
+    <script src="js/libs/modernizr-2.5.3.min.js"></script>
+</head>
+
+<body>
+<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+   chromium.org/developers/how-tos/chrome-frame-getting-started -->
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+
+<div id="wrapper">
+
+<header>
+     <div class="center">
+        <h1>Eventual</h1>
+    </div>
+</header>
+
+<div class="center">
+
+<div role="main" id="main">
+    <div>
+        <h1>Create a new event</h1>
+    </div>
+
+    <div id="name">
+        <div class="banner">
+            <h2>What's happening?</h2>
+        </div>
+
+        <form>
+            <input type=text size=60 placeholder="What's it called?"></input><br>
+            <input type=text id="invitees" size=60 placeholder="Who's invited?"></input>
+        </form>
+    </div>
+
+    <div id="time">
+        <div class="banner">
+            <h2>When can it happen?</h2>
+        </div>
+
+        <script type="text/x-handlebars">
+            {{#view App.AddTimeRangeView}}
+                <button {{action "add"}}>+ Add a new time range</button>
+            {{/view}}
+        </script>
+    </div>
+
+    <script type="text/x-handlebars" data-template-name="timerange">
+        <form>
+            <input class="start" type="text" size="10"></input> for
+            <input class="duration" value="60" type=text size=10></input> minutes on
+            <input class="date" type="date"></input>
+            {{#unless lastOne}}
+                <button {{action "remove"}}>Remove</button>
+            {{/unless}}
+        </form>
+    </script>
+
+    <div id="optional-wrapper">
+        <div class="banner">
+            <h2>Optional</h2>
+            <script type="text/x-handlebars">
+                {{#view App.OptionalExpander}}
+                    <div {{action "expand"}} class="expander" id="optional-expander"></div>
+                {{/view}}
+            </script>
+        </div>
+
+        <div id="optional">
+            <script type="text/x-handlebars">
+            {{#view App.Optional}}
+                <form>
+                    <input type=text placeholder="Where is it?"></input>
+                    <button {{action "pick"}}>Pick location on map</button><br>
+                    <canvas id="map_canvas" height="200" width="200"></canvas>
+                    <textarea id="description" placeholder="Other details"></textarea>
+                    <button {{action "finish"}} id="finish">Finish</button>
+                </form>
+            {{/view}}
+            </script>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<footer>
+    <div class="center">
+        Made by <a href="http://clementin.es">Clementine</a>
+    </div>
+</footer>
+
+</div>
+
+<!-- JavaScript at the bottom for fast page loading -->
+
+<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+
+<!-- scripts concatenated and minified via build script -->
+<script src="js/require.js"></script>
+<script src="js/libs/ember-0.9.8.1.js"></script>
+<script src="js/libs/jquery-ui.min.js"></script>
+
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false">-->
+
+<script src="js/plugins.js"></script>
+<script src="js/plan.js"></script>
+<!-- end scripts -->
+
+<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+   mathiasbynens.be/notes/async-analytics-snippet -->
+<script>
+var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+</body>
+</html>
