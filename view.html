@@ -71,14 +71,8 @@
         <div class="banner">
             <h2>Who's coming?</h2>
         </div>
-        <script type="text/x-handlebars">
-            {{#view App.Invitees}}
-                <ul>
-                {{#each invitees}}
-                    <li>{{this}}</li>
-                {{/each}}
-                </ul>
-            {{/view}}
+        <script type="text/template" id="global-attendees">
+            <li><%= name %></li>
         </script>
 
     </div>
@@ -88,29 +82,29 @@
             <h2>Possible Times</h2>
             <p>(Tick the ones you can attend)</p>
         </div>
-        <script type="text/x-handlebars">
-            {{#view App.Times}}
-                {{#each times}}
-                    <div class="time">
-                        <input type="checkbox">
-                        <p>At {{this.start}} for {{this.duration}} minutes on {{this.date}}</p>
-                    </div>
-                    <div class="clearfix"></div>
+        <div id="time-list"></div>
+        <script type="text/template" id="time">
+            <div class="time">
+                <input type="checkbox">
+                <p>At <%= start %> for <%= duration %> minutes on <%= date %></p>
+            </div>
+            <div class="clearfix"></div>
 
-                    <div class="invitee-details">
-                        <canvas class="piechart" height="30" width="30"></canvas>
-                        <p>{{this.confirmed}}/{{this.total}} people have confirmed that they can attend this time</p>
-                        <div class="expander"></div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <ul class="attendees">
-                        {{#each this.attendees}}
-                            <li>{{this}}</li>
-                        {{/each}}
-                    </ul>
-                    <hr>
+            <div class="invitee-details">
+                <canvas class="piechart" height="30" width="30"></canvas>
+                <p><%= confirmed %>/<%= total %> people have confirmed that they can attend this time</p>
+                <div class="expander"></div>
+            </div>
+            <div class="clearfix"></div>
+            <ul class="attendees">
+                {{#each this.attendees}}
+                    <li>{{this}}</li>
                 {{/each}}
-            {{/view}}
+            </ul>
+            <hr>
+        </script>
+        <script type="text/template" id="time">
+            <li><%= name %></li>
         </script>
     </div>
 
@@ -150,8 +144,8 @@
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
 
 <!-- scripts concatenated and minified via build script -->
-<script src="js/require.js"></script>
-<script src="js/libs/ember-0.9.8.1.js"></script>
+<script src="js/libs/underscore.js"></script>
+<script src="js/libs/backbone.js"></script>
 <script src="js/libs/jquery-ui.min.js"></script>
 
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false">-->
