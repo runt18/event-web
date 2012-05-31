@@ -2,40 +2,56 @@
 Giles Lavelle
 */
 
-var App = Em.Application.create();
+colours = [
+    'red',
+    'red',
+    'red',
+    'red',
+    'yellow',
+    'yellow',
+    'yellow',
+    'green',
+    'green',
+    'green',
+    'green'
+];
 
-App.Time = {
-    timeNow: (function(){
-        var d = new Date();
-        return d.getHours() + ":" + d.getMinutes();
-    }()),
+PieChart = Em.Object.extend({
+    ratio: 1,
 
-    dateNow: (function(){
-        var d = new Date();
-        return d.getDate() + '/' + d.getMonth() + '/' + d.getYear();
-    }())
-};
+    colour: function(){
+        var ratio = this.get('ratio');
+        var index = Math.floor(ratio * 10);
+        var colour = colours[index];
 
-App.drawPieChart = function(percent, canvas){
-    var size = canvas.height;
-    var half = size / 2;
-    var ctx = canvas.getContext('2d');
-    var colour = 'red';
+        return colour;
+    }.property('ratio'),
 
-    if(percent > 33){
-        colour = 'yellow';
-    }
-    if(percent > 66){
-        colour = 'green';
-    }
+    draw: function(){
+        var canvas = this.get('canvas');
+        var ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = colour;
-    ctx.beginPath();
-    ctx.moveTo(half, half);
-    ctx.lineTo(half, 0);
-    ctx.arc(half, half, half, -(Math.PI / 2), (Math.PI * 2 / 100 * percent) - (Math.PI / 2), false);
-    ctx.fill();
-};
+        var size = canvas.height;
+        var half = size / 2;
+
+        var ratio = this.get('ratio');
+
+        ctx.clearRect(0, 0, size, size);
+
+        ctx.fillStyle = this.get('colour');
+        ctx.beginPath();
+        ctx.moveTo(half, half);
+        ctx.lineTo(half, 0);
+
+        var offset = (Math.PI / 2);
+        var start = -offset;
+        var end = (Math.PI * 2 * ratio) - offset;
+        ctx.arc(half, half, half, start, end, false);
+
+        ctx.fill();
+    }.observes('ratio')
+});
+
 
 App.Title = Em.View.extend({
     name: 'Lan Party',
@@ -54,10 +70,15 @@ App.Invitees = Em.View.extend({
 App.Times = Em.View.extend({
     didInsertElement: function(){
         var canvases = $('canvas');
-        for (var i = 0; i < this.times.length; i++) {
-            var percent = this.times[i].confirmed / this.times[i].total * 100;
+        for (var i = 0; i < this.times.length; i++){
+            var time = this.times[i];
+            var ratio = time.confirmed / time.total;
             var canvas = canvases[i];
-            App.drawPieChart(percent, canvas);
+            var pie = PieChart.create({
+                ratio: ratio,
+                canvas: canvas
+            });
+            pie.draw();
         }
     },
     times: [
@@ -65,24 +86,23 @@ App.Times = Em.View.extend({
             start: '12:00',
             duration: 60,
             date: '12/12/12',
-            confirmed: 2,
-            total: 3
+            confirmed: 14,
+            total: 17,
+            attendees: [
+                'bob', 'tim'
+            ]
         },
         {
             start: '12:00',
             duration: 60,
             date: '12/12/12',
-            confirmed: 9,
-            total: 84
+            confirmed: 70,
+            total: 84,
+            attendees: [
+                'tom'
+            ]
         }
     ]
-});
-
-App.OptionalExpander = Em.View.extend({
-    expand: function(){
-        $('#optional-expander').toggleClass('down');
-        $('#optional').toggle('fast');
-    }
 });
 
 $(document).ready(function(){

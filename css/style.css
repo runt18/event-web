@@ -218,7 +218,8 @@ td { vertical-align: top; }
    Author:
    ========================================================================== */
 
-h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6,
+p{
   padding: 0;
   margin: 0;
 }
@@ -266,6 +267,10 @@ input{
   margin: 0 0 10px 0;
 }
 
+input[type=checkbox]{
+  margin-right: 10px;
+}
+
 input, textarea{
   font-size: 20px;
   border: 1px solid #ccc;
@@ -275,7 +280,7 @@ a:visited{
     color: #FF9E22;
 }
 
-#wrapper {
+#wrapper{
   min-height: 100%;
   position: relative;
 }
@@ -291,7 +296,7 @@ div.banner{
   color: #6AC000;
   padding: 10px;
   margin: 0 -20px 10px -40px;
-/*  text-shadow: 0 1px 0 white;*/
+  text-shadow: 0 1px 0 black;
   position: relative;
 
   border-style: solid;
@@ -326,17 +331,8 @@ div.banner:after{
 }
 
 #main > div{
-    /*background: -webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-        from(#eee),
-        to(#ccc),
-        color-stop(10%, #ccc)
-    );*/
     padding: 20px;
     border-bottom: 1px solid #ccc;
-    /*border-radius: 5px;*/
 }
 
 #main > div:nth-last-child(1){
@@ -344,10 +340,7 @@ div.banner:after{
 }
 
 .expander {
-  margin: 0 0 0 30px;
-  padding: 0;
-  width: 0;
-  height: 0;
+  margin: 7px 0 0 10px;
 
   border-style: solid;
   border-color: transparent;
@@ -371,6 +364,14 @@ div.banner:after{
 
 .piechart{
   border: 1px solid #222;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: #aaa;
+}
+
+.time, .invitee-details{
+  height: 32px;
+  line-height: 32px;
 }
 
 .time > *, .invitee-details > *{

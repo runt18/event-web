@@ -78,9 +78,9 @@
 
     <script type="text/x-handlebars" data-template-name="timerange">
         <form>
-            <input class="start" type="text" size="10"></input> for
+            <input {{bindAttr value="App.Time.timeNow"}} class="start" type="text" size="10"> for
             <input class="duration" value="60" type=text size=10></input> minutes on
-            <input class="date" type="date"></input>
+            <input {{bindAttr value="App.Time.dateNow"}} class="date" type="date"></input>
             {{#unless lastOne}}
                 <button {{action "remove"}}>Remove</button>
             {{/unless}}
@@ -137,6 +137,7 @@
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false">-->
 
 <script src="js/plugins.js"></script>
+<script src="js/common.js"></script>
 <script src="js/plan.js"></script>
 <!-- end scripts -->
 

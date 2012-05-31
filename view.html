@@ -92,8 +92,8 @@
             {{#view App.Times}}
                 {{#each times}}
                     <div class="time">
+                        <input type="checkbox">
                         <p>At {{this.start}} for {{this.duration}} minutes on {{this.date}}</p>
-                        <input type="checkbox" />
                     </div>
                     <div class="clearfix"></div>
 
@@ -103,7 +103,11 @@
                         <div class="expander"></div>
                     </div>
                     <div class="clearfix"></div>
-
+                    <ul class="attendees">
+                        {{#each this.attendees}}
+                            <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
                     <hr>
                 {{/each}}
             {{/view}}
@@ -153,6 +157,7 @@
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false">-->
 
 <script src="js/plugins.js"></script>
+<script src="js/common.js"></script>
 <script src="js/view.js"></script>
 <!-- end scripts -->
 
