@@ -340,12 +340,19 @@ div.banner:after{
 }
 
 .expander {
+  height: 0;
+  width: 0;
+
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
   margin: 7px 0 0 10px;
 
   border-style: solid;
   border-color: transparent;
-  border-width: 15px 10px 0 10px;
-  border-top-color: #222;
+  border-width: 30px 20px 0 20px;
+  border-top-color: #eee;
 
   -webkit-transition: 0.2s all;
   -moz-transition: 0.2s all;

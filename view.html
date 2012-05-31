@@ -55,7 +55,7 @@
 
     <div>
         <script type="text/x-handlebars">
-            {{#view App.Title}}
+            <%= #view App.Title}}
                 <div class="banner clearfix">
                     <h2>{{name}} at {{location}}</h2>
                 </div>
@@ -88,31 +88,43 @@
             <h2>Possible Times</h2>
             <p>(Tick the ones you can attend)</p>
         </div>
-        <script type="text/x-handlebars">
-            {{#view App.Times}}
-                {{#each times}}
-                    <div class="time">
-                        <input type="checkbox">
-                        <p>At {{this.start}} for {{this.duration}} minutes on {{this.date}}</p>
-                    </div>
-                    <div class="clearfix"></div>
 
-                    <div class="invitee-details">
-                        <canvas class="piechart" height="30" width="30"></canvas>
-                        <p>{{this.confirmed}}/{{this.total}} people have confirmed that they can attend this time</p>
-                        <div class="expander"></div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <ul class="attendees">
-                        {{#each this.attendees}}
-                            <li>{{this}}</li>
-                        {{/each}}
-                    </ul>
-                    <hr>
-                {{/each}}
+        <script type="text/x-handlebars">
+        {{#view App.TimesView}}
+
+            {{#each App.timesController.times}}
+            {{#view App.TimeView timeBinding="this"}}
+
+                <div class="time">
+                    {{view Ember.Checkbox checkedBinding="isChecked"}}
+                    <p>At {{time.start}} for {{time.duration}} minutes on {{time.date}}</p>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="invitee-details">
+                    {{view App.PieChartView}}
+                    <p>{{time.confirmed}}/{{time.total}} people have confirmed that they can attend this time</p>
+                    <div class="expander"></div>
+                </div>
+                <div class="clearfix"></div>
+
+                <ul class="attendees">
+                    {{#each time.attendees}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+
+                <hr>
+
             {{/view}}
+            {{/each}}
+
+        {{/view}}
         </script>
     </div>
+    <script type="text/x-handlebars" data-template-name="piechart">
+        <canvas class="piechart" height="30" width="30"></canvas>
+    </script>
 
     <div>
         <div class="banner">

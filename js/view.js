@@ -16,9 +16,14 @@ colours = [
     'green'
 ];
 
-PieChart = Em.Object.extend({
+App.PieChartView = Em.View.extend({
+    templateName: 'piechart',
+    //confirmedBinding: 'App.timesController.times[0].confirmed',
+    //totalBinding: 'App.timesController.times[0].total',
+    // ratio: function(){
+    //     console.log(this.get('confirmedBinding'));
+    // }.observes('confirmedBinding', 'totalBinding'),
     ratio: 1,
-
     colour: function(){
         var ratio = this.get('ratio');
         var index = Math.floor(ratio * 10);
@@ -49,7 +54,22 @@ PieChart = Em.Object.extend({
         ctx.arc(half, half, half, start, end, false);
 
         ctx.fill();
-    }.observes('ratio')
+    }.observes('ratio'),
+
+    animate: function(){
+        var oldRatio = 0.5;
+        var newRatio = 1;
+        var diff = newRatio - oldRatio;
+        var step = diff / 10;
+        var i = setInterval(function(){
+            oldRatio += step;
+            this.set('oldratio', oldRatio);
+            this.get('draw');
+            if(oldRatio >= newRatio){
+                clearInterval(i);
+            }
+        }, 100);
+    }
 });
 
 
@@ -67,42 +87,53 @@ App.Invitees = Em.View.extend({
     ]
 });
 
-App.Times = Em.View.extend({
-    didInsertElement: function(){
-        var canvases = $('canvas');
-        for (var i = 0; i < this.times.length; i++){
-            var time = this.times[i];
-            var ratio = time.confirmed / time.total;
-            var canvas = canvases[i];
-            var pie = PieChart.create({
-                ratio: ratio,
-                canvas: canvas
-            });
-            pie.draw();
-        }
-    },
-    times: [
-        {
-            start: '12:00',
-            duration: 60,
-            date: '12/12/12',
-            confirmed: 14,
-            total: 17,
-            attendees: [
-                'bob', 'tim'
-            ]
-        },
-        {
-            start: '12:00',
-            duration: 60,
-            date: '12/12/12',
-            confirmed: 70,
-            total: 84,
-            attendees: [
-                'tom'
-            ]
-        }
+App.PotentialTime = Em.Object.extend({
+    start: '12:00',
+    duration: 60,
+    date: '12/12/12',
+    confirmed: 1,
+    total: 2,
+    attendees: [
+        'bob', 'tim'
     ]
+});
+
+App.timesController = Em.Object.create({
+    times: [
+        App.PotentialTime.create(),
+        App.PotentialTime.create(),
+        App.PotentialTime.create()
+    ]
+});
+
+App.TimesView = Em.ContainerView.extend({
+    didInsertElement: function(){
+        // var canvases = $('canvas');
+        // var times = App.timesController.get('times');
+        // for (var i = 0; i < times.length; i++){
+        //     var time = times[i];
+        //     var ratio = time.confirmed / time.total;
+        //     var canvas = canvases[i];
+        //     var pie = PieChart.create({
+        //         ratio: ratio,
+        //         canvas: canvas
+        //     });
+        //     pie.draw();
+        //     App.timesController.times[i].set('pie', pie);
+        //}
+    }
+});
+
+App.TimeView = Em.View.extend({
+    a: function(){
+        if(this.isChecked){
+            App.timesController.times[0].incrementProperty('confirmed');
+            App.timesController.times[0].pie.set('ratio', 1);
+        } else {
+            App.timesController.times[0].decrementProperty('confirmed');
+        }
+    }.observes('isChecked')
+    //pie: PieChart.create()
 });
 
 $(document).ready(function(){
