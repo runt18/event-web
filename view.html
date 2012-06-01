@@ -38,104 +38,110 @@
    chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
+<!-- Top-level layout of entire page -->
+<script type="layout" id="main-layout">
 <div id="wrapper">
-
-<header>
-     <div class="center">
-        <h1>Eventual</h1>
-    </div>
-</header>
-
-<div class="center">
-
-<div role="main" id="main">
-    <div>
-        <h1>View Event</h1>
-    </div>
-
-    <div>
-        <script type="text/x-handlebars">
-            {{#view App.Title}}
-                <div class="banner clearfix">
-                    <h2>{{name}} at {{location}}</h2>
-                </div>
-
-                {{#if description}}
-                    <p>{{description}}</p>
-                {{/if}}
-            {{/view}}
-        </script>
-    </div>
-
-    <div>
-        <div class="banner">
-            <h2>Who's coming?</h2>
+    <header>
+         <div class="center">
+            <h1>Eventual</h1>
         </div>
-        <script type="text/template" id="global-attendees">
-            <li><%= name %></li>
-        </script>
+    </header>
 
-    </div>
-
-    <div>
-        <div class="banner">
-            <h2>Possible Times</h2>
-            <p>(Tick the ones you can attend)</p>
+    <div role="main" id="main" class="center">
+        <div>
+            <h1>View Event</h1>
         </div>
-        <div id="time-list"></div>
-        <script type="text/template" id="time">
-            <div class="time">
-                <input type="checkbox">
-                <p>At <%= start %> for <%= duration %> minutes on <%= date %></p>
+
+        <div id="main-details"></div>
+        <div>
+            <div class="banner">
+                <h2>Whos coming?</h2>
             </div>
-            <div class="clearfix"></div>
-
-            <div class="invitee-details">
-                <canvas class="piechart" height="30" width="30"></canvas>
-                <p><%= confirmed %>/<%= total %> people have confirmed that they can attend this time</p>
-                <div class="expander"></div>
-            </div>
-            <div class="clearfix"></div>
-            <ul class="attendees">
-                {{#each this.attendees}}
-                    <li>{{this}}</li>
-                {{/each}}
-            </ul>
-            <hr>
-        </script>
-        <script type="text/template" id="time">
-            <li><%= name %></li>
-        </script>
-    </div>
-
-    <div>
-        <div class="banner">
-            <h2>Chat</h2>
+            <div id="global-attendees-list"></div>
         </div>
-
+        <div>
+            <div class="banner">
+                <h2>Possible Times</h2>
+                <p>(Tick the ones you can attend)</p>
+            </div>
+            <div id="time-wrap"></div>
+        </div>
+        <div>
+            <div class="banner">
+                <h2>Chat</h2>
+            </div>
+            <div id="chat-view"></div>
+        </div>
+        <div>
+            <form>
+                <button>Finalise</button>
+            </form>
+        </div>
     </div>
 
-    <div>
-        <form>
-            <button>Finalise</button>
-        </form>
-    </div>
-
-<script type="text/x-handlebars" data-template-name="piechart">
-
+    <footer>
+        <div class="center">
+            Made by <a href="http://clementin.es">Clementine</a>
+        </div>
+    </footer>
+<div>
 </script>
 
-</div>
-</div>
-
-<footer>
-    <div class="center">
-        Made by <a href="http://clementin.es">Clementine</a>
+<!-- Second-level subviews -->
+<script type="text/template" id="details">
+    <div class="banner clearfix">
+        <h2><%= name %> at <%= location %></h2>
     </div>
-</footer>
 
+    <p><%= description %></p>
+</script>
 
-</div>
+<script type="text/template" id="global-attendees">
+    <ul></ul>
+</script>
+
+<script type="text/template" id="times-tmpl">
+    <div></div>
+</script>
+
+<script type="text/template" id="chat">
+    <div></div>
+</script>
+
+<!-- Reusable views -->
+<script type="text/template" id="time">
+    <div class="time">
+        <input class="tick" type="checkbox">
+        <p>At <%= start %> for <%= duration %> minutes on <%= date %></p>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="invitee-details">
+        <div class="piechart-wrap"></div>
+        <p><%= confirmed %>/<%= total %> people have confirmed that they can attend this time</p>
+        <div class="expander-wrap"></div>
+    </div>
+    <div class="clearfix"></div>
+
+    <hr>
+</script>
+
+<script type="text/template" id="attendees">
+    <ul></ul>
+</script>
+
+<script type="text/template" id="attendee">
+    <%= name %>
+</script>
+
+<script type="text/template" id="piechart">
+    <canvas class="piechart" height="30" width="30"></canvas>
+</script>
+
+<script type="text/template" id="expander">
+    <div class="expander"></div>
+</script>
+
 
 <!-- JavaScript at the bottom for fast page loading -->
 
@@ -145,7 +151,11 @@
 
 <!-- scripts concatenated and minified via build script -->
 <script src="js/libs/underscore.js"></script>
+<script src="js/libs/handlebars.js"></script>
+
 <script src="js/libs/backbone.js"></script>
+<script src="js/libs/backbone.layoutmanager.js"></script>
+
 <script src="js/libs/jquery-ui.min.js"></script>
 
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false">-->
