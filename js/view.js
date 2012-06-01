@@ -6,27 +6,12 @@ Giles Lavelle
 
 var colours = 'red red red red yellow yellow yellow green green green green'.split(' ');
 
-var PossibleTime = Backbone.Model.extend({
-    defaults: {
-        start: Time.timeNow,
-        duration: 60,
-        date: Time.dateNow,
-        confirmed: 0,
-        total: 1
-    }
-});
-
 var MainDetails = Backbone.Model.extend({
     defaults: {
         name: 'Lan Party',
         location: "Oli's House",
         description: "lorem ipsum"
     }
-});
-
-
-var PossibleTimes = Backbone.Collection.extend({
-    model: PossibleTime
 });
 
 var PieChartView = Backbone.View.extend({
@@ -86,12 +71,15 @@ var Expander = Backbone.View.extend({
     },
     expand: function(){
         this.$el.find('.expander').toggleClass('expander-closed');
+        var parent = this.$el.closest('.time');
+        parent.find('.attendees-wrap').toggle('fast');
     }
 });
 
 var TimeView = Backbone.View.extend({
     template: '#time-tmpl',
     tagName: 'div',
+    className: 'time',
 
     initialize: function(){
         this.serialize = this.model.toJSON();
@@ -105,7 +93,7 @@ var TimeView = Backbone.View.extend({
 
         this.model.bind('change', function(){
             this.render().then(function(el){
-                log(el);
+                //log(el);
             });
         }, this);
     },
@@ -171,7 +159,7 @@ var Attendees = Backbone.Collection.extend({
 
 //View to display one person in a list
 var AttendeeView = Backbone.View.extend({
-    template: '#attendee',
+    template: '#attendee-tmpl',
     tagName: 'li',
     serialize: function(){
         return this.model.toJSON();
@@ -180,7 +168,7 @@ var AttendeeView = Backbone.View.extend({
 
 //View to display entire list of people
 var AttendeesView = Backbone.View.extend({
-    template: '#attendees',
+    template: '#attendees-tmpl',
     tagName: 'ul',
     initialize: function(){
         this.collection = new Attendees([

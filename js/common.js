@@ -3,7 +3,6 @@ _pad = function(num){
 };
 
 Time = {
-
     timeNow: (function(){
         var d = new Date();
         return d.getHours() + ":" + _pad(d.getMinutes());
@@ -15,9 +14,16 @@ Time = {
     }())
 };
 
-// App.OptionalExpander = Em.View.extend({
-//     expand: function(){
-//         $('#optional-expander').toggleClass('down');
-//         $('#optional').toggle('fast');
-//     }
-// });
+var PossibleTime = Backbone.Model.extend({
+    defaults: {
+        start: Time.timeNow,
+        duration: 60,
+        date: Time.dateNow,
+        confirmed: 0,
+        total: 1
+    }
+});
+
+var PossibleTimes = Backbone.Collection.extend({
+    model: PossibleTime
+});

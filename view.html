@@ -98,16 +98,16 @@
 </script>
 
 <script type="text/template" id="times-tmpl">
-    <div></div>
+
 </script>
 
 <script type="text/template" id="chat-tmpl">
-    <div></div>
+
 </script>
 
 <!-- Reusable views -->
 <script type="text/template" id="time-tmpl">
-    <div class="time">
+    <div class="time-details">
         <input class="tick" type="checkbox">
         <p>At <%= start %> for <%= duration %> minutes on <%= date %></p>
     </div>
@@ -125,11 +125,12 @@
     <hr>
 </script>
 
-<script type="text/template" id="attendees">
+<script type="text/template" id="attendee-tmpl">
+    <%= name %>
 </script>
 
-<script type="text/template" id="attendee">
-    <%= name %>
+<script type="text/template" id="attendees-tmpl">
+
 </script>
 
 <script type="text/template" id="piechart">
