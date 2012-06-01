@@ -39,7 +39,7 @@
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
 <!-- Top-level layout of entire page -->
-<script type="layout" id="main-layout">
+<script type="text/template" id="main-tmpl">
 <div id="wrapper">
     <header>
          <div class="center">
@@ -51,26 +51,27 @@
         <div>
             <h1>View Event</h1>
         </div>
-
-        <div id="main-details"></div>
+        <div>
+            <div id="details"></div>
+        </div>
         <div>
             <div class="banner">
                 <h2>Whos coming?</h2>
             </div>
-            <div id="global-attendees-list"></div>
+            <div id="global-attendees"></div>
         </div>
         <div>
             <div class="banner">
                 <h2>Possible Times</h2>
                 <p>(Tick the ones you can attend)</p>
             </div>
-            <div id="time-wrap"></div>
+            <div id="times"></div>
         </div>
         <div>
             <div class="banner">
                 <h2>Chat</h2>
             </div>
-            <div id="chat-view"></div>
+            <div id="chat"></div>
         </div>
         <div>
             <form>
@@ -88,7 +89,7 @@
 </script>
 
 <!-- Second-level subviews -->
-<script type="text/template" id="details">
+<script type="text/template" id="details-tmpl">
     <div class="banner clearfix">
         <h2><%= name %> at <%= location %></h2>
     </div>
@@ -96,38 +97,35 @@
     <p><%= description %></p>
 </script>
 
-<script type="text/template" id="global-attendees">
-    <ul></ul>
-</script>
-
 <script type="text/template" id="times-tmpl">
     <div></div>
 </script>
 
-<script type="text/template" id="chat">
+<script type="text/template" id="chat-tmpl">
     <div></div>
 </script>
 
 <!-- Reusable views -->
-<script type="text/template" id="time">
+<script type="text/template" id="time-tmpl">
     <div class="time">
         <input class="tick" type="checkbox">
         <p>At <%= start %> for <%= duration %> minutes on <%= date %></p>
     </div>
+
     <div class="clearfix"></div>
 
-    <div class="invitee-details">
+    <div class="attendee-details">
         <div class="piechart-wrap"></div>
         <p><%= confirmed %>/<%= total %> people have confirmed that they can attend this time</p>
         <div class="expander-wrap"></div>
     </div>
-    <div class="clearfix"></div>
+
+    <div class="attendees-wrap"></div>
 
     <hr>
 </script>
 
 <script type="text/template" id="attendees">
-    <ul></ul>
 </script>
 
 <script type="text/template" id="attendee">
@@ -155,7 +153,6 @@
 
 <script src="js/libs/backbone.js"></script>
 <script src="js/libs/backbone.layoutmanager.js"></script>
-
 <script src="js/libs/jquery-ui.min.js"></script>
 
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false">-->

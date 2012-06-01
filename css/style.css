@@ -369,12 +369,12 @@ div.banner:after{
   background: #aaa;
 }
 
-.time, .invitee-details{
+.time, .attendee-details{
   height: 32px;
   line-height: 32px;
 }
 
-.time > *, .invitee-details > *{
+.time > *, .attendee-details > *{
   float: left;
 }
 

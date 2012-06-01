@@ -1,16 +1,19 @@
-// var App = Em.Application.create();
+_pad = function(num){
+        return num < 10 ? '0' + num : num;
+};
 
-// App.Time = {
-//     timeNow: (function(){
-//         var d = new Date();
-//         return d.getHours() + ":" + d.getMinutes();
-//     }()),
+Time = {
 
-//     dateNow: (function(){
-//         var d = new Date();
-//         return d.getDate() + '/' + d.getMonth() + '/' + d.getYear();
-//     }())
-// };
+    timeNow: (function(){
+        var d = new Date();
+        return d.getHours() + ":" + _pad(d.getMinutes());
+    }()),
+
+    dateNow: (function(){
+        var d = new Date();
+        return d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
+    }())
+};
 
 // App.OptionalExpander = Em.View.extend({
 //     expand: function(){
