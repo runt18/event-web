@@ -3,22 +3,17 @@ _pad = function(num){
 };
 
 Time = {
-    timeNow: (function(){
+    now: (function(){
         var d = new Date();
-        return d.getHours() + ":" + _pad(d.getMinutes());
-    }()),
-
-    dateNow: (function(){
-        var d = new Date();
-        return d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear();
+        return _pad(d.getHours()) + ":" + _pad(d.getMinutes());
     }())
 };
 
 var PossibleTime = Backbone.Model.extend({
     defaults: {
-        start: Time.timeNow,
+        start: Time.now,
         duration: 60,
-        date: Time.dateNow,
+        date: $.datepicker.formatDate('dd/mm/yy', new Date()),
         confirmed: 0,
         total: 1
     }

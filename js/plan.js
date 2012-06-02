@@ -2,30 +2,6 @@
 Giles Lavelle
 */
 
-function initialize() {
-    var myOptions = {
-        center: new google.maps.LatLng(-34.397, 150.644),
-        zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-        myOptions);
-}
-
-// App.Optional = Em.View.extend({
-//     finish: function(){
-
-//     },
-//     pick: function(){
-//         if (window.google){
-//             initialize();
-//         } else {
-//             $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false&callback=initialize');
-//         }
-//     }
-// });
-
-
 (function($){
 
 //$('#invitees').tagsInput();
@@ -63,7 +39,9 @@ var TimeView = Backbone.View.extend({
                     date: this.$('.date')
                 };
 
-                $(el).find('.date').datepicker();
+                $(el).find('.date').datepicker({
+                    dateFormat: 'dd/mm/yy'
+                });
             });
     },
 
@@ -134,7 +112,27 @@ var Optional = Backbone.Model.extend({
 
 
 var MapView = Backbone.View.extend({
-    template: '#map-tmpl'
+    // TODO: Load Google Maps script here so it's only loaded if the user actually wants the map
+    template: '#map-tmpl',
+
+    renderMap: function(el){
+        var options = {
+            center: new google.maps.LatLng(-34.397, 150.644),
+            zoom: 8,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var mapCanvas = this.$('#map_canvas')[0];
+        var map = new google.maps.Map(mapCanvas, options);
+    },
+
+    // Override default render method to add Google Map
+    render: function(manage) {
+        return manage(this)
+            .render()
+            .then(function(el){
+                this.renderMap(el);
+            });
+    }
 });
 
 var OptionalView = Backbone.View.extend({
