@@ -60,7 +60,22 @@ var TimeView = Backbone.View.extend({
     },
 
     events: {
-        'click .remove': 'destroyModel'
+        'click .remove': 'destroyModel',
+        'change .date': 'saveDate',
+        'change .duration': 'saveDuration',
+        'change .start': 'saveStart'
+    },
+
+    saveDate: function(){
+        this.model.set('date', this.$('.date').val());
+    },
+
+    saveDuration: function(){
+        this.model.set('duration', this.$('.duration').val());
+    },
+
+    saveStart: function(){
+        this.model.set('start', this.$('.start').val());
     },
 
     destroyModel: function(){
