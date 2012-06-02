@@ -201,6 +201,7 @@ var ChatView = Backbone.View.extend({
 //Main view for the entire page
 var main = new Backbone.LayoutManager({
     template: '#main-tmpl',
+    id: 'wrapper',
 
     views: {
         '#details': new DetailsView(),

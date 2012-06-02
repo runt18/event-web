@@ -38,8 +38,6 @@
    chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 <script type="text/template" id="main-tmpl">
-<div id="wrapper">
-
 <header>
     <div class="center">
         <div class="left">
@@ -89,8 +87,6 @@
         Made by <a href="http://clementin.es">Clementine</a>
     </div>
 </footer>
-
-</div>
 </script>
 
 <script type="text/template" id="times-tmpl">
@@ -120,9 +116,14 @@
         <input type="button" class="remove" value="Remove"></input>
     </form>
 </script>
+<!--
+<script type="text/template" id="map-tmpl">
+    <div id="map" height="100" width="100"></div>
+</script>
+ -->
 
 <script type="text/template" id="map-tmpl">
-    <canvas id="map_canvas" height="200" width="200"></canvas>
+    <canvas id="map-canvas" height="100" width="100"></canvas>
 </script>
 
 <!-- JavaScript at the bottom for fast page loading -->
@@ -138,8 +139,10 @@
 <script src="js/libs/backbone.js"></script>
 <script src="js/libs/backbone.layoutmanager.js"></script>
 <script src="js/libs/jquery-ui.min.js"></script>
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false"></script>
+<script src="js/libs/gmaps.js"></script>
+
+
 
 <script src="js/plugins.js"></script>
 <script src="js/common.js"></script>

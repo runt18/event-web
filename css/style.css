@@ -420,9 +420,9 @@ div.banner:after{
   float: left;
 }
 
-#map-wrap{
+/*#map-wrap{
   display: none;
-}
+}*/
 
 /* ==|== media queries ======================================================
    EXAMPLE Media Query for Responsive Design.

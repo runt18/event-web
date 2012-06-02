@@ -1,11 +1,13 @@
 /* Author:
 Giles Lavelle
 */
-
+var map;
 (function($){
 
 //$('#invitees').tagsInput();
 //initialize();
+
+
 
 var OptionalViewExpander = Expander.extend({
     initialize: function(){
@@ -17,6 +19,7 @@ var OptionalViewExpander = Expander.extend({
             .closest('#optional')
             .find('form')
             .toggle('fast');
+
     }
 });
 
@@ -126,16 +129,21 @@ var Optional = Backbone.Model.extend({
 
 var MapView = Backbone.View.extend({
     // TODO: Load Google Maps script here so it's only loaded if the user actually wants the map
-    template: '#map-tmpl',
+    tagName: 'div',
+
+    initialize: function(){
+        this.el.height = 100;
+        this.el.width = 100;
+    },
 
     renderMap: function(el){
         var options = {
             center: new google.maps.LatLng(-34.397, 150.644),
-            zoom: 8,
+            zoom: 1,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var mapCanvas = this.$('#map_canvas')[0];
-        var map = new google.maps.Map(mapCanvas, options);
+        map = new google.maps.Map(this.el, options);
+
     },
 
     // Override default render method to add Google Map
@@ -143,7 +151,12 @@ var MapView = Backbone.View.extend({
         return manage(this)
             .render()
             .then(function(el){
-                this.renderMap(el);
+                this.renderMap();
+                // new GMaps({
+                //     div: '#map',
+                //     lat: -12.043333,
+                //     lng: -77.028333
+                // });
             });
     }
 });
@@ -176,9 +189,13 @@ var OptionalView = Backbone.View.extend({
             },
             function(){
                 $(this).val('Hide map');
-                mapWrap.show('fast');
+                mapWrap.show();
+                google.maps.event.trigger(map, "resize");
+                //map.setZoom( map.getZoom() );
             }
         );
+
+
     },
 
     initialize: function(){
@@ -193,6 +210,7 @@ var OptionalView = Backbone.View.extend({
 //Main view for the entire page
 var main = new Backbone.LayoutManager({
     template: '#main-tmpl',
+    id: 'wrapper',
 
     views: {
         '#times': new TimesView([{}]),
