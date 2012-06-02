@@ -37,24 +37,30 @@
 <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
    chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-
 <script type="text/template" id="main-tmpl">
 <div id="wrapper">
 
 <header>
-     <div class="center">
-        <h1>Eventual</h1>
+    <div class="center">
+        <div class="left">
+            <h1>Eventual</h1>
+        </div>
+
+        <div class="right">
+            <a href="">Sign Up/Log In</a>
+            <a href="">Create a new event</a>
+        </div>
     </div>
 </header>
 
 <div role="main" id="main" class="center">
     <div>
-        <h1>Create a new event</h1>
+        <h2>Create a new event</h2>
     </div>
 
     <div id="name">
         <div class="banner">
-            <h2>Whats happening?</h2>
+            <h3>Whats happening?</h3>
         </div>
 
         <form>
@@ -65,7 +71,7 @@
 
     <div id="time">
         <div class="banner">
-            <h2>When can it happen?</h2>
+            <h3>When can it happen?</h3>
         </div>
 
         <div id="times"></div>
@@ -75,7 +81,7 @@
 
     <div id="optional-wrapper">
         <div class="banner">
-            <h2>Optional</h2>
+            <h3>Optional</h3>
             expander
         </div>
 
@@ -93,16 +99,16 @@
 </script>
 
 <script type="text/template" id="times-tmpl">
-    <button {{action "add"}}>+ Add a new time range</button>
+    <input type="button" id="add-time" value="+ Add a new time range"></input>
 </script>
 
 <script type="text/template" id="optional-tmpl">
     <form>
         <input type=text placeholder="Where is it?"></input>
-        <button>Pick location on map</button><br>
+        <input type="button" value="Pick location on map"></input><br>
         <canvas id="map_canvas" height="200" width="200"></canvas>
         <textarea id="description" placeholder="Other details"></textarea>
-        <button id="finish">Finish</button>
+        <input type="button" id="finish" value="Finish"></input>
     </form>
 </script>
 
@@ -111,7 +117,7 @@
         <input value="<%= start %>" class="start" type="text" size="10"> for
         <input class="duration" value="<%= duration %>" type=text size=10></input> minutes on
         <input value="<%= date %>" class="date" type="date"></input>
-        <button>Remove</button>
+        <input type="button" class="remove" value="Remove"></input>
     </form>
 </script>
 

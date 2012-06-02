@@ -12,34 +12,6 @@ function initialize() {
         myOptions);
 }
 
-// App.timesController = Em.Object.create({
-//     times: [
-//         PotentialTime.create()
-//     ]
-// });
-
-// App.AddTimeRangeView = Em.View.extend({
-//     add: function(){
-//         var time = PotentialTime.create();
-//         var times = App.timesController.get('times');
-
-//         var view = Em.View.create({
-
-//             templateName: 'timerange',
-//             lastOne: times.length === 1,
-
-//             didInsertElement: function(){
-//                 $('.date').datepicker({
-//                     //showAnim: 'fold'
-//                 });
-//             }
-//         });
-
-//         times.pushObject(time);
-//         view.appendTo('#time');
-//     }
-// });
-
 // App.Optional = Em.View.extend({
 //     finish: function(){
 
@@ -56,30 +28,65 @@ function initialize() {
 
 (function($){
 
-$('#invitees').tagsInput();
+//$('#invitees').tagsInput();
 //initialize();
 
 var TimeView = Backbone.View.extend({
     template: '#time-tmpl',
 
-    initialize: function(){
-        this.serialize = this.model.toJSON();
-        this.views = {
+    serialize: function(){
+        return this.model.toJSON();
+    },
 
-        };
-        this.model.bind('change', function(){
-            this.render().then(function(el){
-                //log(el);
+    // initialize: function(){
+    //     this.views = {
+
+    //     };
+
+    //     this.model.bind('change', function(){
+    //         this.render().then(function(el){
+    //             //log(el);
+    //         });
+    //     }, this);
+    // },
+
+    // Override default render method to add jQuery plugins
+    render: function(manage) {
+        return manage(this)
+            .render()
+            .then(function(el){
+                $(el).find('.date').datepicker();
             });
-        }, this);
+    },
+
+    events: {
+        'click .remove': 'destroyModel'
+    },
+
+    destroyModel: function(){
+        // Remove model from the collection,
+        // view automatically re-renders to reflect this
+        this.model.destroy();
     }
 });
 
 var TimesView = Backbone.View.extend({
     template: '#times-tmpl',
 
-    initialize: function(){
-        this.collection = new PossibleTimes([{}]);
+    initialize: function(times){
+        this.collection = new PossibleTimes(times);
+        this.collection.on('add remove', function(){
+            this.render();
+        }, this);
+    },
+
+    events: {
+        'click #add-time': 'addTime'
+    },
+
+    addTime: function(){
+        var time = new PossibleTime();
+        this.collection.add(time);
     },
 
     render: function(manage){
@@ -105,7 +112,7 @@ var OptionalView = Backbone.View.extend({
     model: new Optional(),
 
     initialize: function(){
-        this.serialize = this.model.toJSON();
+        //this.serialize = this.model.toJSON();
         this.views = {
 
         };
@@ -122,7 +129,7 @@ var main = new Backbone.LayoutManager({
     template: '#main-tmpl',
 
     views: {
-        '#times': new TimesView(),
+        '#times': new TimesView([{}]),
         '#optional': new OptionalView()
     }
 });

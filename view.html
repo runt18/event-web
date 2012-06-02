@@ -42,34 +42,41 @@
 <script type="text/template" id="main-tmpl">
 <div id="wrapper">
     <header>
-         <div class="center">
-            <h1>Eventual</h1>
+        <div class="center">
+            <div class="left">
+                <h1>Eventual</h1>
+            </div>
+
+            <div class="right">
+                <a href="">Sign Up/Log In</a>
+                <a href="">Create a new event</a>
+            </div>
         </div>
     </header>
 
     <div role="main" id="main" class="center">
         <div>
-            <h1>View Event</h1>
+            <h2>View Event</h2>
         </div>
         <div>
             <div id="details"></div>
         </div>
         <div>
             <div class="banner">
-                <h2>Whos coming?</h2>
+                <h3>Whos coming?</h3>
             </div>
             <div id="global-attendees"></div>
         </div>
         <div>
             <div class="banner">
-                <h2>Possible Times</h2>
+                <h3>Possible Times</h3>
                 <p>(Tick the ones you can attend)</p>
             </div>
             <div id="times"></div>
         </div>
         <div>
             <div class="banner">
-                <h2>Chat</h2>
+                <h3>Chat</h3>
             </div>
             <div id="chat"></div>
         </div>
@@ -91,7 +98,7 @@
 <!-- Second-level subviews -->
 <script type="text/template" id="details-tmpl">
     <div class="banner clearfix">
-        <h2><%= name %> at <%= location %></h2>
+        <h3><%= name %> at <%= location %></h3>
     </div>
 
     <p><%= description %></p>
