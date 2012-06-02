@@ -56,17 +56,21 @@ var TimeView = Backbone.View.extend({
         return manage(this)
             .render()
             .then(function(el){
+
                 this.fields = {
                     start: this.$('.start'),
                     duration: this.$('.duration'),
                     date: this.$('.date')
                 };
+
                 $(el).find('.date').datepicker();
             });
     },
 
     events: {
         'click .remove': 'destroyModel',
+
+        // Updates to contents of text boxes
         'change .date': 'saveDate',
         'change .duration': 'saveDuration',
         'change .start': 'saveStart'
@@ -128,15 +132,39 @@ var Optional = Backbone.Model.extend({
     }
 });
 
+
+var MapView = Backbone.View.extend({
+    template: '#map-tmpl'
+});
+
 var OptionalView = Backbone.View.extend({
-    'template': '#optional-tmpl',
+    template: '#optional-tmpl',
     model: new Optional(),
 
-    initialize: function(){
-        //this.serialize = this.model.toJSON();
-        this.views = {
+    views: {
+        '#map-wrap': new MapView()
+    },
 
-        };
+    events: {
+        'click #toggle-map': 'toggleMap'
+    },
+
+    toggleMap: function(){
+        var mapWrap = this.$('#map-wrap');
+
+        this.$('#toggle-map').toggle(
+            function(){
+                $(this).val('Pick location on map');
+                mapWrap.hide('fast');
+            },
+            function(){
+                $(this).val('Hide map');
+                mapWrap.show('fast');
+            }
+        );
+    },
+
+    initialize: function(){
         this.model.bind('change', function(){
             this.render().then(function(el){
                 //log(el);

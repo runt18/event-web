@@ -105,9 +105,9 @@
 <script type="text/template" id="optional-tmpl">
     <form>
         <input type=text placeholder="Where is it?"></input>
-        <input type="button" value="Pick location on map"></input><br>
-        <canvas id="map_canvas" height="200" width="200"></canvas>
-        <textarea id="description" placeholder="Other details"></textarea>
+        <input type="button" id="toggle-map" value="Pick location on map"></input><br>
+        <div id="map-wrap"></div>
+        <textarea id="description" placeholder="Other details"></textarea><br>
         <input type="button" id="finish" value="Finish"></input>
     </form>
 </script>
@@ -119,6 +119,10 @@
         <input value="<%= date %>" class="date" type="text"></input>
         <input type="button" class="remove" value="Remove"></input>
     </form>
+</script>
+
+<script type="text/template" id="map-tmpl">
+    <canvas id="map_canvas" height="200" width="200"></canvas>
 </script>
 
 
