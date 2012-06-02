@@ -37,25 +37,30 @@
 <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
    chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-
+<script type="text/template" id="main-tmpl">
 <div id="wrapper">
 
 <header>
-     <div class="center">
-        <h1>Eventual</h1>
+    <div class="center">
+        <div class="left">
+            <h1>Eventual</h1>
+        </div>
+
+        <div class="right">
+            <a href="">Sign Up/Log In</a>
+            <a href="">Create a new event</a>
+        </div>
     </div>
 </header>
 
-<div class="center">
-
-<div role="main" id="main">
+<div role="main" id="main" class="center">
     <div>
-        <h1>Create a new event</h1>
+        <h2>Create a new event</h2>
     </div>
 
     <div id="name">
         <div class="banner">
-            <h2>What's happening?</h2>
+            <h3>Whats happening?</h3>
         </div>
 
         <form>
@@ -66,53 +71,22 @@
 
     <div id="time">
         <div class="banner">
-            <h2>When can it happen?</h2>
+            <h3>When can it happen?</h3>
         </div>
 
-        <script type="text/x-handlebars">
-            {{#view App.AddTimeRangeView}}
-                <button {{action "add"}}>+ Add a new time range</button>
-            {{/view}}
-        </script>
+        <div id="times"></div>
     </div>
 
-    <script type="text/x-handlebars" data-template-name="timerange">
-        <form>
-            <input {{bindAttr value="App.Time.timeNow"}} class="start" type="text" size="10"> for
-            <input class="duration" value="60" type=text size=10></input> minutes on
-            <input {{bindAttr value="App.Time.dateNow"}} class="date" type="date"></input>
-            {{#unless lastOne}}
-                <button {{action "remove"}}>Remove</button>
-            {{/unless}}
-        </form>
-    </script>
+
 
     <div id="optional-wrapper">
         <div class="banner">
-            <h2>Optional</h2>
-            <script type="text/x-handlebars">
-                {{#view App.OptionalExpander}}
-                    <div {{action "expand"}} class="expander" id="optional-expander"></div>
-                {{/view}}
-            </script>
+            <h3>Optional</h3>
+            expander
         </div>
 
-        <div id="optional">
-            <script type="text/x-handlebars">
-            {{#view App.Optional}}
-                <form>
-                    <input type=text placeholder="Where is it?"></input>
-                    <button {{action "pick"}}>Pick location on map</button><br>
-                    <canvas id="map_canvas" height="200" width="200"></canvas>
-                    <textarea id="description" placeholder="Other details"></textarea>
-                    <button {{action "finish"}} id="finish">Finish</button>
-                </form>
-            {{/view}}
-            </script>
-        </div>
+        <div id="optional"></div>
     </div>
-
-</div>
 </div>
 
 <footer>
@@ -122,6 +96,35 @@
 </footer>
 
 </div>
+</script>
+
+<script type="text/template" id="times-tmpl">
+    <input type="button" id="add-time" value="+ Add a new time range"></input>
+</script>
+
+<script type="text/template" id="optional-tmpl">
+    <form>
+        <input type=text placeholder="Where is it?"></input>
+        <input type="button" id="toggle-map" value="Pick location on map"></input><br>
+        <div id="map-wrap"></div>
+        <textarea id="description" placeholder="Other details"></textarea><br>
+        <input type="button" id="finish" value="Finish"></input>
+    </form>
+</script>
+
+<script type="text/template" id="time-tmpl">
+    <form>
+        <input value="<%= start %>" class="start" type="text" size="10"> for
+        <input class="duration" value="<%= duration %>" type=text size=10></input> minutes on
+        <input value="<%= date %>" class="date" type="text"></input>
+        <input type="button" class="remove" value="Remove"></input>
+    </form>
+</script>
+
+<script type="text/template" id="map-tmpl">
+    <canvas id="map_canvas" height="200" width="200"></canvas>
+</script>
+
 
 <!-- JavaScript at the bottom for fast page loading -->
 
@@ -130,11 +133,14 @@
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
 
 <!-- scripts concatenated and minified via build script -->
-<script src="js/require.js"></script>
-<script src="js/libs/ember-0.9.8.1.js"></script>
+<script src="js/libs/underscore.js"></script>
+<script src="js/libs/handlebars.js"></script>
+
+<script src="js/libs/backbone.js"></script>
+<script src="js/libs/backbone.layoutmanager.js"></script>
 <script src="js/libs/jquery-ui.min.js"></script>
 
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false">-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false"></script>
 
 <script src="js/plugins.js"></script>
 <script src="js/common.js"></script>

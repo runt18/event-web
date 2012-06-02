@@ -1,20 +1,24 @@
-var App = Em.Application.create();
+_pad = function(num){
+        return num < 10 ? '0' + num : num;
+};
 
-App.Time = {
-    timeNow: (function(){
+Time = {
+    now: (function(){
         var d = new Date();
-        return d.getHours() + ":" + d.getMinutes();
-    }()),
-
-    dateNow: (function(){
-        var d = new Date();
-        return d.getDate() + '/' + d.getMonth() + '/' + d.getYear();
+        return _pad(d.getHours()) + ":" + _pad(d.getMinutes());
     }())
 };
 
-App.OptionalExpander = Em.View.extend({
-    expand: function(){
-        $('#optional-expander').toggleClass('down');
-        $('#optional').toggle('fast');
+var PossibleTime = Backbone.Model.extend({
+    defaults: {
+        start: Time.now,
+        duration: 60,
+        date: $.datepicker.formatDate('dd/mm/yy', new Date()),
+        confirmed: 0,
+        total: 1
     }
+});
+
+var PossibleTimes = Backbone.Collection.extend({
+    model: PossibleTime
 });

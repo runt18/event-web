@@ -38,122 +38,116 @@
    chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
+<!-- Top-level layout of entire page -->
+<script type="text/template" id="main-tmpl">
 <div id="wrapper">
+    <header>
+        <div class="center">
+            <div class="left">
+                <h1>Eventual</h1>
+            </div>
 
-<header>
-     <div class="center">
-        <h1>Eventual</h1>
-    </div>
-</header>
-
-<div class="center">
-
-<div role="main" id="main">
-    <div>
-        <h1>View Event</h1>
-    </div>
-
-    <div>
-        <script type="text/x-handlebars">
-            <%= #view App.Title}}
-                <div class="banner clearfix">
-                    <h2>{{name}} at {{location}}</h2>
-                </div>
-
-                {{#if description}}
-                    <p>{{description}}</p>
-                {{/if}}
-            {{/view}}
-        </script>
-    </div>
-
-    <div>
-        <div class="banner">
-            <h2>Who's coming?</h2>
+            <div class="right">
+                <a href="">Sign Up/Log In</a>
+                <a href="">Create a new event</a>
+            </div>
         </div>
-        <script type="text/x-handlebars">
-            {{#view App.Invitees}}
-                <ul>
-                {{#each invitees}}
-                    <li>{{this}}</li>
-                {{/each}}
-                </ul>
-            {{/view}}
-        </script>
+    </header>
 
-    </div>
-
-    <div>
-        <div class="banner">
-            <h2>Possible Times</h2>
-            <p>(Tick the ones you can attend)</p>
+    <div role="main" id="main" class="center">
+        <div>
+            <h2>View Event</h2>
         </div>
-
-        <script type="text/x-handlebars">
-        {{#view App.TimesView}}
-
-            {{#each App.timesController.times}}
-            {{#view App.TimeView timeBinding="this"}}
-
-                <div class="time">
-                    {{view Ember.Checkbox checkedBinding="isChecked"}}
-                    <p>At {{time.start}} for {{time.duration}} minutes on {{time.date}}</p>
-                </div>
-                <div class="clearfix"></div>
-
-                <div class="invitee-details">
-                    {{view App.PieChartView}}
-                    <p>{{time.confirmed}}/{{time.total}} people have confirmed that they can attend this time</p>
-                    <div class="expander"></div>
-                </div>
-                <div class="clearfix"></div>
-
-                <ul class="attendees">
-                    {{#each time.attendees}}
-                        <li>{{this}}</li>
-                    {{/each}}
-                </ul>
-
-                <hr>
-
-            {{/view}}
-            {{/each}}
-
-        {{/view}}
-        </script>
-    </div>
-    <script type="text/x-handlebars" data-template-name="piechart">
-        <canvas class="piechart" height="30" width="30"></canvas>
-    </script>
-
-    <div>
-        <div class="banner">
-            <h2>Chat</h2>
+        <div>
+            <div id="details"></div>
         </div>
-
+        <div>
+            <div class="banner">
+                <h3>Whos coming?</h3>
+            </div>
+            <div id="global-attendees"></div>
+        </div>
+        <div>
+            <div class="banner">
+                <h3>Possible Times</h3>
+                <p>(Tick the ones you can attend)</p>
+            </div>
+            <div id="times"></div>
+        </div>
+        <div>
+            <div class="banner">
+                <h3>Chat</h3>
+            </div>
+            <div id="chat"></div>
+        </div>
+        <div>
+            <form>
+                <button>Finalise</button>
+            </form>
+        </div>
     </div>
 
-    <div>
-        <form>
-            <button>Finalise</button>
-        </form>
+    <footer>
+        <div class="center">
+            Made by <a href="http://clementin.es">Clementine</a>
+        </div>
+    </footer>
+<div>
+</script>
+
+<!-- Second-level subviews -->
+<script type="text/template" id="details-tmpl">
+    <div class="banner clearfix">
+        <h3><%= name %> at <%= location %></h3>
     </div>
 
-<script type="text/x-handlebars" data-template-name="piechart">
+    <p><%= description %></p>
+</script>
+
+<script type="text/template" id="times-tmpl">
 
 </script>
 
-</div>
-</div>
+<script type="text/template" id="chat-tmpl">
 
-<footer>
-    <div class="center">
-        Made by <a href="http://clementin.es">Clementine</a>
+</script>
+
+<!-- Reusable views -->
+<script type="text/template" id="time-tmpl">
+    <div class="time-details">
+        <input class="tick" type="checkbox">
+        <p>At <%= start %> for <%= duration %> minutes on <%= date %></p>
     </div>
-</footer>
 
+    <div class="clearfix"></div>
 
-</div>
+    <div class="attendee-details">
+        <div class="piechart-wrap"></div>
+        <p><%= confirmed %>/<%= total %> people have confirmed that they can attend this time</p>
+        <div class="expander-wrap"></div>
+    </div>
+
+    <div class="attendees-wrap"></div>
+
+    <hr>
+</script>
+
+<script type="text/template" id="attendee-tmpl">
+    <%= name %>
+</script>
+
+<script type="text/template" id="attendees-tmpl">
+
+</script>
+
+<script type="text/template" id="piechart">
+    <canvas class="piechart" height="30" width="30"></canvas>
+</script>
+
+<script type="text/template" id="expander">
+    <div class="expander"></div>
+</script>
+
 
 <!-- JavaScript at the bottom for fast page loading -->
 
@@ -162,8 +156,11 @@
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
 
 <!-- scripts concatenated and minified via build script -->
-<script src="js/require.js"></script>
-<script src="js/libs/ember-0.9.8.1.js"></script>
+<script src="js/libs/underscore.js"></script>
+<script src="js/libs/handlebars.js"></script>
+
+<script src="js/libs/backbone.js"></script>
+<script src="js/libs/backbone.layoutmanager.js"></script>
 <script src="js/libs/jquery-ui.min.js"></script>
 
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false">-->
