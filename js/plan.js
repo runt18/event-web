@@ -38,23 +38,29 @@ var TimeView = Backbone.View.extend({
         return this.model.toJSON();
     },
 
-    // initialize: function(){
-    //     this.views = {
+    initialize: function(){
 
-    //     };
+        // this.views = {
 
-    //     this.model.bind('change', function(){
-    //         this.render().then(function(el){
-    //             //log(el);
-    //         });
-    //     }, this);
-    // },
+        // };
+
+        // this.model.bind('change', function(){
+        //     this.render().then(function(el){
+        //         //log(el);
+        //     });
+        // }, this);
+    },
 
     // Override default render method to add jQuery plugins
     render: function(manage) {
         return manage(this)
             .render()
             .then(function(el){
+                this.fields = {
+                    start: this.$('.start'),
+                    duration: this.$('.duration'),
+                    date: this.$('.date')
+                };
                 $(el).find('.date').datepicker();
             });
     },
@@ -67,15 +73,15 @@ var TimeView = Backbone.View.extend({
     },
 
     saveDate: function(){
-        this.model.set('date', this.$('.date').val());
+        this.model.set('date', this.fields.date.val());
     },
 
     saveDuration: function(){
-        this.model.set('duration', this.$('.duration').val());
+        this.model.set('duration', this.fields.duration.val());
     },
 
     saveStart: function(){
-        this.model.set('start', this.$('.start').val());
+        this.model.set('start', this.fields.start.val());
     },
 
     destroyModel: function(){
