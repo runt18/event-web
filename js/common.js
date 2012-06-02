@@ -22,3 +22,16 @@ var PossibleTime = Backbone.Model.extend({
 var PossibleTimes = Backbone.Collection.extend({
     model: PossibleTime
 });
+
+var Expander = Backbone.View.extend({
+    tagName: 'div',
+    className: 'expander',
+
+    events: {
+        'click': 'expand'
+    },
+
+    spinArrow: function(){
+        this.$el.toggleClass('expander-closed');
+    }
+});

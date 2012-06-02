@@ -80,11 +80,6 @@
 
 
     <div id="optional-wrapper">
-        <div class="banner">
-            <h3>Optional</h3>
-            expander
-        </div>
-
         <div id="optional"></div>
     </div>
 </div>
@@ -103,6 +98,11 @@
 </script>
 
 <script type="text/template" id="optional-tmpl">
+    <div class="banner">
+        <h3>Optional</h3>
+        <div class="expander-wrap"></div>
+    </div>
+
     <form>
         <input type=text placeholder="Where is it?"></input>
         <input type="button" id="toggle-map" value="Pick location on map"></input><br>
@@ -124,7 +124,6 @@
 <script type="text/template" id="map-tmpl">
     <canvas id="map_canvas" height="200" width="200"></canvas>
 </script>
-
 
 <!-- JavaScript at the bottom for fast page loading -->
 

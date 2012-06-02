@@ -7,6 +7,19 @@ Giles Lavelle
 //$('#invitees').tagsInput();
 //initialize();
 
+var OptionalViewExpander = Expander.extend({
+    initialize: function(){
+        this.$el.addClass('expander-banner');
+    },
+    expand: function(){
+        this.spinArrow();
+        this.$el
+            .closest('#optional')
+            .find('form')
+            .toggle('fast');
+    }
+});
+
 var TimeView = Backbone.View.extend({
     template: '#time-tmpl',
 
@@ -140,11 +153,17 @@ var OptionalView = Backbone.View.extend({
     model: new Optional(),
 
     views: {
+        '.expander-wrap': new OptionalViewExpander(),
         '#map-wrap': new MapView()
     },
 
     events: {
-        'click #toggle-map': 'toggleMap'
+        'click #toggle-map': 'toggleMap',
+        'click #finish': 'finish'
+    },
+
+    finish: function(){
+        log('done');
     },
 
     toggleMap: function(){

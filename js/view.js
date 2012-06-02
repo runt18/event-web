@@ -14,6 +14,19 @@ var MainDetails = Backbone.Model.extend({
     }
 });
 
+var TimeViewExpander = Expander.extend({
+    initialize: function(){
+        this.$el.addClass('expander-small');
+    },
+    expand: function(){
+        this.spinArrow();
+        this.$el
+            .closest('.time')
+            .find('.attendees-wrap')
+            .toggle('fast');
+    }
+});
+
 var PieChartView = Backbone.View.extend({
     template: '#piechart',
 
@@ -64,18 +77,6 @@ var PieChartView = Backbone.View.extend({
     }
 });
 
-var Expander = Backbone.View.extend({
-    template: '#expander',
-    events: {
-        'click': 'expand'
-    },
-    expand: function(){
-        this.$el.find('.expander').toggleClass('expander-closed');
-        var parent = this.$el.closest('.time');
-        parent.find('.attendees-wrap').toggle('fast');
-    }
-});
-
 var TimeView = Backbone.View.extend({
     template: '#time-tmpl',
     tagName: 'div',
@@ -85,13 +86,14 @@ var TimeView = Backbone.View.extend({
         this.serialize = this.model.toJSON();
 
         var ratio = this.model.get('confirmed') / this.model.get('total');
+
         this.views = {
             '.piechart-wrap': new PieChartView(ratio),
-            '.expander-wrap': new Expander(),
+            '.expander-wrap': new TimeViewExpander(),
             '.attendees-wrap': new AttendeesView()
         };
 
-        this.model.bind('change', function(){
+        this.model.on('change', function(){
             this.render().then(function(el){
                 //log(el);
             });
