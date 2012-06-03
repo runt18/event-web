@@ -180,7 +180,9 @@ var DetailsView = Backbone.View.extend({
         return manage(this)
             .render()
             .then(function(el){
-                this.$('#invitees').tagsInput();
+                this.$('#invitees').tagsInput({
+                    defaultText: "Who's invited?"
+                });
             });
     }
 });
