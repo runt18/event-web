@@ -287,6 +287,15 @@ input[type=checkbox]{
 input, textarea{
   font-size: 20px;
   border: 1px solid #ccc;
+  padding: 5px;
+}
+
+::-webkit-input-placeholder{
+  color: #777
+}
+
+:-moz-placeholder{
+  color: #777;
 }
 
 h1{
@@ -365,6 +374,10 @@ div.banner:after{
 
 #description{
   width: 400px;
+}
+
+#main-details input{
+  width: 600px;
 }
 
 #main{
