@@ -4,8 +4,6 @@ Giles Lavelle
 
 (function($){
 
-var colours = 'red red red red yellow yellow yellow green green green green'.split(' ');
-
 var MainDetails = Backbone.Model.extend({
     defaults: {
         name: 'Lan Party',
@@ -28,52 +26,79 @@ var TimeViewExpander = Expander.extend({
 });
 
 var PieChartView = Backbone.View.extend({
-    template: '#piechart',
+    tagName: 'canvas',
+    className: 'piechart',
 
     colour: function(){
+        // Determine the colour of the pie chart
+        // based on how full it is
         var index = Math.floor(this.ratio * 10);
-        var colour = colours[index];
+        var colour = this.colours[index];
 
         return colour;
     },
 
-    draw: function(){
-        var canvas = this.$el.find('canvas')[0];
-        var ctx = canvas.getContext('2d');
+    draw: function(ratio){
+        var ctx = this.context;
+        var size = this.size;
+        var half = this.half;
 
-        var size = canvas.height;
-        var half = size / 2;
-
-        var ratio = this.ratio;
-
+        // Clear the old image
         ctx.clearRect(0, 0, size, size);
 
         ctx.fillStyle = this.colour();
         ctx.beginPath();
+
+        // Start at the center
         ctx.moveTo(half, half);
+
+        // Draw a line to the top
         ctx.lineTo(half, 0);
 
+        // Draw an arc clockwise round from the top
         var offset = (Math.PI / 2);
         var start = -offset;
         var end = (Math.PI * 2 * ratio) - offset;
         ctx.arc(half, half, half, start, end, false);
 
+        // Connect the arc back to the center, fill the shape in
         ctx.fill();
     },
 
+    animate: function(){
+        // var diff = this.ratio - this.oldRatio;
+        // var step = diff / 10;
+        // var drawRatio = this.oldRatio;
+        // var that = this;
+
+        // var draw = function(){
+        //     drawRatio += step;
+        //     that.draw(drawRatio);
+        //     setTimeout(draw, 100);
+        // };
+
+        // draw();
+        this.draw(this.ratio);
+    },
+
     render: function(manage) {
-        var a = manage(this).render();
-        this.draw();
-        return a;
+        return manage(this).render().then(function(){
+            this.el.height = this.size;
+            this.el.width = this.size;
+
+            // Cache a reference to the drawing context
+            this.context = this.el.getContext('2d');
+
+            this.animate();
+        });
     },
 
-    update: function(ratio){
+    initialize: function(ratio, oldRatio){
         this.ratio = ratio;
-        this.draw();
-    },
-
-    initialize: function(ratio){
-        this.ratio = ratio;
+        this.oldRatio = oldRatio;
+        this.size = 30;
+        this.half = this.size / 2;
+        this.colours = 'red red red red yellow yellow yellow green green green green'.split(' ');
     }
 });
 
@@ -96,9 +121,10 @@ var TimeView = Backbone.View.extend({
     },
 
     render: function(manage) {
-        var ratio = this.model.get('confirmed') / this.model.get('total');
+        var ratio = this.model.get('ratio');
+        var oldRatio = this.model.get('oldRatio');
         this.insertViews({
-            '.piechart-wrap': new PieChartView(ratio),
+            '.piechart-wrap': new PieChartView(ratio, oldRatio),
             '.expander-wrap': new TimeViewExpander(),
             '.attendees-wrap': new AttendeesView()
         });
@@ -109,7 +135,7 @@ var TimeView = Backbone.View.extend({
         'click input.tick': 'updateAttendeeCount'
     },
 
-    updateAttendeeCount: function(){
+    updateAttendeeCount: _.throttle(function(){
         var isAttending  = this.model.get('attending');
         if(isAttending){
             this.model.decrement('confirmed');
@@ -117,7 +143,7 @@ var TimeView = Backbone.View.extend({
             this.model.increment('confirmed');
         }
         this.model.set('attending', !isAttending);
-    }
+    }, 500)
 });
 
 var TimesListView = Backbone.View.extend({

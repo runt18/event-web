@@ -47,10 +47,10 @@
                 <h1>Eventual</h1>
             </div>
 
-            <div class="right" id="nav">
+            <nav class="right">
                 <a href="register.html">Login/Join</a>
                 <a href="plan.html">New Event</a>
-            </div>
+            </nav>
         </div>
     </header>
 
@@ -127,7 +127,7 @@
 
     <div class="attendee-details">
         <div class="piechart-wrap"></div>
-        <p><%= confirmed %>/<%= total %> people have confirmed that they can attend this time</p>
+        <p><strong><%= confirmed %></strong>/<strong><%= total %></strong> can make it</p>
         <div class="expander-wrap"></div>
     </div>
 
@@ -142,10 +142,6 @@
 
 <script type="text/template" id="attendees-tmpl">
 
-</script>
-
-<script type="text/template" id="piechart">
-    <canvas class="piechart" height="30" width="30"></canvas>
 </script>
 
 <!-- JavaScript at the bottom for fast page loading -->
