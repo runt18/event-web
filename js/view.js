@@ -85,19 +85,21 @@ var TimeView = Backbone.View.extend({
     initialize: function(){
         this.serialize = this.model.toJSON();
 
-        var ratio = this.model.get('confirmed') / this.model.get('total');
-
-        this.views = {
-            '.piechart-wrap': new PieChartView(ratio),
-            '.expander-wrap': new TimeViewExpander(),
-            '.attendees-wrap': new AttendeesView()
-        };
-
         this.model.on('change', function(){
             this.render().then(function(el){
                 //log(el);
             });
         }, this);
+    },
+
+    render: function(manage) {
+        var ratio = this.model.get('confirmed') / this.model.get('total');
+        this.insertViews({
+            '.piechart-wrap': new PieChartView(ratio),
+            '.expander-wrap': new TimeViewExpander(),
+            '.attendees-wrap': new AttendeesView()
+        });
+        return manage(this).render();
     },
 
     events: {
@@ -126,14 +128,13 @@ var TimesListView = Backbone.View.extend({
     },
 
     render: function(manage){
-        var view = manage(this);
         this.collection.each(function(model){
-            view.insert(new TimeView({
+            this.insertView(new TimeView({
                 model: model
             }));
-        });
+        }, this);
 
-        return view.render();
+        return manage(this).render();
     }
 });
 
@@ -182,14 +183,13 @@ var AttendeesView = Backbone.View.extend({
     },
 
     render: function(manage){
-        var view = manage(this);
         this.collection.each(function(model){
-            view.insert(new AttendeeView({
+            this.insertView(new AttendeeView({
                 model: model
             }));
-        });
+        }, this);
 
-        return view.render();
+        return manage(this).render();
     }
 });
 

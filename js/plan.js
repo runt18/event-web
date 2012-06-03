@@ -105,14 +105,13 @@ var TimesView = Backbone.View.extend({
     },
 
     render: function(manage){
-        var view = manage(this);
         this.collection.each(function(model){
-            view.insert(new TimeView({
+            this.insertView(new TimeView({
                 model: model
             }));
-        });
+        }, this);
 
-        return view.render();
+        return manage(this).render();
     }
 });
 
@@ -190,12 +189,7 @@ var DetailsView = Backbone.View.extend({
 var OptionalView = Backbone.View.extend({
     template: '#optional-tmpl',
     model: new Optional(),
-    //id: 'optional',
-
-    views: {
-        '.expander-wrap': new OptionalViewExpander(),
-        '#map-wrap': new MapView()
-    },
+    id: 'optional',
 
     events: {
         'click #toggle-map': 'toggleMap'
@@ -224,6 +218,14 @@ var OptionalView = Backbone.View.extend({
                 //log(el);
             });
         }, this);
+    },
+
+    render: function(manage) {
+        this.insertViews({
+            '.expander-wrap': new OptionalViewExpander(),
+            '#map-wrap': new MapView()
+        });
+        return manage(this).render();
     }
 });
 
