@@ -294,8 +294,17 @@ h1{
   padding: 0 20px;
 }
 
-a:visited{
-    color: #FF9E22;
+a{
+  text-decoration: none;
+  color: #FF9E22;
+}
+
+a, a:visited{
+  color: #FF9E22;
+}
+
+a:hover{
+  color: #FFB40C;
 }
 
 #wrapper{
@@ -320,6 +329,11 @@ a:visited{
 
 .right{
   right: 0;
+}
+
+#nav a{
+  margin-left: 20px;
+  font-weight: bold;
 }
 
 
@@ -376,10 +390,6 @@ div.banner:after{
   width: 0;
 
   position: absolute;
-  top: 10px;
-  right: 10px;
-
-  margin: 7px 0 0 10px;
 
   border-style: solid;
   border-color: transparent;
@@ -392,13 +402,19 @@ div.banner:after{
 }
 
 .expander-banner{
-  border-width: 30px 20px 0 20px;
+  top: 12px;
+  right: 10px;
+  border-width: 22px 18px 0 18px;
   border-top-color: #eee;
 }
 
 .expander-small{
+  top: 10px;
+  right: 10px;
   border-width: 15px 10px 0 10px;
   border-top-color: #222;
+
+  margin: 7px 0 0 10px;
 }
 
 .expander-closed {

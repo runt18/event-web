@@ -2,12 +2,8 @@
 Giles Lavelle
 */
 var map;
+
 (function($){
-
-//$('#invitees').tagsInput();
-//initialize();
-
-
 
 var OptionalViewExpander = Expander.extend({
     initialize: function(){
@@ -161,9 +157,38 @@ var MapView = Backbone.View.extend({
     }
 });
 
+var FinishView = Backbone.View.extend({
+    template: '#finish-tmpl',
+
+    events: {
+        'click #finish': 'finish'
+    },
+
+    finish: function(){
+        log('done');
+    }
+});
+
+var DetailsView = Backbone.View.extend({
+    template: '#details-tmpl',
+
+    events: {
+
+    },
+
+    render: function(manage) {
+        return manage(this)
+            .render()
+            .then(function(el){
+                this.$('#invitees').tagsInput();
+            });
+    }
+});
+
 var OptionalView = Backbone.View.extend({
     template: '#optional-tmpl',
     model: new Optional(),
+    //id: 'optional',
 
     views: {
         '.expander-wrap': new OptionalViewExpander(),
@@ -171,12 +196,7 @@ var OptionalView = Backbone.View.extend({
     },
 
     events: {
-        'click #toggle-map': 'toggleMap',
-        'click #finish': 'finish'
-    },
-
-    finish: function(){
-        log('done');
+        'click #toggle-map': 'toggleMap'
     },
 
     toggleMap: function(){
@@ -194,8 +214,6 @@ var OptionalView = Backbone.View.extend({
                 //map.setZoom( map.getZoom() );
             }
         );
-
-
     },
 
     initialize: function(){
@@ -213,8 +231,10 @@ var main = new Backbone.LayoutManager({
     id: 'wrapper',
 
     views: {
+        '#main-details': new DetailsView([{}]),
         '#times': new TimesView([{}]),
-        '#optional': new OptionalView()
+        '#optional': new OptionalView(),
+        '#finish-wrapper': new FinishView()
     }
 });
 

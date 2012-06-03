@@ -44,9 +44,9 @@
             <h1>Eventual</h1>
         </div>
 
-        <div class="right">
-            <a href="">Sign Up/Log In</a>
-            <a href="">Create a new event</a>
+        <div class="right" id="nav">
+            <a href="register.html">Login/Join</a>
+            <a href="plan.html">New Event</a>
         </div>
     </div>
 </header>
@@ -61,10 +61,7 @@
             <h3>Whats happening?</h3>
         </div>
 
-        <form>
-            <input type=text size=60 placeholder="What's it called?"></input><br>
-            <input type=text id="invitees" size=60 placeholder="Who's invited?"></input>
-        </form>
+        <div id="main-details"></div>
     </div>
 
     <div id="time">
@@ -75,11 +72,9 @@
         <div id="times"></div>
     </div>
 
+    <div id="optional"></div>
 
-
-    <div id="optional-wrapper">
-        <div id="optional"></div>
-    </div>
+    <div id="finish-wrapper"></div>
 </div>
 
 <footer>
@@ -104,7 +99,6 @@
         <input type="button" id="toggle-map" value="Pick location on map"></input><br>
         <div id="map-wrap"></div>
         <textarea id="description" placeholder="Other details"></textarea><br>
-        <input type="button" id="finish" value="Finish"></input>
     </form>
 </script>
 
@@ -124,6 +118,17 @@
 
 <script type="text/template" id="map-tmpl">
     <canvas id="map-canvas" height="100" width="100"></canvas>
+</script>
+
+<script type="text/template" id="finish-tmpl">
+    <input type="button" id="finish" value="Finish"></input>
+</script>
+
+<script type="text/template" id="details-tmpl">
+    <form>
+        <input type=text size=60 placeholder="What's it called?"></input><br>
+        <input type=text id="invitees" size=60 placeholder="Who's invited?"></input>
+    </form>
 </script>
 
 <!-- JavaScript at the bottom for fast page loading -->
