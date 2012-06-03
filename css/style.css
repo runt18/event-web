@@ -234,7 +234,11 @@ body{
   background: white;
 }
 
-header, footer{
+header,footer {
+  /*Support browsers with no gradients*/
+  background: #333;
+
+  /*Support old WebKit*/
   background: -webkit-gradient(
     linear,
     left top,
@@ -242,8 +246,15 @@ header, footer{
     from(#333),
     to(#222)
   );
-  color: white;
 
+  /*Support modern versions of browsers*/
+  background: -webkit-linear-gradient(-90deg, #333, #222);
+  background: -moz-linear-gradient(-90deg, #333, #222);
+  background: -o-linear-gradient(-90deg, #333, #222);
+  background: -ms-linear-gradient(-90deg, #333, #222);
+  background: linear-gradient(-90deg, #333, #222);
+
+  color: white;
   margin: 0;
 
   border-color: #000;
@@ -313,7 +324,7 @@ a, a:visited{
 }
 
 a:hover{
-  color: #FFB40C;
+  color: #FFCD0B;
 }
 
 #wrapper{
@@ -340,10 +351,18 @@ a:hover{
   right: 0;
 }
 
-#nav a{
+nav a {
   margin-left: 20px;
   font-weight: bold;
+
+  -webkit-transition: color .15s ease-in 0;
+  -moz-transition: color .15s ease-in 0;
+  -o-transition: color .15s ease-in 0;
+  -ms-transition: color .15s ease-in 0;
+  transition: color .15s ease-in 0;
+  text-shadow: 0 1px 0 black;
 }
+
 
 
 div.banner{
