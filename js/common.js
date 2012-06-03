@@ -25,7 +25,8 @@ var PossibleTime = Backbone.Model.extend({
         duration: 60,
         date: $.datepicker.formatDate('dd/mm/yy', new Date()),
         confirmed: 0,
-        total: 1
+        total: 1,
+        attending: false
     }
 });
 

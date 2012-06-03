@@ -82,12 +82,15 @@ var TimeView = Backbone.View.extend({
     tagName: 'div',
     className: 'time',
 
-    initialize: function(){
-        this.serialize = this.model.toJSON();
+    serialize: function(){
+        return this.model.toJSON();
+    },
 
+    initialize: function(){
         this.model.on('change', function(){
             this.render().then(function(el){
-                //log(el);
+                var isAttending  = this.model.get('attending');
+                $(el).find('.tick').attr('checked', isAttending);
             });
         }, this);
     },
@@ -103,11 +106,17 @@ var TimeView = Backbone.View.extend({
     },
 
     events: {
-        'click input.tick': 'update'
+        'click input.tick': 'updateAttendeeCount'
     },
 
-    update: function(){
-        this.model.increment('confirmed');
+    updateAttendeeCount: function(){
+        var isAttending  = this.model.get('attending');
+        if(isAttending){
+            this.model.decrement('confirmed');
+        } else {
+            this.model.increment('confirmed');
+        }
+        this.model.set('attending', !isAttending);
     }
 });
 
