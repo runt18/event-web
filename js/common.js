@@ -10,6 +10,16 @@ Time = {
 };
 
 var PossibleTime = Backbone.Model.extend({
+    increment: function(value, amount){
+        amount = typeof amount === 'undefined' ? 1 : amount;
+        this.set(value, this.get(value) + amount);
+    },
+
+    decrement: function(value, amount){
+        amount = typeof amount === 'undefined' ? 1 : amount;
+        this.increment(value, -amount);
+    },
+
     defaults: {
         start: Time.now,
         duration: 60,

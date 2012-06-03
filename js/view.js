@@ -105,7 +105,7 @@ var TimeView = Backbone.View.extend({
     },
 
     update: function(){
-        this.model.set('confirmed', 5);
+        this.model.increment('confirmed');
     }
 });
 
