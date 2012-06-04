@@ -28,7 +28,7 @@ var PossibleTime = Backbone.Model.extend({
 
     _updateRatio: function(){
         var oldRatio = this.get('ratio');
-        this.set('oldRatio', ratio);
+        this.set('oldRatio', oldRatio);
 
         var ratio = this.get('confirmed') / this.get('total');
         this.set('ratio', ratio);

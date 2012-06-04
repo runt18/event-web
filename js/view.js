@@ -32,9 +32,11 @@ var PieChartView = Backbone.View.extend({
     colour: function(){
         // Determine the colour of the pie chart
         // based on how full it is
-        var index = Math.floor(this.ratio * 10);
-        var colour = this.colours[index];
-
+        var n = this.ratio,
+            r = Math.round(255 * (1 - n)),
+            g = Math.round(255 * n),
+            b = 0;
+        var colour = 'rgb(' + r + ',' + g + ',' + b + ')';
         return colour;
     },
 
@@ -66,19 +68,26 @@ var PieChartView = Backbone.View.extend({
     },
 
     animate: function(){
-        // var diff = this.ratio - this.oldRatio;
-        // var step = diff / 10;
-        // var drawRatio = this.oldRatio;
-        // var that = this;
+        var that = this; // Save reference to keep access to draw function
+        var duration = 0.6; // seconds
+        var fps = 30;
+        var frames = fps * duration;
+        var step = duration / frames;
 
-        // var draw = function(){
-        //     drawRatio += step;
-        //     that.draw(drawRatio);
-        //     setTimeout(draw, 100);
-        // };
+        var drawRatio = this.oldRatio; // Ratio to be drawn on each frame
+        var endRatio = this.ratio; //Ratio to reach
 
-        // draw();
-        this.draw(this.ratio);
+        var direction = endRatio > drawRatio ? 1 : -1; // Is it increasing or decreasing?
+        step *= direction;
+
+        // Run the animation
+        var timer = setInterval(function(){
+            drawRatio += step;
+            if(direction * drawRatio >= direction * endRatio){
+                clearInterval(timer);
+            }
+            that.draw(drawRatio);
+        }, duration * 1000 / frames);
     },
 
     render: function(manage) {
@@ -98,7 +107,6 @@ var PieChartView = Backbone.View.extend({
         this.oldRatio = oldRatio;
         this.size = 30;
         this.half = this.size / 2;
-        this.colours = 'red red red red yellow yellow yellow green green green green'.split(' ');
     }
 });
 
@@ -123,6 +131,7 @@ var TimeView = Backbone.View.extend({
     render: function(manage) {
         var ratio = this.model.get('ratio');
         var oldRatio = this.model.get('oldRatio');
+
         this.insertViews({
             '.piechart-wrap': new PieChartView(ratio, oldRatio),
             '.expander-wrap': new TimeViewExpander(),
@@ -233,16 +242,44 @@ var ChatView = Backbone.View.extend({
     template: '#chat-tmpl'
 });
 
+var HeaderView = Backbone.View.extend({
+    //template: '#header-tmpl',
+    tagName: 'header',
+
+    fetch: function(name){
+        var done = this.async();
+        log(name);
+        $.ajax({
+            url: 'header.html',
+            success: function(contents){
+
+                log(contents);
+                done(contents);
+            },
+            error: function(data){
+                log(data);
+            }
+        });
+    }
+});
+
+var FooterView = Backbone.View.extend({
+    template: '#footer-tmpl',
+    tagName: 'footer'
+});
+
 //Main view for the entire page
 var main = new Backbone.LayoutManager({
     template: '#main-tmpl',
     id: 'wrapper',
 
     views: {
+        '#header': new HeaderView(),
         '#details': new DetailsView(),
         '#global-attendees': new AttendeesView(),
         '#times': new TimesListView(),
-        '#chat': new ChatView()
+        '#chat': new ChatView(),
+        '#footer': new FooterView()
     }
 });
 

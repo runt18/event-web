@@ -41,19 +41,7 @@
 <!-- Top-level layout of entire page -->
 <script type="text/template" id="main-tmpl">
 <div id="wrapper">
-    <header>
-        <div class="center">
-            <div class="left">
-                <h1>Eventual</h1>
-            </div>
-
-            <nav class="right">
-                <a href="register.html">Login/Join</a>
-                <a href="plan.html">New Event</a>
-            </nav>
-        </div>
-    </header>
-
+    <div id="header"></div>
     <div role="main" id="main" class="center">
         <div>
             <h2>View Event</h2>
@@ -86,12 +74,7 @@
             </form>
         </div>
     </div>
-
-    <footer>
-        <div class="center">
-            Made by <a href="http://clementin.es">Clementine</a>
-        </div>
-    </footer>
+    <div id="footer"></div>
 <div>
 </script>
 
@@ -142,6 +125,25 @@
 
 <script type="text/template" id="attendees-tmpl">
 
+</script>
+
+<script type="text/template" id="header-tmpl">
+    <div class="center">
+        <div class="left">
+            <h1>Eventual</h1>
+        </div>
+
+        <nav class="right">
+            <a href="register.html">Login/Join</a>
+            <a href="plan.html">New Event</a>
+        </nav>
+    </div>
+</script>
+
+<script type="text/template" id="footer-tmpl">
+    <div class="center">
+        Made by <a href="http://clementin.es">Clementine</a>
+    </div>
 </script>
 
 <!-- JavaScript at the bottom for fast page loading -->
