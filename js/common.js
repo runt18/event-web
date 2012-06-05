@@ -9,7 +9,13 @@ Time = {
     }())
 };
 
-var PossibleTime = Backbone.Model.extend({
+var Event = Backbone.Model.extend({
+    defaults: {
+        totalAttendees: 10
+    }
+});
+
+var PossibleTime = Event.extend({
     initialize: function(){
         this._updateRatio();
         this.on('change:confirmed change:total', function(){
@@ -39,8 +45,8 @@ var PossibleTime = Backbone.Model.extend({
         duration: 60,
         date: $.datepicker.formatDate('dd/mm/yy', new Date()),
         confirmed: 0,
-        total: 1,
         ratio: 0,
+        total: 10,
         oldRatio: 0,
         attending: false
     }
@@ -48,6 +54,27 @@ var PossibleTime = Backbone.Model.extend({
 
 var PossibleTimes = Backbone.Collection.extend({
     model: PossibleTime
+});
+
+var ReusableView = Backbone.View.extend({
+    render: function(manage) {
+        return manage(this).render().then(function(el){
+            var path = 'templates/' + this.filename + '.html';
+            $.get(path, function(content){
+                $(el).html(content);
+            });
+        });
+    }
+});
+
+var HeaderView = ReusableView.extend({
+    tagName: 'header',
+    filename: 'header'
+});
+
+var FooterView = ReusableView.extend({
+    tagName: 'footer',
+    filename: 'footer'
 });
 
 var Expander = Backbone.View.extend({

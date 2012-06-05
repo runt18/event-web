@@ -4,6 +4,8 @@ Giles Lavelle
 
 (function($){
 
+var theEvent = new Event();
+
 var MainDetails = Backbone.Model.extend({
     defaults: {
         name: 'Lan Party',
@@ -161,11 +163,9 @@ var TimesListView = Backbone.View.extend({
     initialize: function(){
         this.collection = new PossibleTimes([
             {
-                total: 10,
                 confirmed: 7
             },
             {
-                total: 3,
                 confirmed: 2
             }
         ]);
@@ -240,32 +240,6 @@ var AttendeesView = Backbone.View.extend({
 //Classes for displaying the chat window
 var ChatView = Backbone.View.extend({
     template: '#chat-tmpl'
-});
-
-var HeaderView = Backbone.View.extend({
-    //template: '#header-tmpl',
-    tagName: 'header',
-
-    fetch: function(name){
-        var done = this.async();
-        log(name);
-        $.ajax({
-            url: 'header.html',
-            success: function(contents){
-
-                log(contents);
-                done(contents);
-            },
-            error: function(data){
-                log(data);
-            }
-        });
-    }
-});
-
-var FooterView = Backbone.View.extend({
-    template: '#footer-tmpl',
-    tagName: 'footer'
 });
 
 //Main view for the entire page

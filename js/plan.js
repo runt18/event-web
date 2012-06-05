@@ -235,10 +235,12 @@ var main = new Backbone.LayoutManager({
     id: 'wrapper',
 
     views: {
+        '#header': new HeaderView(),
         '#main-details': new DetailsView([{}]),
         '#times': new TimesView([{}]),
         '#optional': new OptionalView(),
-        '#finish-wrapper': new FinishView()
+        '#finish-wrapper': new FinishView(),
+        '#footer': new FooterView()
     }
 });
 
