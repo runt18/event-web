@@ -124,7 +124,7 @@ var TimeView = Backbone.View.extend({
     initialize: function(){
         this.model.on('change', function(){
             this.render().then(function(el){
-                var isAttending  = this.model.get('attending');
+                var isAttending  = this.model.get('isAttending');
                 $(el).find('.tick').attr('checked', isAttending);
             });
         }, this);
@@ -137,7 +137,9 @@ var TimeView = Backbone.View.extend({
         this.insertViews({
             '.piechart-wrap': new PieChartView(ratio, oldRatio),
             '.expander-wrap': new TimeViewExpander(),
-            '.attendees-wrap': new AttendeesView()
+            '.attendees-wrap': new AttendeesView(
+                this.attending
+            )
         });
         return manage(this).render();
     },
@@ -147,13 +149,13 @@ var TimeView = Backbone.View.extend({
     },
 
     updateAttendeeCount: _.throttle(function(){
-        var isAttending  = this.model.get('attending');
+        var isAttending  = this.model.get('isAttending');
         if(isAttending){
-            this.model.decrement('confirmed');
+            this.model.decrement('numAttending');
         } else {
-            this.model.increment('confirmed');
+            this.model.increment('numAttending');
         }
-        this.model.set('attending', !isAttending);
+        this.model.set('isAttending', !isAttending);
     }, 500)
 });
 
@@ -163,10 +165,10 @@ var TimesListView = Backbone.View.extend({
     initialize: function(){
         this.collection = new PossibleTimes([
             {
-                confirmed: 7
+                attending: ['tom', 'bob']
             },
             {
-                confirmed: 2
+                attending: ['tom']
             }
         ]);
     },
@@ -217,13 +219,8 @@ var AttendeeView = Backbone.View.extend({
 var AttendeesView = Backbone.View.extend({
     template: '#attendees-tmpl',
     tagName: 'ul',
-    initialize: function(){
-        this.collection = new Attendees([
-            {},
-            {
-                name: 'Tim'
-            }
-        ]);
+    initialize: function(attendees){
+        this.collection = new Attendees(attendees);
     },
 
     render: function(manage){
@@ -250,7 +247,12 @@ var main = new Backbone.LayoutManager({
     views: {
         '#header': new HeaderView(),
         '#details': new DetailsView(),
-        '#global-attendees': new AttendeesView(),
+        '#global-attendees': new AttendeesView([
+            {
+                name: 'Tim'
+            },
+            {}
+        ]),
         '#times': new TimesListView(),
         '#chat': new ChatView(),
         '#footer': new FooterView()

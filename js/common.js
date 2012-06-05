@@ -11,14 +11,17 @@ Time = {
 
 var Event = Backbone.Model.extend({
     defaults: {
-        totalAttendees: 10
+        total: 10
     }
 });
 
 var PossibleTime = Event.extend({
     initialize: function(){
+        this.set('total', this.get('_event').get('total'));
         this._updateRatio();
-        this.on('change:confirmed change:total', function(){
+
+        this.on('change:attending', function(){
+
             this._updateRatio();
         });
     },
@@ -33,22 +36,25 @@ var PossibleTime = Event.extend({
     },
 
     _updateRatio: function(){
+        this.set('numAttending', this.get('attending').length);
+
         var oldRatio = this.get('ratio');
         this.set('oldRatio', oldRatio);
 
-        var ratio = this.get('confirmed') / this.get('total');
+        var ratio = this.get('numAttending') / this.get('total');
         this.set('ratio', ratio);
     },
 
     defaults: {
+        _event: new Event(),
         start: Time.now,
         duration: 60,
         date: $.datepicker.formatDate('dd/mm/yy', new Date()),
-        confirmed: 0,
+        attending: [],
+        numAttending: 0,
         ratio: 0,
-        total: 10,
         oldRatio: 0,
-        attending: false
+        isAttending: false
     }
 });
 
