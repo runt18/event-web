@@ -18,12 +18,11 @@ var Event = Backbone.Model.extend({
 var PossibleTime = Event.extend({
     initialize: function(){
         this.set('total', this.get('_event').get('total'));
-        this._updateRatio();
 
-        this.on('change:attending', function(){
-
-            this._updateRatio();
+        this.on('change:attendees', function(){
+            this._updateAttendeeData();
         });
+        this.trigger('change:attendees');
     },
     increment: function(value, amount){
         amount = typeof amount === 'undefined' ? 1 : amount;
@@ -35,8 +34,9 @@ var PossibleTime = Event.extend({
         this.increment(value, -amount);
     },
 
-    _updateRatio: function(){
-        this.set('numAttending', this.get('attending').length);
+    _updateAttendeeData: function(){
+        this.set('numAttending', this.get('attendees').length);
+        this.set('isAttending', this.get('attendees').indexOf('you') !== -1);
 
         var oldRatio = this.get('ratio');
         this.set('oldRatio', oldRatio);
@@ -47,14 +47,14 @@ var PossibleTime = Event.extend({
 
     defaults: {
         _event: new Event(),
+
         start: Time.now,
         duration: 60,
         date: $.datepicker.formatDate('dd/mm/yy', new Date()),
-        attending: [],
-        numAttending: 0,
-        ratio: 0,
-        oldRatio: 0,
-        isAttending: false
+
+        attendees: [],
+
+        ratio: 0
     }
 });
 

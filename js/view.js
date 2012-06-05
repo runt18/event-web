@@ -4,8 +4,6 @@ Giles Lavelle
 
 (function($){
 
-var theEvent = new Event();
-
 var MainDetails = Backbone.Model.extend({
     defaults: {
         name: 'Lan Party',
@@ -137,40 +135,38 @@ var TimeView = Backbone.View.extend({
         this.insertViews({
             '.piechart-wrap': new PieChartView(ratio, oldRatio),
             '.expander-wrap': new TimeViewExpander(),
-            '.attendees-wrap': new AttendeesView(
-                this.attending
-            )
+            '.attendees-wrap': new AttendeesView(this.model.get('attendees'))
         });
         return manage(this).render();
     },
 
     events: {
-        'click input.tick': 'updateAttendeeCount'
+        'click input.tick': 'updateAttendeeData'
     },
 
-    updateAttendeeCount: _.throttle(function(){
-        var isAttending  = this.model.get('isAttending');
+    updateAttendeeData: _.throttle(function(){
+        var attendees = this.model.get('attendees');
+        var isAttending = this.model.get('isAttending');
+
         if(isAttending){
-            this.model.decrement('numAttending');
+            var index = attendees.indexOf('you');
+            attendees.splice(index, 1);
         } else {
-            this.model.increment('numAttending');
+            attendees.push('you');
         }
-        this.model.set('isAttending', !isAttending);
+
+        this.model
+            .set('attendees', attendees)
+            .trigger('change:attendees');
+
     }, 500)
 });
 
 var TimesListView = Backbone.View.extend({
     template: '#times-tmpl',
 
-    initialize: function(){
-        this.collection = new PossibleTimes([
-            {
-                attending: ['tom', 'bob']
-            },
-            {
-                attending: ['tom']
-            }
-        ]);
+    initialize: function(times){
+        this.collection = new PossibleTimes(times);
     },
 
     render: function(manage){
@@ -253,7 +249,25 @@ var main = new Backbone.LayoutManager({
             },
             {}
         ]),
-        '#times': new TimesListView(),
+        '#times': new TimesListView([
+            {
+                attendees: [
+                    {
+                        name: 'Tim'
+                    }
+                ]
+            },
+            {
+                attendees: [
+                    {
+                        name: 'Tom'
+                    },
+                    {
+                        name: 'Bill'
+                    }
+                ]
+            }
+        ]),
         '#chat': new ChatView(),
         '#footer': new FooterView()
     }
