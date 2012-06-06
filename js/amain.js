@@ -1,5 +1,5 @@
 //Main view for the entire page
-define(
+require(
 
 ['jquery', 'underscore', 'backbone', 'common', 'layoutmanager', 'jquery-ui', 'plugins'],
 function($, _, Backbone, Common){
