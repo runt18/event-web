@@ -5,14 +5,14 @@
 //     For all details and documentation:
 //     http://backbonejs.org
 
-(function(){
+define(function(){
 
   // Initial Setup
   // -------------
 
   // Save a reference to the global object (`window` in the browser, `global`
   // on the server).
-  var root = this;
+  var root = window;
 
   // Save the previous value of the `Backbone` variable, so that it can be
   // restored later on, if `noConflict` is used.
@@ -1428,4 +1428,6 @@
     throw new Error('A "url" property or function must be specified');
   };
 
-}).call(this);
+  return Backbone;
+
+});

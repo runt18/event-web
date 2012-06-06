@@ -2,7 +2,10 @@
 Giles Lavelle
 */
 
-(function($){
+require(
+
+['jquery', 'underscore', 'backbone', 'common', 'layoutmanager', 'jquery-ui', 'plugins'],
+function($, _, Backbone, Common){
 
 var MainDetails = Backbone.Model.extend({
     defaults: {
@@ -12,7 +15,7 @@ var MainDetails = Backbone.Model.extend({
     }
 });
 
-var TimeViewExpander = Expander.extend({
+var TimeViewExpander = Common.Expander.extend({
     initialize: function(){
         this.$el.addClass('expander-small');
     },
@@ -166,7 +169,7 @@ var TimesListView = Backbone.View.extend({
     template: '#times-tmpl',
 
     initialize: function(times){
-        this.collection = new PossibleTimes(times);
+        this.collection = new Common.PossibleTimes(times);
     },
 
     render: function(manage){
@@ -241,7 +244,7 @@ var main = new Backbone.LayoutManager({
     id: 'wrapper',
 
     views: {
-        '#header': new HeaderView(),
+        '#header': new Common.HeaderView(),
         '#details': new DetailsView(),
         '#global-attendees': new AttendeesView([
             {
@@ -269,11 +272,11 @@ var main = new Backbone.LayoutManager({
             }
         ]),
         '#chat': new ChatView(),
-        '#footer': new FooterView()
+        '#footer': new Common.FooterView()
     }
 });
 
 main.$el.appendTo('body');
 main.render();
 
-}(jQuery));
+});

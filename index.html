@@ -43,96 +43,23 @@
 
 <div role="main" id="main" class="center">
     <div>
-        <h2>View Event</h2>
+        <h1 class="slogan">Events made easy.</h1>
+        <p>Eventual makes it easy to plan stuff</p>
     </div>
+
     <div>
-        <div id="details"></div>
-    </div>
-    <div>
-        <div class="banner">
-            <h3>Whos coming?</h3>
-        </div>
-        <div id="global-attendees"></div>
-    </div>
-    <div>
-        <div class="banner">
-            <h3>Possible Times</h3>
-            <p>(Tick the ones you can attend)</p>
-        </div>
-        <div id="times"></div>
-    </div>
-    <div>
-        <div class="banner">
-            <h3>Chat</h3>
-        </div>
-        <div id="chat"></div>
-    </div>
-    <div>
-        <form>
-            <input type="button" value="Finalise"></input>
-        </form>
+        Google Play
+        Webapp
     </div>
 </div>
 
 <div id="footer"></div>
 </script>
 
-<!-- Second-level subviews -->
-<script type="text/template" id="details-tmpl">
-    <div class="banner clearfix">
-        <h3><%= name %> at <%= location %></h3>
-    </div>
-
-    <p><%= description %></p>
-</script>
-
-<script type="text/template" id="times-tmpl">
-
-</script>
-
-<script type="text/template" id="chat-tmpl">
-    <textarea></textarea><br>
-    <input type="text">
-</script>
-
-<!-- Reusable views -->
-<script type="text/template" id="time-tmpl">
-    <div class="time-details">
-        <input class="tick" type="checkbox">
-        <p>
-            At <strong><%= start %></strong> for
-            <strong><%= duration %></strong> minutes on
-            <strong><%= date %></strong>
-        </p>
-    </div>
-
-    <div class="clearfix"></div>
-
-    <div class="attendee-details">
-        <div class="piechart-wrap"></div>
-        <p><strong><%= numAttending %></strong>/<strong><%= total %></strong> can make it</p>
-        <div class="expander-wrap"></div>
-    </div>
-
-    <div class="attendees-wrap"></div>
-
-    <hr>
-</script>
-
-<script type="text/template" id="attendee-tmpl">
-    <%= name %>
-</script>
-
-<script type="text/template" id="attendees-tmpl">
-
-</script>
-
 <script src="js/require.js"></script>
 <script src="js/requireconf.js"></script>
 
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0&sensor=false">-->
-
-<script src="js/view.js"></script>
+<script src="js/amain.js"></script>
 
 <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
    mathiasbynens.be/notes/async-analytics-snippet -->

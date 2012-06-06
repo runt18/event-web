@@ -3,9 +3,12 @@ Giles Lavelle
 */
 var map;
 
-(function($){
+require(
 
-var OptionalViewExpander = Expander.extend({
+['jquery', 'underscore', 'backbone', 'common', 'layoutmanager', 'jquery-ui', 'plugins'],
+function($, _, Backbone, Common){
+
+var OptionalViewExpander = Common.Expander.extend({
     initialize: function(){
         this.$el.addClass('expander-banner');
     },
@@ -89,7 +92,7 @@ var TimesView = Backbone.View.extend({
     template: '#times-tmpl',
 
     initialize: function(times){
-        this.collection = new PossibleTimes(times);
+        this.collection = new Common.PossibleTimes(times);
         this.collection.on('add remove', function(){
             this.render();
         }, this);
@@ -100,7 +103,7 @@ var TimesView = Backbone.View.extend({
     },
 
     addTime: function(){
-        var time = new PossibleTime();
+        var time = new Common.PossibleTime();
         this.collection.add(time);
     },
 
@@ -235,16 +238,16 @@ var main = new Backbone.LayoutManager({
     id: 'wrapper',
 
     views: {
-        '#header': new HeaderView(),
+        '#header': new Common.HeaderView(),
         '#main-details': new DetailsView([{}]),
         '#times': new TimesView([{}]),
         '#optional': new OptionalView(),
         '#finish-wrapper': new FinishView(),
-        '#footer': new FooterView()
+        '#footer': new Common.FooterView()
     }
 });
 
 main.$el.appendTo('body');
 main.render();
 
-}(jQuery));
+});

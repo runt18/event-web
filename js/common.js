@@ -1,3 +1,8 @@
+define(
+
+['jquery', 'backbone', 'jquery-ui'],
+function($, Backbone){
+
 _pad = function(num){
         return num < 10 ? '0' + num : num;
 };
@@ -94,4 +99,14 @@ var Expander = Backbone.View.extend({
     spinArrow: function(){
         this.$el.toggleClass('expander-closed');
     }
+});
+
+return {
+    PossibleTime: PossibleTime,
+    PossibleTimes: PossibleTimes,
+    Expander: Expander,
+    HeaderView: HeaderView,
+    FooterView: FooterView
+};
+
 });
