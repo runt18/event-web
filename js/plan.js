@@ -5,7 +5,7 @@ var map;
 
 require(
 
-['jquery', 'underscore', 'backbone', 'common', 'layoutmanager', 'jquery-ui', 'plugins'],
+['jquery', 'underscore', 'backbone', 'common', 'layoutmanager', 'jquery-ui', 'jquery-ui-timepicker', 'plugins'],
 function($, _, Backbone, Common){
 
 var OptionalViewExpander = Common.Expander.extend({
@@ -42,7 +42,7 @@ var TimeView = Backbone.View.extend({
             .then(function(el){
                 log(el);
                 this.fields = {
-                    start: this.$('.start'),
+                    timestring: this.$('.start'),
                     duration: this.$('.duration'),
                     date: this.$('.date')
                 };
@@ -50,6 +50,8 @@ var TimeView = Backbone.View.extend({
                 $(el).find('.date').datepicker({
                     dateFormat: 'dd/mm/yy'
                 });
+
+                $(el).find('.start').timepicker();
             });
     },
 
@@ -57,24 +59,28 @@ var TimeView = Backbone.View.extend({
         'click .remove': 'destroyModel',
 
         // Updates to contents of text boxes
-        'change .date': 'saveTimestamp',
+        'change .date': 'saveDate',
         'change .duration': 'saveDuration',
-        'change .start': 'saveTimestamp'
+        'change .start': 'saveDate'
     },
 
-    saveTimestamp: function(){
-        var timestamp = new Date();
-
-        var timestring = this.fields.start.val();
-        var hours = timestring.substring(0, 2);
-        var minutes = timestring.substring(3, 5);
+    saveDate: function(){
+        // Use the jQuery datepicker function to get a Date object representing the date in the text box
         var date = this.fields.date.datepicker("getDate");
 
-        timestamp.setHours(hours);
-        timestamp.setMinutes(minutes);
-        timestamp.setDate(date);
+        // Get the string representing the time from the text box
+        var timestring = this.fields.timestring.val();
 
-        this.model.set('timestamp', timestamp.getTime());
+        //Get strings for the hour and minute parts of the time
+        var hours = timestring.substring(0, 2);
+        var minutes = timestring.substring(3, 5);
+
+        // Update the date with the new time
+        date.setHours(hours);
+        date.setMinutes(minutes);
+
+        // Set the model's date to this new value
+        this.model.set('date', date);
     },
 
     saveDuration: function(){

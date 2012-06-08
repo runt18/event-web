@@ -30,13 +30,13 @@ var PossibleTime = Backbone.Model.extend({
             this._updateAttendeeData();
         });
 
-        this.on('change:timestamp', function(){
+        this.on('change:date', function(){
             this._updateTime();
         });
 
         // Update the values based on those relationships for the first time
         this.trigger('change:attendees');
-        this.trigger('change:timestamp');
+        this.trigger('change:date');
     },
 
     increment: function(value, amount){
@@ -50,10 +50,9 @@ var PossibleTime = Backbone.Model.extend({
     },
 
     _updateTime: function(){
-        var date = new Date();
-        date.setTime(this.get('timestamp'));
-        this.set('start', Timestring(date));
-        this.set('date', $.datepicker.formatDate('dd/mm/yy', date));
+        var date = this.get('date');
+        this.set('timestring', Timestring(date));
+        this.set('datestring', $.datepicker.formatDate('dd/mm/yy', date));
     },
 
     _updateAttendeeData: function(){
@@ -76,7 +75,7 @@ var PossibleTime = Backbone.Model.extend({
             return "No one is attending this time!";
         }
 
-        if (attrs.timestamp < new Date().getTime()){
+        if (attrs.date.getTime() < new Date().getTime()){
             return "Event cannot happen in the past";
         }
     },
@@ -84,9 +83,9 @@ var PossibleTime = Backbone.Model.extend({
     defaults: {
         _event: new Event(),
 
-        timestamp: new Date().getTime(),
-        start: '',
-        date: '',
+        date: new Date(),
+        timestring: '',
+        datestring: '',
         duration: 60,
 
         attendees: [],
