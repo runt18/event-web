@@ -71,13 +71,13 @@ var PossibleTime = Backbone.Model.extend({
             return "Duration must be a positive number of minutes";
         }
 
-        if (attrs.numAttending === 0){
+        if (attrs.numAttending <= 0){
             return "No one is attending this time!";
         }
 
-        if (attrs.date.getTime() < new Date().getTime()){
-            return "Event cannot happen in the past";
-        }
+        // if (attrs.date.getTime() < new Date().getTime()){
+        //     return "Event cannot happen in the past";
+        // }
     },
 
     defaults: {

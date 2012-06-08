@@ -40,7 +40,7 @@ var TimeView = Backbone.View.extend({
         return manage(this)
             .render()
             .then(function(el){
-                log(el);
+                //log(el);
                 this.fields = {
                     timestring: this.$('.start'),
                     duration: this.$('.duration'),
@@ -68,12 +68,9 @@ var TimeView = Backbone.View.extend({
         // Use the jQuery datepicker function to get a Date object representing the date in the text box
         var date = this.fields.date.datepicker("getDate");
 
-        // Get the string representing the time from the text box
-        var timestring = this.fields.timestring.val();
-
-        //Get strings for the hour and minute parts of the time
-        var hours = timestring.substring(0, 2);
-        var minutes = timestring.substring(3, 5);
+        // Get integer representations of the hour and minute parts of the time
+        var hours = this.fields.timestring.timepicker('getHour');
+        var minutes = this.fields.timestring.timepicker('getMinute');
 
         // Update the date with the new time
         date.setHours(hours);
