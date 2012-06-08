@@ -30,16 +30,9 @@ var TimeView = Backbone.View.extend({
     },
 
     initialize: function(){
-
-        // this.views = {
-
-        // };
-
-        // this.model.bind('change', function(){
-        //     this.render().then(function(el){
-        //         //log(el);
-        //     });
-        // }, this);
+        this.model.bind('change', function(){
+            this.render();
+        }, this);
     },
 
     // Override default render method to add jQuery plugins
@@ -47,7 +40,7 @@ var TimeView = Backbone.View.extend({
         return manage(this)
             .render()
             .then(function(el){
-
+                log(el);
                 this.fields = {
                     start: this.$('.start'),
                     duration: this.$('.duration'),
@@ -64,21 +57,28 @@ var TimeView = Backbone.View.extend({
         'click .remove': 'destroyModel',
 
         // Updates to contents of text boxes
-        'change .date': 'saveDate',
+        'change .date': 'saveTimestamp',
         'change .duration': 'saveDuration',
-        'change .start': 'saveStart'
+        'change .start': 'saveTimestamp'
     },
 
-    saveDate: function(){
-        this.model.set('date', this.fields.date.val());
+    saveTimestamp: function(){
+        var timestamp = new Date();
+
+        var timestring = this.fields.start.val();
+        var hours = timestring.substring(0, 2);
+        var minutes = timestring.substring(3, 5);
+        var date = this.fields.date.datepicker("getDate");
+
+        timestamp.setHours(hours);
+        timestamp.setMinutes(minutes);
+        timestamp.setDate(date);
+
+        this.model.set('timestamp', timestamp.getTime());
     },
 
     saveDuration: function(){
-        this.model.set('duration', this.fields.duration.val());
-    },
-
-    saveStart: function(){
-        this.model.set('start', this.fields.start.val());
+        this.model.set('duration', parseInt(this.fields.duration.val(), 10));
     },
 
     destroyModel: function(){

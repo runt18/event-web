@@ -3,32 +3,42 @@ define(
 ['jquery', 'backbone', 'jquery-ui'],
 function($, Backbone){
 
-_pad = function(num){
-        return num < 10 ? '0' + num : num;
+var _pad = function(num){
+    return num < 10 ? '0' + num : num;
 };
 
-Time = {
-    now: (function(){
-        var d = new Date();
-        return _pad(d.getHours()) + ":" + _pad(d.getMinutes());
-    }())
+var Timestring = function(d){
+    d = d || new Date();
+    return _pad(d.getHours()) + ":" + _pad(d.getMinutes());
 };
 
+// Model representing the entire event
 var Event = Backbone.Model.extend({
     defaults: {
         total: 10
     }
 });
 
-var PossibleTime = Event.extend({
+var PossibleTime = Backbone.Model.extend({
+    urlRoot: '/event',
+
     initialize: function(){
         this.set('total', this.get('_event').get('total'));
 
+        // Bind relationships between properties of the model
         this.on('change:attendees', function(){
             this._updateAttendeeData();
         });
+
+        this.on('change:timestamp', function(){
+            this._updateTime();
+        });
+
+        // Update the values based on those relationships for the first time
         this.trigger('change:attendees');
+        this.trigger('change:timestamp');
     },
+
     increment: function(value, amount){
         amount = typeof amount === 'undefined' ? 1 : amount;
         this.set(value, this.get(value) + amount);
@@ -37,6 +47,13 @@ var PossibleTime = Event.extend({
     decrement: function(value, amount){
         amount = typeof amount === 'undefined' ? 1 : amount;
         this.increment(value, -amount);
+    },
+
+    _updateTime: function(){
+        var date = new Date();
+        date.setTime(this.get('timestamp'));
+        this.set('start', Timestring(date));
+        this.set('date', $.datepicker.formatDate('dd/mm/yy', date));
     },
 
     _updateAttendeeData: function(){
@@ -50,23 +67,39 @@ var PossibleTime = Event.extend({
         this.set('ratio', ratio);
     },
 
+    validate: function(attrs){
+        if (attrs.duration <= 0){
+            return "Duration must be a positive number of minutes";
+        }
+
+        if (attrs.numAttending === 0){
+            return "No one is attending this time!";
+        }
+
+        if (attrs.timestamp < new Date().getTime()){
+            return "Event cannot happen in the past";
+        }
+    },
+
     defaults: {
         _event: new Event(),
 
-        start: Time.now,
+        timestamp: new Date().getTime(),
+        start: '',
+        date: '',
         duration: 60,
-        date: $.datepicker.formatDate('dd/mm/yy', new Date()),
 
         attendees: [],
-
         ratio: 0
     }
 });
 
 var PossibleTimes = Backbone.Collection.extend({
-    model: PossibleTime
+    model: PossibleTime,
+    url: '/event'
 });
 
+// Generic class for any view that exists in more than one place
 var ReusableView = Backbone.View.extend({
     render: function(manage) {
         return manage(this).render().then(function(el){
@@ -78,6 +111,7 @@ var ReusableView = Backbone.View.extend({
     }
 });
 
+// Reusable classes for the header and footer of each page
 var HeaderView = ReusableView.extend({
     tagName: 'header',
     filename: 'header'
@@ -88,6 +122,7 @@ var FooterView = ReusableView.extend({
     filename: 'footer'
 });
 
+// Class for a UI element that is used to show and hide a view
 var Expander = Backbone.View.extend({
     tagName: 'div',
     className: 'expander',
@@ -101,6 +136,7 @@ var Expander = Backbone.View.extend({
     }
 });
 
+// Return everything that's needed outside of this module
 return {
     PossibleTime: PossibleTime,
     PossibleTimes: PossibleTimes,
