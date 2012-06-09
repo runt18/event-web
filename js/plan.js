@@ -207,13 +207,13 @@ var OptionalView = Backbone.View.extend({
 
         this.$('#toggle-map').toggle(
             function(){
-                $(this).val('Pick location on map');
-                mapWrap.fadeOut('fast');
+                $(this).val('Map');
+                mapWrap.slideUp('fast');
                 //google.maps.event.trigger(map, "resize");
             },
             function(){
-                $(this).val('Hide map');
-                mapWrap.fadeIn('fast');
+                $(this).val('Hide');
+                mapWrap.slideDown('fast');
                 //google.maps.event.trigger(map, "resize");
             }
         );

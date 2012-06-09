@@ -78,11 +78,13 @@
     </div>
 
     <form>
-        <input type=text placeholder="Where is it?"></input><br>
+        <input id="location" type=text placeholder="Where is it?"></input>
+        <input type="button" id="toggle-map" value="Map"></input>
+        <br>
         <textarea id="description" placeholder="Other details"></textarea>
     </form>
     <form>
-        <input type="button" id="toggle-map" value="Pick location on map"></input><br>
+
         <div id="map-wrap"></div>
     </form>
     <div class="clearfix"></div>
@@ -90,8 +92,8 @@
 
 <script type="text/template" id="time-tmpl">
     <form>
-        <input value="<%= timestring %>" class="start" type="text" size="10"> for
-        <input class="duration" value="<%= duration %>" type=text size="3"></input> minutes on
+        <input value="<%= timestring %>" class="start" type="text"> for
+        <input class="duration" value="<%= duration %>" type="text"></input> minutes on
         <input value="<%= datestring %>" class="date" type="text"></input>
         <input type="button" class="remove" value="Remove"></input>
     </form>

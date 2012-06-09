@@ -218,6 +218,13 @@ td { vertical-align: top; }
    Author:
    ========================================================================== */
 
+
+*{
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 h1, h2, h3, h4, h5, h6,
 p{
   padding: 0;
@@ -298,7 +305,7 @@ input[type=checkbox]{
 input, textarea{
   font-size: 20px;
   border: 1px solid #ccc;
-  padding: 5px;
+  padding: 0 5px;
 }
 
 ::-webkit-input-placeholder{
@@ -485,18 +492,27 @@ div.banner:after{
   width: 490px;
 }
 
-#optional input, textarea{
-  float: left;
-  width: 470px;
+#location{
+  width: 400px;
+}
+
+#toggle-map{
+  width: 80px;
 }
 
 #description{
-  height: 380px;
+  width: 485px;
+  height: 300px;
+}
+
+#map-wrap{
+
 }
 
 #map{
-  height: 300px;
-  width: 470px;
+  border: 1px solid #ccc;
+  height: 340px;
+  width: 488px;
 }
 
 /* ==|== media queries ======================================================
