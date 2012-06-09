@@ -401,10 +401,6 @@ div.banner:after{
   border-right-color: #222;
 }
 
-#description{
-  width: 400px;
-}
-
 #main-details input{
   width: 600px;
 }
@@ -484,9 +480,23 @@ div.banner:after{
   float: left;
 }
 
+#optional form{
+  float: left;
+  width: 490px;
+}
+
+#optional input, textarea{
+  float: left;
+  width: 470px;
+}
+
+#description{
+  height: 380px;
+}
+
 #map{
   height: 300px;
-  width: 300px;
+  width: 470px;
 }
 
 /* ==|== media queries ======================================================

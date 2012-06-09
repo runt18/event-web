@@ -129,8 +129,8 @@ var Optional = Backbone.Model.extend({
 
 window.rendermap = function(){
     var options = {
-        center: new google.maps.LatLng(-34.397, 150.644),
-        zoom: 10,
+        center: new google.maps.LatLng(0, 0),
+        zoom: 2,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map($('#map')[0], options);
@@ -208,12 +208,12 @@ var OptionalView = Backbone.View.extend({
         this.$('#toggle-map').toggle(
             function(){
                 $(this).val('Pick location on map');
-                mapWrap.hide('fast');
+                mapWrap.fadeOut('fast');
                 //google.maps.event.trigger(map, "resize");
             },
             function(){
                 $(this).val('Hide map');
-                mapWrap.show('fast');
+                mapWrap.fadeIn('fast');
                 //google.maps.event.trigger(map, "resize");
             }
         );
