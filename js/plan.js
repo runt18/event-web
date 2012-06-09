@@ -127,24 +127,30 @@ var Optional = Backbone.Model.extend({
     }
 });
 
+window.rendermap = function(){
+    var options = {
+        center: new google.maps.LatLng(-34.397, 150.644),
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map($('#map')[0], options);
+    delete rendermap;
+};
+
 
 var MapView = Backbone.View.extend({
-    // TODO: Load Google Maps script here so it's only loaded if the user actually wants the map
     tagName: 'div',
+    id: 'map',
 
-    initialize: function(){
-        this.el.height = 100;
-        this.el.width = 100;
-    },
-
-    renderMap: function(el){
-        var options = {
-            center: new google.maps.LatLng(-34.397, 150.644),
-            zoom: 1,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(this.el, options);
-
+    loadMap: function(){
+        var script = $("<script>");
+        var key = "AIzaSyCb9d96VBOWpB6STnKEyGCaXyG80L2tw-0";
+        var url = "http://maps.googleapis.com/maps/api/js" +
+            "?key=" + key +
+            "&sensor=false" +
+            "&callback=rendermap";
+        script[0].src = url;
+        script.appendTo('body');
     },
 
     // Override default render method to add Google Map
@@ -152,12 +158,7 @@ var MapView = Backbone.View.extend({
         return manage(this)
             .render()
             .then(function(el){
-                this.renderMap();
-                // new GMaps({
-                //     div: '#map',
-                //     lat: -12.043333,
-                //     lng: -77.028333
-                // });
+                this.loadMap();
             });
     }
 });
@@ -208,21 +209,19 @@ var OptionalView = Backbone.View.extend({
             function(){
                 $(this).val('Pick location on map');
                 mapWrap.hide('fast');
+                //google.maps.event.trigger(map, "resize");
             },
             function(){
                 $(this).val('Hide map');
-                mapWrap.show();
-                google.maps.event.trigger(map, "resize");
-                //map.setZoom( map.getZoom() );
+                mapWrap.show('fast');
+                //google.maps.event.trigger(map, "resize");
             }
         );
     },
 
     initialize: function(){
         this.model.bind('change', function(){
-            this.render().then(function(el){
-                //log(el);
-            });
+            this.render();
         }, this);
     },
 
