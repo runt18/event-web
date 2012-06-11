@@ -295,7 +295,7 @@ button{
 
 input{
   height: 30px;
-  margin: 0 0 10px 0;
+  margin: 5px;
 }
 
 input[type=checkbox]{
@@ -382,20 +382,24 @@ nav a {
   text-align: center;
 }
 
-div.banner{
+.banner{
   background: #333;
   color: #6AC000;
+  font-size: 18px;
+
   padding: 10px;
-  margin: 0 -20px 10px -40px;
+  margin: 10px 0;
+
   text-shadow: 0 1px 0 black;
   position: relative;
+  z-index: 10;
 
   border-style: solid;
   border-width: 1px 0;
   border-color: #222;
 }
 
-div.banner:after{
+/*div.banner:after{
   position: absolute;
   height: 0;
   width: 0;
@@ -406,7 +410,7 @@ div.banner:after{
   border-color: transparent;
   border-width: 0 20px 20px 20px;
   border-right-color: #222;
-}
+}*/
 
 #main-details input{
   width: 600px;
@@ -415,19 +419,10 @@ div.banner:after{
 #main{
   height: 100%;
   background: #fffff7;
-  border-color: #ccc;
+  border-color: #222;
   border-style: solid;
   border-width: 0 1px;
   padding-bottom: 70px;
-}
-
-#main > div{
-    padding: 20px;
-    border-bottom: 1px solid #ccc;
-}
-
-#main > div:nth-last-child(1){
-  border-bottom-style: none;
 }
 
 .expander {
@@ -487,32 +482,110 @@ div.banner:after{
   float: left;
 }
 
-#optional form{
+.time:nth-child(odd){
+  background: rgb(0,0,0);
+  background: rgba(0,0,0,.2);
+}
+
+.time{
+  padding: 5px;
+}
+
+.time:nth-child(even){
+  background: rgb(0,0,0);
+  background: rgba(0,0,0,.3);
+}
+
+.start{
+  width: 70px;
+}
+
+.duration{
+  width: 60px;
+}
+
+.date{
+  width: 120px;
+}
+
+#optional-wrapper{
+  border: none;
+}
+
+.panels{
+  position: relative;
+  z-index: 1;
+  min-height: 360px;
+  margin-top: -10px;
+}
+
+#optional .left-panel, .right-panel{
   float: left;
   width: 490px;
+  padding: 10px;
+  position: absolute;
+}
+
+#optional .left-panel{
+  border-right: 1px solid #222;
+  background: #fffff7;
+}
+
+#optional .left-panel::after {
+  content: '';
+  height: 102%;
+  width: 10px;
+  position: absolute;
+  z-index: -1;
+  box-shadow: 11px 0 3px rgba(0, 0, 0, .7);
+  right: 6px;
+  top: -1%;
+  border-radius: 0;
+}
+
+#optional .right-panel{
+  left: 10px;
+  z-index: -2;
+  -webkit-transition: .5s all ease-out;
+}
+
+.in{
+  left: 480px !important;
+}
+
+#arrow{
+  float: left;
+  display: block;
+  height: 100%;
+  width: 5px;
+  background: red;
 }
 
 #location{
-  width: 400px;
+  width: 80%;
 }
 
 #toggle-map{
-  width: 80px;
+  width: 15%;
 }
 
 #description{
-  width: 485px;
+  width: 100%;
   height: 300px;
-}
-
-#map-wrap{
-
 }
 
 #map{
   border: 1px solid #ccc;
   height: 340px;
   width: 488px;
+  border-radius: 0 3px 3px 0;
+}
+
+#finish-wrapper{
+  background: #fffff7;
+  z-index: 10;
+  position: relative;
+  border-top: 1px solid #222;
 }
 
 /* ==|== media queries ======================================================

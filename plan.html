@@ -60,7 +60,7 @@
         <div id="times"></div>
     </div>
 
-    <div id="optional"></div>
+    <div id="optional-wrapper"></div>
 
     <div id="finish-wrapper"></div>
 </div>
@@ -77,26 +77,26 @@
         <div class="expander-wrap"></div>
     </div>
 
-    <form>
-        <input id="location" type=text placeholder="Where is it?"></input>
-        <input type="button" id="toggle-map" value="Map"></input>
-        <br>
-        <textarea id="description" placeholder="Other details"></textarea>
-    </form>
-    <form>
+    <div class="panels">
+        <div class="left-panel">
+            <input id="location" type=text placeholder="Where is it?"></input>
+            <input type="button" id="toggle-map" value="Map"></input>
+            <br>
+            <textarea id="description" placeholder="Other details"></textarea>
+        </div>
 
-        <div id="map-wrap"></div>
-    </form>
-    <div class="clearfix"></div>
+        <div class="right-panel">
+            <div id="map-wrap"></div>
+            <div id="arrow"></div>
+        </div>
+    </div>
 </script>
 
 <script type="text/template" id="time-tmpl">
-    <form>
-        <input value="<%= timestring %>" class="start" type="text"> for
-        <input class="duration" value="<%= duration %>" type="text"></input> minutes on
-        <input value="<%= datestring %>" class="date" type="text"></input>
-        <input type="button" class="remove" value="Remove"></input>
-    </form>
+    <input value="<%= timestring %>" class="start" type="text"> for
+    <input class="duration" value="<%= duration %>" type="text"></input> minutes on
+    <input value="<%= datestring %>" class="date" type="text"></input>
+    <input type="button" class="remove" value="Remove"></input>
 </script>
 
 <script type="text/template" id="finish-tmpl">

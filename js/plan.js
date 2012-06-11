@@ -16,7 +16,7 @@ var OptionalViewExpander = Common.Expander.extend({
         this.spinArrow();
         this.$el
             .closest('#optional')
-            .find('form')
+            .find('.panels')
             .toggle('fast');
 
     }
@@ -24,6 +24,8 @@ var OptionalViewExpander = Common.Expander.extend({
 
 var TimeView = Backbone.View.extend({
     template: '#time-tmpl',
+    tagName: 'form',
+    className: 'time',
 
     serialize: function(){
         return this.model.toJSON();
@@ -203,20 +205,20 @@ var OptionalView = Backbone.View.extend({
     },
 
     toggleMap: function(){
-        var mapWrap = this.$('#map-wrap');
+        $('.right-panel').toggleClass('in');
 
-        this.$('#toggle-map').toggle(
-            function(){
-                $(this).val('Map');
-                mapWrap.slideUp('fast');
-                //google.maps.event.trigger(map, "resize");
-            },
-            function(){
-                $(this).val('Hide');
-                mapWrap.slideDown('fast');
-                //google.maps.event.trigger(map, "resize");
-            }
-        );
+        // this.$('#toggle-map').toggle(
+        //     function(){
+        //         $(this).val('Map');
+
+        //         //google.maps.event.trigger(map, "resize");
+        //     },
+        //     function(){
+        //         $(this).val('Hide');
+        //         $('.right-panel').addClass('in');
+        //         //google.maps.event.trigger(map, "resize");
+        //     }
+        // );
     },
 
     initialize: function(){
@@ -243,7 +245,7 @@ var main = new Backbone.LayoutManager({
         '#header': new Common.HeaderView(),
         '#main-details': new DetailsView([{}]),
         '#times': new TimesView([{}]),
-        '#optional': new OptionalView(),
+        '#optional-wrapper': new OptionalView(),
         '#finish-wrapper': new FinishView(),
         '#footer': new Common.FooterView()
     }
