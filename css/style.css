@@ -238,7 +238,7 @@ html, body{
 }
 
 body{
-  background: white;
+  background: #E6E6E6;
 }
 
 header,footer {
@@ -294,8 +294,8 @@ button{
 }
 
 input{
-  height: 30px;
-  margin: 5px;
+  height: 35px;
+  margin: 5px 0;
 }
 
 input[type=checkbox]{
@@ -305,7 +305,7 @@ input[type=checkbox]{
 input, textarea{
   font-size: 20px;
   border: 1px solid #ccc;
-  padding: 0 5px;
+  padding: 5px;
 }
 
 ::-webkit-input-placeholder{
@@ -383,20 +383,19 @@ nav a {
 }
 
 .banner{
-  background: #333;
-  color: #6AC000;
+  color: #303030;
   font-size: 18px;
 
-  padding: 10px;
+  padding: 10px 0 0 20px;
   margin: 10px 0;
 
-  text-shadow: 0 1px 0 black;
+  text-shadow: 0 1px 0 white;
   position: relative;
   z-index: 10;
 
   border-style: solid;
-  border-width: 1px 0;
-  border-color: #222;
+  border-width: 0 0 1px 0;
+  border-color: #AFABAB;
 }
 
 /*div.banner:after{
@@ -418,16 +417,14 @@ nav a {
 
 #main{
   height: 100%;
-  background: #fffff7;
-  border-color: #222;
-  border-style: solid;
-  border-width: 0 1px;
   padding-bottom: 70px;
 }
 
 .expander {
   height: 0;
   width: 0;
+
+  cursor: pointer;
 
   position: absolute;
 
@@ -445,7 +442,7 @@ nav a {
   top: 12px;
   right: 10px;
   border-width: 22px 18px 0 18px;
-  border-top-color: #eee;
+  border-top-color: #303030;
 }
 
 .expander-small{
@@ -496,6 +493,9 @@ nav a {
   background: rgba(0,0,0,.3);
 }
 
+#optional-wrapper{
+}
+
 .start{
   width: 70px;
 }
@@ -508,30 +508,30 @@ nav a {
   width: 120px;
 }
 
-#optional-wrapper{
-  border: none;
-}
-
 .panels{
   position: relative;
   z-index: 1;
-  min-height: 360px;
+  min-height: 345px;
   margin-top: -10px;
 }
 
 #optional .left-panel, .right-panel{
-  float: left;
-  width: 490px;
-  padding: 10px;
   position: absolute;
 }
 
 #optional .left-panel{
-  border-right: 1px solid #222;
-  background: #fffff7;
+  margin-top: -1px;
+  width: 1024px;
+  padding: 10px;
+  background: #e6e6e6;
+  -webkit-transition: .5s all ease-out;
+  -moz-transition: .5s all ease-out;
+  -o-transition: .5s all ease-out;
+  -ms-transition: .5s all ease-out;
+  transition: .5s all ease-out;
 }
 
-#optional .left-panel::after {
+/*#optional .left-panel::after {
   content: '';
   height: 102%;
   width: 10px;
@@ -540,52 +540,55 @@ nav a {
   box-shadow: 11px 0 3px rgba(0, 0, 0, .7);
   right: 6px;
   top: -1%;
-  border-radius: 0;
-}
+}*/
 
-#optional .right-panel{
-  left: 10px;
+#optional .right-panel {
+  padding: 10px;
+  right: -1px;
   z-index: -2;
-  -webkit-transition: .5s all ease-out;
-}
-
-.in{
-  left: 480px !important;
-}
-
-#arrow{
-  float: left;
-  display: block;
-  height: 100%;
-  width: 5px;
-  background: red;
-}
-
-#location{
-  width: 80%;
 }
 
 #toggle-map{
-  width: 15%;
+  width: 11%;
+}
+
+.in{
+  width: 511px !important;
+}
+
+/*#arrow{
+  float: left;
+  display: block;
+  height: 340px;
+  width: 20px;
+  background: #ccc;
+  border-radius: 0 3px 3px 0;
+  border: 1px solid #222;
+  border-left: none;
+}*/
+
+#location{
+  width: 88%;
 }
 
 #description{
   width: 100%;
-  height: 300px;
+  height: 280px;
 }
 
 #map{
-  border: 1px solid #ccc;
-  height: 340px;
-  width: 488px;
-  border-radius: 0 3px 3px 0;
+  height: 325px;
+  width: 491px;
 }
 
-#finish-wrapper{
-  background: #fffff7;
-  z-index: 10;
-  position: relative;
-  border-top: 1px solid #222;
+#map::after{
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  z-index: 99;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.32) inset;
 }
 
 /* ==|== media queries ======================================================

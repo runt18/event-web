@@ -205,20 +205,7 @@ var OptionalView = Backbone.View.extend({
     },
 
     toggleMap: function(){
-        $('.right-panel').toggleClass('in');
-
-        // this.$('#toggle-map').toggle(
-        //     function(){
-        //         $(this).val('Map');
-
-        //         //google.maps.event.trigger(map, "resize");
-        //     },
-        //     function(){
-        //         $(this).val('Hide');
-        //         $('.right-panel').addClass('in');
-        //         //google.maps.event.trigger(map, "resize");
-        //     }
-        // );
+        $('.left-panel').toggleClass('in');
     },
 
     initialize: function(){
