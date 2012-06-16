@@ -20,6 +20,7 @@
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
+    <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/tagsinput.css">
     <link rel="stylesheet" href="css/ui-lightness/jquery-ui.css">
     <link rel="stylesheet" href="css/style.css">
@@ -53,10 +54,6 @@
     </div>
 
     <div id="time">
-        <div class="banner">
-            <h3>When can it happen?</h3>
-        </div>
-
         <div id="times"></div>
     </div>
 
@@ -68,7 +65,10 @@
 </script>
 
 <script type="text/template" id="times-tmpl">
-    <input type="button" id="add-time" value="+ Add a new time range"></input>
+    <div class="banner">
+        <h3>When can it happen?</h3>
+        <input type="button" id="add-time" value="+"></input>
+    </div>
 </script>
 
 <script type="text/template" id="optional-tmpl">
@@ -94,7 +94,7 @@
     <input value="<%= timestring %>" class="start" type="text"> for
     <input class="duration" value="<%= duration %>" type="text"></input> minutes on
     <input value="<%= datestring %>" class="date" type="text"></input>
-    <input type="button" class="remove" value="Remove"></input>
+    <input type="button" class="remove" value="X"></input>
 </script>
 
 <script type="text/template" id="finish-tmpl">

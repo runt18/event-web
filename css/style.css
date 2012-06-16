@@ -237,36 +237,22 @@ html, body{
   height: 100%;
 }
 
-body{
-  background: #E6E6E6;
+body, .left-panel{
+  background: #E6E6E6 url(../img/noise.png);
 }
 
 header,footer {
-  /*Support browsers with no gradients*/
-  background: #333;
+  background: #222;
 
-  /*Support old WebKit*/
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#333),
-    to(#222)
-  );
-
-  /*Support modern versions of browsers*/
-  background: -webkit-linear-gradient(-90deg, #333, #222);
-  background: -moz-linear-gradient(-90deg, #333, #222);
-  background: -o-linear-gradient(-90deg, #333, #222);
-  background: -ms-linear-gradient(-90deg, #333, #222);
-  background: linear-gradient(-90deg, #333, #222);
-
-  color: white;
   margin: 0;
 
-  border-color: #000;
+  border-color: black;
   border-style: solid;
   border-width: 0;
+
+  color: white;
+
+  font-family: 'Cabin', sans-serif;
 }
 
 header{
@@ -305,7 +291,6 @@ input[type=checkbox]{
 input, textarea{
   font-size: 20px;
   border: 1px solid #ccc;
-  padding: 5px;
 }
 
 ::-webkit-input-placeholder{
@@ -320,7 +305,7 @@ input, textarea{
   border-right: 1px solid black;
   padding: 0 20px;
   font-size: 30px;
-  color: white;
+  color: #099093;
   font-weight: bold;
 }
 
@@ -330,11 +315,11 @@ a{
 }
 
 a, a:visited{
-  color: #FF9E22;
+  color: #FF6E01;
 }
 
 a:hover{
-  color: #FFCD0B;
+  color: #FF984A;
 }
 
 #wrapper{
@@ -366,15 +351,14 @@ nav{
 }
 
 nav a {
-  margin-left: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  margin-left: 12px;
 
   -webkit-transition: color .15s ease-in 0;
   -moz-transition: color .15s ease-in 0;
   -o-transition: color .15s ease-in 0;
   -ms-transition: color .15s ease-in 0;
   transition: color .15s ease-in 0;
-  text-shadow: 0 1px 0 black;
 }
 
 .slogan{
@@ -397,19 +381,6 @@ nav a {
   border-width: 0 0 1px 0;
   border-color: #AFABAB;
 }
-
-/*div.banner:after{
-  position: absolute;
-  height: 0;
-  width: 0;
-  content: '';
-  bottom: -21px;
-  left: -21px;
-  border-style: solid;
-  border-color: transparent;
-  border-width: 0 20px 20px 20px;
-  border-right-color: #222;
-}*/
 
 #main-details input{
   width: 600px;
@@ -469,6 +440,20 @@ nav a {
   background: #444;
 }
 
+#add-time{
+    padding: 0 3px;
+    font-size: 26px;
+    box-shadow: 0 1px 0 #27C919 inset;
+    font-weight: bold;
+    right: 20px;
+
+    position: absolute;
+    top: 0;
+    background: rgb(23, 170, 10);
+    color: #074107;
+    border: 1px solid;
+}
+
 .time-details, .attendee-details{
   height: 32px;
   line-height: 32px;
@@ -479,21 +464,12 @@ nav a {
   float: left;
 }
 
-.time:nth-child(odd){
-  background: rgb(0,0,0);
-  background: rgba(0,0,0,.2);
+.time:nth-child(even){
+  background: rgb(179, 179, 179);
 }
 
 .time{
   padding: 5px;
-}
-
-.time:nth-child(even){
-  background: rgb(0,0,0);
-  background: rgba(0,0,0,.3);
-}
-
-#optional-wrapper{
 }
 
 .start{
@@ -523,24 +499,12 @@ nav a {
   margin-top: -1px;
   width: 1024px;
   padding: 10px;
-  background: #e6e6e6;
   -webkit-transition: .5s all ease-out;
   -moz-transition: .5s all ease-out;
   -o-transition: .5s all ease-out;
   -ms-transition: .5s all ease-out;
   transition: .5s all ease-out;
 }
-
-/*#optional .left-panel::after {
-  content: '';
-  height: 102%;
-  width: 10px;
-  position: absolute;
-  z-index: -1;
-  box-shadow: 11px 0 3px rgba(0, 0, 0, .7);
-  right: 6px;
-  top: -1%;
-}*/
 
 #optional .right-panel {
   padding: 10px;
@@ -555,17 +519,6 @@ nav a {
 .in{
   width: 511px !important;
 }
-
-/*#arrow{
-  float: left;
-  display: block;
-  height: 340px;
-  width: 20px;
-  background: #ccc;
-  border-radius: 0 3px 3px 0;
-  border: 1px solid #222;
-  border-left: none;
-}*/
 
 #location{
   width: 88%;

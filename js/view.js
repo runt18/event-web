@@ -238,6 +238,24 @@ var ChatView = Backbone.View.extend({
     template: '#chat-tmpl'
 });
 
+var bevent = new Common.Event({
+    invitees: [
+        {
+            name: 'Tim'
+        },
+        {}
+    ],
+
+    times: [
+        {
+            attendees: ['bob']
+        },
+        {
+            attendees: ['bob']
+        }
+    ]
+});
+
 //Main view for the entire page
 var main = new Backbone.LayoutManager({
     template: '#main-tmpl',
@@ -246,31 +264,8 @@ var main = new Backbone.LayoutManager({
     views: {
         '#header': new Common.HeaderView(),
         '#details': new DetailsView(),
-        '#global-attendees': new AttendeesView([
-            {
-                name: 'Tim'
-            },
-            {}
-        ]),
-        '#times': new TimesListView([
-            {
-                attendees: [
-                    {
-                        name: 'Tim'
-                    }
-                ]
-            },
-            {
-                attendees: [
-                    {
-                        name: 'Tom'
-                    },
-                    {
-                        name: 'Bill'
-                    }
-                ]
-            }
-        ]),
+        '#global-attendees': new AttendeesView(bevent.get('invitees')),
+        '#times': new TimesListView(bevent.get('times')),
         '#chat': new ChatView(),
         '#footer': new Common.FooterView()
     }
