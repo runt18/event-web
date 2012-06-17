@@ -9,9 +9,9 @@ function($, _, Backbone, Common){
 
 var MainDetails = Backbone.Model.extend({
     defaults: {
-        name: 'Lan Party',
-        location: "Oli's House",
-        description: "lorem ipsum"
+        name: '',
+        location: '',
+        description: "No description given"
     }
 });
 
@@ -262,7 +262,7 @@ var main = new Backbone.LayoutManager({
     id: 'wrapper',
 
     views: {
-        '#header': new Common.HeaderView(),
+        '#header': new Common.HeaderView({page_title: 'hi'}),
         '#details': new DetailsView(),
         '#global-attendees': new AttendeesView(bevent.get('invitees')),
         '#times': new TimesListView(bevent.get('times')),

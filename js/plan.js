@@ -89,7 +89,12 @@ var TimeView = Backbone.View.extend({
     destroyModel: function(){
         // Remove model from the collection,
         // view automatically re-renders to reflect this
-        this.model.destroy();
+        if(timesView.collection.length <= 1){
+            log("You can't remove the last time range")
+        } else {
+            this.model.destroy();
+            this.remove();
+        }
     }
 });
 
@@ -223,18 +228,29 @@ var OptionalView = Backbone.View.extend({
     }
 });
 
+var headerView   = new Common.HeaderView(),
+    timesView    = new TimesView([
+        {}
+    ]),
+    detailsView  = new DetailsView([
+        {}
+    ]),
+    optionalView = new OptionalView(),
+    finishView   = new FinishView(),
+    footerView   = new Common.FooterView();
+
 //Main view for the entire page
 var main = new Backbone.LayoutManager({
     template: '#main-tmpl',
     id: 'wrapper',
 
     views: {
-        '#header': new Common.HeaderView(),
-        '#main-details': new DetailsView([{}]),
-        '#times': new TimesView([{}]),
-        '#optional-wrapper': new OptionalView(),
-        '#finish-wrapper': new FinishView(),
-        '#footer': new Common.FooterView()
+        '#header': headerView,
+        '#main-details': detailsView,
+        '#times': timesView,
+        '#optional-wrapper': optionalView,
+        '#finish-wrapper': finishView,
+        '#footer': footerView
     }
 });
 

@@ -96,7 +96,7 @@ var PossibleTime = Backbone.Model.extend({
 
 var PossibleTimes = Backbone.Collection.extend({
     url: '/time',
-    model: PossibleTime,
+    model: PossibleTime
 });
 
 // Model representing the entire event
@@ -147,11 +147,18 @@ var Event = Backbone.Model.extend({
 
 // Generic class for any view that exists in more than one place
 var ReusableView = Backbone.View.extend({
+    initialize: function(){
+        this.model = {page_title: 'Create a new event'};
+    },
+
     render: function(manage) {
         return manage(this).render().then(function(el){
             var path = 'templates/' + this.filename + '.html';
+            var model = this.model;
             $.get(path, function(content){
-                $(el).html(content);
+                var compiled = _.template(content);
+
+                $(el).html(compiled(model));
             });
         });
     }

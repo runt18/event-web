@@ -71,7 +71,15 @@ blockquote { margin: 1em 40px; }
 
 dfn { font-style: italic; }
 
-hr { display: block; height: 1px; border: 0; border-top: 1px solid #222; margin: 1em 0; padding: 0; }
+hr {
+  display: block;
+  height: 1px;
+  border-style: solid;
+  border-width: 1px 0;
+  border-top-color: #b3b3b3;
+  border-bottom-color: white;
+  padding: 0;
+}
 
 ins { background: #ff9; color: #000; text-decoration: none; }
 
@@ -261,6 +269,15 @@ header{
   line-height: 50px;
 }
 
+header .left{
+  border-right: 1px solid black;
+}
+
+header .left > *{
+  margin-right: 15px;
+  float: left;
+}
+
 footer{
   border-top-width: 1px;
 
@@ -302,8 +319,6 @@ input, textarea{
 }
 
 .logo{
-  border-right: 1px solid black;
-  padding: 0 20px;
   font-size: 30px;
   color: #099093;
   font-weight: bold;
@@ -376,10 +391,6 @@ nav a {
   text-shadow: 0 1px 0 white;
   position: relative;
   z-index: 10;
-
-  border-style: solid;
-  border-width: 0 0 1px 0;
-  border-color: #AFABAB;
 }
 
 #main-details input{
@@ -410,10 +421,10 @@ nav a {
 }
 
 .expander-banner{
-  top: 12px;
-  right: 10px;
-  border-width: 22px 18px 0 18px;
-  border-top-color: #303030;
+  top: 16px;
+  right: 13px;
+  border-width: 15px 15px 0 15px;
+  border-top-color: #969696;
 }
 
 .expander-small{
@@ -464,12 +475,13 @@ nav a {
   float: left;
 }
 
-.time:nth-child(even){
+/*.time:nth-child(even){
   background: rgb(179, 179, 179);
-}
+}*/
 
 .time{
   padding: 5px;
+  border-bottom: 1px solid #a7a7a7;
 }
 
 .start{
@@ -488,7 +500,6 @@ nav a {
   position: relative;
   z-index: 1;
   min-height: 345px;
-  margin-top: -10px;
 }
 
 #optional .left-panel, .right-panel{
