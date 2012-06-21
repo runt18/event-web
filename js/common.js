@@ -22,7 +22,7 @@ var Invitee = Backbone.Model.extend({
 
 var Invitees = Backbone.Collection.extend({
     model: Invitee
-}); 
+});
 
 var PossibleTime = Backbone.Model.extend({
     initialize: function(){
@@ -68,13 +68,13 @@ var PossibleTime = Backbone.Model.extend({
     },
 
     validate: function(attrs){
-        if (attrs.duration <= 0){
-            return "Duration must be a positive number of minutes";
-        }
+        // if (attrs.duration <= 0){
+        //     return "Duration must be a positive number of minutes";
+        // }
 
-        if (attrs.numAttending <= 0){
-            return "No one is attending this time!";
-        }
+        // if (attrs.numAttending <= 0){
+        //     return "No one is attending this time!";
+        // }
 
         // if (attrs.date.getTime() < new Date().getTime()){
         //     return "Event cannot happen in the past";
@@ -83,8 +83,6 @@ var PossibleTime = Backbone.Model.extend({
 
     defaults: {
         date: new Date(),
-        timestring: '',
-        datestring: '',
         duration: 60,
         numAttending: 0,
         total: 0,
@@ -118,13 +116,13 @@ var Event = Backbone.Model.extend({
         _.each(times, function(time){
             time.total = total;
         });
-        this.set('times', times)
+        this.set('times', times);
     },
 
     defaults: {
         id: 0,
         name: "New event",
-        
+
         location: {
             name: "",
             coords: {
@@ -132,13 +130,13 @@ var Event = Backbone.Model.extend({
                 lon: 0
             }
         },
-        
+
         description: "No description provided",
-        
+
         invitees: [
             {}
         ],
-        
+
         times: [
             {}
         ]
@@ -147,24 +145,36 @@ var Event = Backbone.Model.extend({
 
 // Generic class for any view that exists in more than one place
 var ReusableView = Backbone.View.extend({
-    initialize: function(){
-        this.model = {page_title: 'Create a new event'};
-    },
-
     render: function(manage) {
         return manage(this).render().then(function(el){
             var path = 'templates/' + this.filename + '.html';
-            var model = this.model;
+            var data = this.serialize();
             $.get(path, function(content){
                 var compiled = _.template(content);
 
-                $(el).html(compiled(model));
+                $(el).html(compiled(data));
             });
         });
+    },
+
+    serialize: function(){
+        return this.model.toJSON();
     }
 });
 
 // Reusable classes for the header and footer of each page
+var Header = Backbone.Model.extend({
+    defaults: {
+        page_title: ""
+    }
+});
+
+var Footer = Backbone.Model.extend({
+    defaults: {
+
+    }
+});
+
 var HeaderView = ReusableView.extend({
     tagName: 'header',
     filename: 'header'
@@ -172,7 +182,8 @@ var HeaderView = ReusableView.extend({
 
 var FooterView = ReusableView.extend({
     tagName: 'footer',
-    filename: 'footer'
+    filename: 'footer',
+    model: new Footer()
 });
 
 // Class for a UI element that is used to show and hide a view
@@ -196,6 +207,7 @@ return {
     Event: Event,
 
     Expander: Expander,
+    Header: Header,
     HeaderView: HeaderView,
     FooterView: FooterView
 };

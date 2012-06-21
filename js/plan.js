@@ -46,14 +46,20 @@ var TimeView = Backbone.View.extend({
                 this.fields = {
                     timestring: this.$('.start'),
                     duration: this.$('.duration'),
-                    date: this.$('.date')
+                    date: this.$('.date'),
+                    remove: this.$('.remove')
                 };
 
-                $(el).find('.date').datepicker({
+                this.fields.date.datepicker({
                     dateFormat: 'dd/mm/yy'
                 });
 
-                $(el).find('.start').timepicker();
+                this.fields.timestring.timepicker();
+
+                // Don't show the remove button if there's only one time range
+                if (timesView.collection.length <= 1){
+                    this.fields.remove.hide();
+                }
             });
     },
 
@@ -80,6 +86,7 @@ var TimeView = Backbone.View.extend({
 
         // Set the model's date to this new value
         this.model.set('date', date);
+        log(this.model.get('date'));
     },
 
     saveDuration: function(){
@@ -89,12 +96,8 @@ var TimeView = Backbone.View.extend({
     destroyModel: function(){
         // Remove model from the collection,
         // view automatically re-renders to reflect this
-        if(timesView.collection.length <= 1){
-            log("You can't remove the last time range")
-        } else {
-            this.model.destroy();
-            this.remove();
-        }
+        this.model.destroy();
+        this.remove();
     }
 });
 
@@ -228,7 +231,15 @@ var OptionalView = Backbone.View.extend({
     }
 });
 
-var headerView   = new Common.HeaderView(),
+var mainEvent = new Common.Event();
+
+var header = new Common.Header({
+    page_title: 'Plan Event'
+});
+
+var headerView   = new Common.HeaderView({
+        model: header
+    }),
     timesView    = new TimesView([
         {}
     ]),

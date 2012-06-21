@@ -238,7 +238,9 @@ var ChatView = Backbone.View.extend({
     template: '#chat-tmpl'
 });
 
-var bevent = new Common.Event({
+
+
+var mainEvent = new Common.Event({
     invitees: [
         {
             name: 'Tim'
@@ -256,18 +258,31 @@ var bevent = new Common.Event({
     ]
 });
 
+var header = new Common.Header({
+    page_title: 'View Event'
+});
+
+var headerView = new Common.HeaderView({
+        model: header
+    }),
+    details = new DetailsView(),
+    global_attendees =  new AttendeesView(mainEvent.get('invitees')),
+    times = new TimesListView(mainEvent.get('times')),
+    chat = new ChatView(),
+    footer = new Common.FooterView();
+
 //Main view for the entire page
 var main = new Backbone.LayoutManager({
     template: '#main-tmpl',
     id: 'wrapper',
 
     views: {
-        '#header': new Common.HeaderView({page_title: 'hi'}),
-        '#details': new DetailsView(),
-        '#global-attendees': new AttendeesView(bevent.get('invitees')),
-        '#times': new TimesListView(bevent.get('times')),
-        '#chat': new ChatView(),
-        '#footer': new Common.FooterView()
+        '#header': headerView,
+        '#details': details,
+        '#global-attendees': global_attendees,
+        '#times': times,
+        '#chat': chat,
+        '#footer': footer
     }
 });
 
