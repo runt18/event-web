@@ -133,6 +133,12 @@ var PossibleTimes = Backbone.Collection.extend({
     model: PossibleTime
 });
 
+var FinishView = Backbone.View.extend({
+    template: '#finish-box-tmpl',
+    tagName: 'div',
+    className: 'finish-box'
+});
+
 // Model representing the entire event
 var Event = Backbone.Model.extend({
     urlRoot: '/event',
@@ -245,7 +251,9 @@ return {
     Expander: Expander,
     Header: Header,
     HeaderView: HeaderView,
-    FooterView: FooterView
+    FooterView: FooterView,
+
+    FinishView: FinishView
 };
 
 });

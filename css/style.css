@@ -311,9 +311,9 @@ input[type=checkbox]{
 }
 
 .remove{
-  border: none;
+  border: 1px solid rgb(95, 10, 10);
   margin: 0px 0;
-  background: rgb(196, 6, 6);
+  background: #E22E2E;
   width: 35px;
 }
 
@@ -323,6 +323,12 @@ input, textarea{
   font-size: 20px;
   border-width: 1px;
   border-style: solid;
+}
+
+.hint{
+  font-size: 11px;
+  font-style: italic;
+  color: #858585;
 }
 
 ::-webkit-input-placeholder{
@@ -518,7 +524,7 @@ nav a {
   margin-left: 35px;
   position: relative;
   z-index: 1;
-  min-height: 345px;
+  min-height: 360px;
 }
 
 #optional .left-panel, .right-panel{
@@ -571,6 +577,31 @@ nav a {
   height: 100%;
   width: 100%;
   box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.32) inset;
+}
+
+#finish-wrapper{
+  width: 200px;
+  margin: 0 auto;
+}
+
+#finish{
+  border: 1px solid rgb(0, 97, 0);
+  font-weight: bold;
+  height: 52px;
+  padding: 15px;
+  background: #3CD300;
+}
+
+.finish-box{
+  border: 2px solid black;
+  left: 30%;
+  z-index: 1000;
+  top: 200px;
+  position: absolute;
+  height: 500px;
+  width: 500px;
+  background: rgba(0, 0, 0, 0.84);
+  color: white;
 }
 
 /* ==|== media queries ======================================================

@@ -178,7 +178,7 @@ var MapView = Backbone.View.extend({
     }
 });
 
-var FinishView = Backbone.View.extend({
+var FinishButtonView = Backbone.View.extend({
     template: '#finish-tmpl',
 
     events: {
@@ -186,7 +186,9 @@ var FinishView = Backbone.View.extend({
     },
 
     finish: function(){
-        log('done');
+        var finishbox = new Common.FinishView();
+        finishbox.$el.appendTo('body');
+        finishbox.render();
     }
 });
 
@@ -252,7 +254,7 @@ var headerView   = new Common.HeaderView({
         {}
     ]),
     optionalView = new OptionalView(),
-    finishView   = new FinishView(),
+    finishButtonView   = new FinishButtonView(),
     footerView   = new Common.FooterView();
 
 //Main view for the entire page
@@ -265,7 +267,7 @@ var main = new Backbone.LayoutManager({
         '#main-details': detailsView,
         '#times': timesView,
         '#optional-wrapper': optionalView,
-        '#finish-wrapper': finishView,
+        '#finish-wrapper': finishButtonView,
         '#footer': footerView
     }
 });
