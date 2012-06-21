@@ -51,10 +51,15 @@ var TimeView = Backbone.View.extend({
                 };
 
                 this.fields.date.datepicker({
-                    dateFormat: 'dd/mm/yy'
+                    dateFormat: 'dd/mm/yy',
+                    minDate: 0
                 });
 
-                this.fields.timestring.timepicker();
+                this.fields.timestring.timepicker({
+                    minutes: {
+                        interval: 15
+                    }
+                });
 
                 // Don't show the remove button if there's only one time range
                 if (timesView.collection.length <= 1){

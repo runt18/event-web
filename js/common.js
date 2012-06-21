@@ -4,12 +4,48 @@ define(
 function($, Backbone){
 
 var _pad = function(num){
+    // Pad a number to two digits if it only has one
     return num < 10 ? '0' + num : num;
 };
 
+var _roundUpTime = function(time, roundTo){
+    // Round up a number of minutes to the next interval
+
+    // Get the minutes and hours from the Date object passed in
+    var minutes = time.getMinutes();
+    var hours = time.getHours();
+
+    // Default the number of minutes to round up to to be 15 if it wasn't specified
+    roundTo = typeof roundTo === 'undefined' ? 15 : roundTo;
+
+    // Round the minutes
+    minutes = Math.ceil(minutes / roundTo) * roundTo;
+
+    // If it's 60 minutes, set it to zero and increase the number of hours instead
+    if (minutes === 60){
+        minutes = 0;
+        hours += 1;
+    }
+
+    // Return an object containing the new amount of hours and minutes
+    return {
+        minutes: minutes,
+        hours: hours
+    };
+};
+
 var Timestring = function(d){
+    // Create a string representation of the time part of a date object in the format HH:MM
+
+    // Create a new Date object representing the current time if nothing was passed in
     d = d || new Date();
-    return _pad(d.getHours()) + ":" + _pad(d.getMinutes());
+
+    var time = _roundUpTime(d);
+
+    var minutes = _pad(time.minutes);
+    var hours = _pad(time.hours);
+
+    return hours + ":" + minutes;
 };
 
 var Invitee = Backbone.Model.extend({
