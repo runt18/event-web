@@ -1,6 +1,6 @@
 define(
 
-['jquery', 'backbone', 'jquery-ui'],
+['jquery', 'backbone', 'layoutmanager', 'jquery-ui'],
 function($, Backbone){
 
 var _pad = function(num){
@@ -71,6 +71,12 @@ var PossibleTime = Backbone.Model.extend({
             this._updateTime();
         });
 
+        if(this.has('start')){
+            this.set('date', new Date(this.get('start')));
+        } else {
+            this.set('date', new Date());
+        }
+
         // Update the values based on those relationships for the first time
         this.trigger('change:attendees');
         this.trigger('change:date');
@@ -118,7 +124,6 @@ var PossibleTime = Backbone.Model.extend({
     },
 
     defaults: {
-        date: new Date(),
         duration: 60,
         numAttending: 0,
         total: 0,

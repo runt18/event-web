@@ -189,6 +189,8 @@ var FinishButtonView = Backbone.View.extend({
         var finishbox = new Common.FinishView();
         finishbox.$el.appendTo('body');
         finishbox.render();
+        finishbox.$el.show('slow');
+        //finishbox.$el.css({opacity: 1});
     }
 });
 

@@ -592,7 +592,7 @@ nav a {
   background: #3CD300;
 }
 
-.finish-box{
+.finish-box {
   border: 2px solid black;
   left: 30%;
   z-index: 1000;
@@ -600,9 +600,18 @@ nav a {
   position: absolute;
   height: 500px;
   width: 500px;
+  background: black;
   background: rgba(0, 0, 0, 0.84);
   color: white;
+  display: none;
+
+  -webkit-transition: 0.2s all;
+  -moz-transition: 0.2s all;
+  -o-transition: 0.2s all;
+  -ms-transition: 0.2s all;
+  transition: 0.2s all;
 }
+
 
 /* ==|== media queries ======================================================
    EXAMPLE Media Query for Responsive Design.

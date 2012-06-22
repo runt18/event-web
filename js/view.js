@@ -8,6 +8,7 @@ require(
 function($, _, Backbone, Common){
 
 var MainDetails = Backbone.Model.extend({
+    urlRoot: '/foo',
     defaults: {
         name: '',
         location: '',
@@ -238,55 +239,47 @@ var ChatView = Backbone.View.extend({
     template: '#chat-tmpl'
 });
 
+$.getJSON('test-data.json', function(data){
+    log(data);
 
+    var mainEvent = new Common.Event(data);
 
-var mainEvent = new Common.Event({
-    invitees: [
-        {
-            name: 'Tim'
-        },
-        {}
-    ],
+    var mainDetails = new MainDetails({
+        name: data.name,
+        location: data.location
+    });
 
-    times: [
-        {
-            attendees: ['bob']
-        },
-        {
-            attendees: ['bob']
+    var header = new Common.Header({
+        page_title: 'View Event'
+    });
+
+    var headerView = new Common.HeaderView({
+            model: header
+        }),
+        details = new DetailsView(),
+        global_attendees =  new AttendeesView(mainEvent.get('invitees')),
+        times = new TimesListView(mainEvent.get('times')),
+        chat = new ChatView(),
+        footer = new Common.FooterView();
+
+    //Main view for the entire page
+    var main = new Backbone.LayoutManager({
+        template: '#main-tmpl',
+        id: 'wrapper',
+
+        views: {
+            '#header': headerView,
+            '#details': details,
+            '#global-attendees': global_attendees,
+            '#times': times,
+            '#chat': chat,
+            '#footer': footer
         }
-    ]
+    });
+
+    main.$el.appendTo('body');
+    main.render();
+
 });
-
-var header = new Common.Header({
-    page_title: 'View Event'
-});
-
-var headerView = new Common.HeaderView({
-        model: header
-    }),
-    details = new DetailsView(),
-    global_attendees =  new AttendeesView(mainEvent.get('invitees')),
-    times = new TimesListView(mainEvent.get('times')),
-    chat = new ChatView(),
-    footer = new Common.FooterView();
-
-//Main view for the entire page
-var main = new Backbone.LayoutManager({
-    template: '#main-tmpl',
-    id: 'wrapper',
-
-    views: {
-        '#header': headerView,
-        '#details': details,
-        '#global-attendees': global_attendees,
-        '#times': times,
-        '#chat': chat,
-        '#footer': footer
-    }
-});
-
-main.$el.appendTo('body');
-main.render();
 
 });

@@ -1,0 +1,38 @@
+{
+    "id": 45,
+    "name": "Cinema Trip",
+    "location": "Cineworld",
+    "description": "Lorem ipsum",
+
+    "coords": {
+        "lat": 52.123456789,
+        "lon": -2.123456789
+    },
+
+    "invitees": [
+        {
+            "id": 254,
+            "name": "John Doe",
+            "email": "john@doe.com"
+        },
+        {
+            "id": 43254,
+            "name": "Joe Bloggs",
+            "email": "joebloggs75@gmail.com"
+        }
+    ],
+    
+    "times": [
+        {
+            "id": 0,
+            "start": 1502527437544,
+            "duration": 60,
+            "attendees": []
+        },
+        {
+            "id": 1,
+            "duration": 82,
+            "attendees": [0]
+        }
+    ]
+}
