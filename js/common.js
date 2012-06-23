@@ -138,11 +138,6 @@ var PossibleTimes = Backbone.Collection.extend({
     model: PossibleTime
 });
 
-var FinishView = Backbone.View.extend({
-    template: '#finish-box-tmpl',
-    tagName: 'div',
-    className: 'finish-box'
-});
 
 // Model representing the entire event
 var Event = Backbone.Model.extend({
@@ -205,7 +200,9 @@ var ReusableView = Backbone.View.extend({
     },
 
     serialize: function(){
-        return this.model.toJSON();
+        if(this.model){
+            return this.model.toJSON();
+        }
     }
 });
 
@@ -233,6 +230,24 @@ var FooterView = ReusableView.extend({
     model: new Footer()
 });
 
+var FinishView = ReusableView.extend({
+    tagName: 'div',
+    filename: 'finishbox',
+    className: 'finish-box'
+});
+
+var FinishButtonView = ReusableView.extend({
+    filename: 'finishbutton',
+
+    events: {
+        'click #finish': 'finish'
+    },
+
+    finish: function(){
+        log('done');
+    }
+});
+
 // Class for a UI element that is used to show and hide a view
 var Expander = Backbone.View.extend({
     tagName: 'div',
@@ -258,7 +273,8 @@ return {
     HeaderView: HeaderView,
     FooterView: FooterView,
 
-    FinishView: FinishView
+    FinishView: FinishView,
+    FinishButtonView: FinishButtonView
 };
 
 });

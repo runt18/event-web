@@ -1,0 +1,52 @@
+@import 'main.css';
+
+#add-time{
+    width: 35px;
+    height: 35px;
+    font-size: 26px;
+    font-weight: bold;
+    right: 20px;
+
+    position: absolute;
+    top: 0;
+    background: rgb(23, 170, 10);
+    color: #074107;
+    border: 1px solid;
+}
+
+/* Text boxes in each row of the time ranges view*/
+.start{
+  width: 70px;
+}
+
+.duration{
+  width: 60px;
+}
+
+.date{
+  width: 120px;
+}
+
+/* Styles for the Optional view */
+#toggle-map{
+  width: 60px;
+}
+
+#location{
+  width: 80%;
+}
+
+#map{
+  height: 325px;
+  width: 491px;
+}
+
+#map::after{
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  z-index: 99;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.32) inset;
+}

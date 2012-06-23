@@ -1,0 +1,8 @@
+@import 'main.css';
+
+.piechart{
+  border: 1px solid #222;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: #444;
+}

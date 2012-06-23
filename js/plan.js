@@ -178,22 +178,6 @@ var MapView = Backbone.View.extend({
     }
 });
 
-var FinishButtonView = Backbone.View.extend({
-    template: '#finish-tmpl',
-
-    events: {
-        'click #finish': 'finish'
-    },
-
-    finish: function(){
-        var finishbox = new Common.FinishView();
-        finishbox.$el.appendTo('body');
-        finishbox.render();
-        finishbox.$el.show('slow');
-        //finishbox.$el.css({opacity: 1});
-    }
-});
-
 var DetailsView = Backbone.View.extend({
     template: '#details-tmpl',
 
@@ -256,7 +240,7 @@ var headerView   = new Common.HeaderView({
         {}
     ]),
     optionalView = new OptionalView(),
-    finishButtonView   = new FinishButtonView(),
+    finishButtonView   = new Common.FinishButtonView(),
     footerView   = new Common.FooterView();
 
 //Main view for the entire page

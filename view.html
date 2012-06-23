@@ -23,7 +23,7 @@
     <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/tagsinput.css">
     <link rel="stylesheet" href="css/ui-lightness/jquery-ui.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/view.css">
 
     <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
 
@@ -42,10 +42,7 @@
 <script type="text/template" id="main-tmpl">
 <div id="header"></div>
 
-<div role="main" id="main" class="center">
-    <div>
-        <h2>View Event</h2>
-    </div>
+<div role="main" id="main">
     <div>
         <div id="details"></div>
     </div>
@@ -53,26 +50,28 @@
         <div class="banner">
             <h3>Whos coming?</h3>
         </div>
+        <hr>
         <div id="global-attendees"></div>
     </div>
     <div>
         <div class="banner">
             <h3>Possible Times</h3>
-            <p>(Tick the ones you can attend)</p>
+            <span class="hint">(Tick the ones you can attend)</span>
         </div>
+        <hr>
         <div id="times"></div>
     </div>
     <div>
         <div class="banner">
             <h3>Chat</h3>
         </div>
+        <hr>
         <div id="chat"></div>
     </div>
-    <div>
-        <form>
-            <input type="button" value="Finalise"></input>
-        </form>
-    </div>
+
+    <hr>
+
+    <div id="finish-button-wrapper"></div>
 </div>
 
 <div id="footer"></div>
@@ -83,7 +82,7 @@
     <div class="banner clearfix">
         <h3><%= name %> at <%= location %></h3>
     </div>
-
+    <hr>
     <p><%= description %></p>
 </script>
 
@@ -92,8 +91,8 @@
 </script>
 
 <script type="text/template" id="chat-tmpl">
-    <textarea></textarea><br>
-    <input type="text">
+    <textarea id="chat-window"></textarea><br>
+    <input type="text" id="chat-entry">
 </script>
 
 <!-- Reusable views -->
@@ -116,8 +115,6 @@
     </div>
 
     <div class="attendees-wrap"></div>
-
-    <hr>
 </script>
 
 <script type="text/template" id="attendee-tmpl">
