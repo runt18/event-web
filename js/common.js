@@ -1,8 +1,8 @@
 define(
 
-['jquery', 'backbone', 'layoutmanager', 'jquery-ui'],
-function($, Backbone){
-
+['jquery', 'backbone', 'use!layoutmanager', 'jquery-ui'],
+function($, Backbone, LayoutManager){
+log(Backbone);
 var _pad = function(num){
     // Pad a number to two digits if it only has one
     return num < 10 ? '0' + num : num;
@@ -221,13 +221,26 @@ var Footer = Backbone.Model.extend({
 
 var HeaderView = ReusableView.extend({
     tagName: 'header',
-    filename: 'header'
+    filename: 'header',
+
+    views: {
+        '#login-wrap': new LoginView()
+    },
+
+    events: {
+       'click #login-button': 'showLogin'
+    },
+
+    showLogin: function(){
+        var loginView = new LoginView();
+        loginView.$el.appendTo('body');
+        loginView.render();
+    }
 });
 
 var FooterView = ReusableView.extend({
     tagName: 'footer',
-    filename: 'footer',
-    model: new Footer()
+    filename: 'footer'
 });
 
 var FinishView = ReusableView.extend({
@@ -262,6 +275,12 @@ var Expander = Backbone.View.extend({
     }
 });
 
+var LoginView = ReusableView.extend({
+    tagName: 'div',
+    id: 'login-container',
+    filename: 'login'
+});
+
 // Return everything that's needed outside of this module
 return {
     PossibleTime: PossibleTime,
@@ -272,6 +291,8 @@ return {
     Header: Header,
     HeaderView: HeaderView,
     FooterView: FooterView,
+
+    //LoginView: LoginView,
 
     FinishView: FinishView,
     FinishButtonView: FinishButtonView

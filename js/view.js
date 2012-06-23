@@ -61,7 +61,7 @@ var PieChartView = Backbone.View.extend({
         // Draw a line to the top
         ctx.lineTo(half, 0);
 
-        // Draw an arc clockwise round from the top
+        // Draw an arc clockwise round from north
         var offset = (Math.PI / 2);
         var start = -offset;
         var end = (Math.PI * 2 * ratio) - offset;
@@ -87,7 +87,7 @@ var PieChartView = Backbone.View.extend({
         // Run the animation
         var timer = setInterval(function(){
             drawRatio += step;
-            if(direction * drawRatio >= direction * endRatio){
+            if(direction * drawRatio > direction * endRatio){
                 clearInterval(timer);
             }
             that.draw(drawRatio);
@@ -101,8 +101,9 @@ var PieChartView = Backbone.View.extend({
 
             // Cache a reference to the drawing context
             this.context = this.el.getContext('2d');
-
-            this.animate();
+            if(this.ratio){
+                this.animate();
+            }
         });
     },
 

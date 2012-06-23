@@ -266,12 +266,12 @@ header{
   line-height: 48px;
 }
 
-header .left{
+header .left, footer .left{
   left: 35px;
   border-right: 1px solid black;
 }
 
-header .right{
+header .right, footer .right{
   border-left: 1px solid black;
   right: 35px;
 }
@@ -442,7 +442,7 @@ nav a {
 .expander-small{
   top: 10px;
   right: 10px;
-  border-width: 15px 10px 0 10px;
+  border-width: 10px 10px 0 10px;
   border-top-color: #222;
 
   margin: 7px 0 0 10px;
@@ -456,6 +456,11 @@ nav a {
   transform: rotate(-90deg);
 }
 
+#times{
+  margin: -5px 0 0 35px;
+  border-left: 1px solid #c7c7c7;
+}
+
 .time-details, .attendee-details{
   height: 32px;
   line-height: 32px;
@@ -467,9 +472,9 @@ nav a {
 }
 
 .time{
-  padding-bottom: 4px;
+  padding: 0 0 4px 10px;
   border-bottom: 1px solid rgb(199, 199, 199);
-  margin: 4px 0 0 35px;
+  margin: 4px 0 0 0;
 }
 
 .panels{
@@ -514,11 +519,13 @@ nav a {
 }
 
 #finish{
+  font-size: 19px;
+  color: rgb(0, 44, 0);
   border: 1px solid rgb(0, 97, 0);
   font-weight: bold;
-  height: 52px;
-  padding: 15px;
-  background: #3CD300;
+  height: 43px;
+  padding: 0 25px;
+  background: #2B9600;
 }
 
 .finish-box {
@@ -539,6 +546,16 @@ nav a {
   -o-transition: 0.2s all;
   -ms-transition: 0.2s all;
   transition: 0.2s all;
+}
+
+#login-container{
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .4);
+  height: 12em;
+  width: 18em;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  border: 1px solid black;
 }
 
 

@@ -6,3 +6,21 @@
   border-radius: 50%;
   background: #444;
 }
+
+#chat{
+	margin: 8px 0 8px 35px;
+}
+
+
+#chat-window{
+    width: 25em;
+    margin: 0;
+  
+}
+
+#chat-entry{
+    width: 25em;
+    margin: 0;
+
+    border-top: none;
+}

@@ -106,23 +106,12 @@ var TimeView = Backbone.View.extend({
     }
 });
 
-var TimesView = Backbone.View.extend({
-    template: '#times-tmpl',
-
+var TimesListView = Backbone.View.extend({
     initialize: function(times){
         this.collection = new Common.PossibleTimes(times);
         this.collection.on('add remove', function(){
             this.render();
         }, this);
-    },
-
-    events: {
-        'click #add-time': 'addTime'
-    },
-
-    addTime: function(){
-        var time = new Common.PossibleTime();
-        this.collection.add(time);
     },
 
     render: function(manage){
@@ -132,6 +121,31 @@ var TimesView = Backbone.View.extend({
             }));
         }, this);
 
+        return manage(this).render();
+    }
+});
+
+var TimesView = Backbone.View.extend({
+    template: '#times-tmpl',
+
+    initialize: function(times){
+        this.list = new TimesListView(times);
+    },
+
+    events: {
+        'click #add-time': 'addTime'
+    },
+
+    views: {
+        '#times': new TimesListView()//this.list
+    },
+
+    addTime: function(){
+        var time = new Common.PossibleTime();
+        this.list.collection.add(time);
+    },
+
+    render: function(manage){
         return manage(this).render();
     }
 });
@@ -251,7 +265,7 @@ var main = new Backbone.LayoutManager({
     views: {
         '#header': headerView,
         '#main-details': detailsView,
-        '#times': timesView,
+        '#times-wrapper': timesView,
         '#optional-wrapper': optionalView,
         '#finish-wrapper': finishButtonView,
         '#footer': footerView
