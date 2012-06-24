@@ -268,14 +268,15 @@ var main = new Backbone.LayoutManager({
     template: '#main-tmpl',
     id: 'wrapper',
 
+    // Add all subviews to the main layout
     views: {
         '#header': headerView,
         '#main-details': detailsView,
         '#times-wrapper': timesView,
         '#optional-wrapper': optionalView,
-        '#finish-wrapper': finishButtonView,
+        '#finish-button-wrapper': finishButtonView,
         '#footer': footerView,
-        '#finish-view-wrapper': finishView
+        '#finish-wrapper': finishView
     }
 });
 

@@ -252,7 +252,7 @@ $.getJSON('test-data.json', function(data){
             name: data.name,
             location: data.location
         }),
-        details = new DetailsView({
+        detailsView = new DetailsView({
             model: mainDetails
         });
 
@@ -267,27 +267,28 @@ $.getJSON('test-data.json', function(data){
     headerView.setView('#login-wrap', new Common.LoginView());
     
     var
-        global_attendees = new AttendeesView(mainEvent.get('invitees')),
-        times = new TimesListView(mainEvent.get('times')),
-        chat = new ChatView(),
+        globalAttendeesView = new AttendeesView(mainEvent.get('invitees')),
+        timesView = new TimesListView(mainEvent.get('times')),
+        chatView = new ChatView(),
         finishView = new Common.FinishView();
-        finishbutton = new Common.FinishButtonView();
-        footer = new Common.FooterView();
+        finishButtonView = new Common.FinishButtonView();
+        footerView = new Common.FooterView();
 
     //Main view for the entire page
     var main = new Backbone.LayoutManager({
         template: '#main-tmpl',
         id: 'wrapper',
 
+        // Add all subviews to the main layout
         views: {
             '#header': headerView,
-            '#details': details,
-            '#global-attendees': global_attendees,
-            '#times': times,
-            '#chat': chat,
-            '#finish-button-wrapper': finishbutton,
-            '#finish-wrapper': finishView,
-            '#footer': footer
+            '#details': detailsView,
+            '#global-attendees': globalAttendeesView,
+            '#times': timesView,
+            '#chat': chatView,
+            '#finish-button-wrapper': finishButtonView,
+            '#footer': footerView,
+            '#finish-wrapper': finishView
         }
     });
 
