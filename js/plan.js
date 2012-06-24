@@ -13,11 +13,7 @@ var OptionalViewExpander = Common.Expander.extend({
     },
     expand: function(){
         this.spinArrow();
-        this.$el
-            .closest('#optional')
-            .find('.panels')
-            .toggle('fast');
-
+        optionalView.togglePanels();
     }
 });
 
@@ -213,8 +209,12 @@ var OptionalView = Backbone.View.extend({
         'click #toggle-map': 'toggleMap'
     },
 
+    togglePanels: function(){
+        this.elems.panels.toggle('fast');
+    },
+
     toggleMap: function(){
-        $('.left-panel').toggleClass('in');
+        this.elems.leftPanel.toggleClass('in');
     },
 
     initialize: function(){
@@ -223,12 +223,20 @@ var OptionalView = Backbone.View.extend({
         }, this);
     },
 
-    render: function(manage) {
+    render: function(manage){
         this.insertViews({
             '.expander-wrap': new OptionalViewExpander(),
             '#map-wrap': new MapView()
         });
-        return manage(this).render();
+
+        return manage(this)
+            .render()
+            .then(function(el){
+                this.elems = {
+                    panels: this.$('.panels'),
+                    leftPanel: this.$('.left-panel')
+                };
+            });
     }
 });
 
