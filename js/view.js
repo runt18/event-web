@@ -270,11 +270,8 @@ $.getJSON('test-data.json', function(data){
         global_attendees = new AttendeesView(mainEvent.get('invitees')),
         times = new TimesListView(mainEvent.get('times')),
         chat = new ChatView(),
-        finishbutton = new Common.FinishButtonView({
-            finish: function(){
-                log('dfsdfdsf');
-            }
-        });
+        finishView = new Common.FinishView();
+        finishbutton = new Common.FinishButtonView();
         footer = new Common.FooterView();
 
     //Main view for the entire page
@@ -289,6 +286,7 @@ $.getJSON('test-data.json', function(data){
             '#times': times,
             '#chat': chat,
             '#finish-button-wrapper': finishbutton,
+            '#finish-wrapper': finishView,
             '#footer': footer
         }
     });

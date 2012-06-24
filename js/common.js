@@ -200,9 +200,7 @@ var ReusableView = Backbone.View.extend({
     },
 
     serialize: function(){
-        if(this.model){
-            return this.model.toJSON();
-        }
+        return this.model ? this.model.toJSON() : {};
     }
 });
 
@@ -262,7 +260,7 @@ var FinishButtonView = ReusableView.extend({
     },
 
     finish: function(){
-        log('done');
+        $('.finish-box').toggle();
     }
 });
 
@@ -291,6 +289,8 @@ return {
     HeaderView: HeaderView,
     FooterView: FooterView,
 
+    // Temporary fix, should not be necessary to export this because it's only needed as
+    // a subview of the header, which is defined in this module. See issue #1
     LoginView: LoginView,
 
     FinishView: FinishView,

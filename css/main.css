@@ -50,7 +50,7 @@ body { margin: 0; font-size: 1em; line-height: 1.4; }
    Links
    ========================================================================== */
 
-a { color: #00e; }
+a { cursor: pointer; color: #00e; }
 a:visited { color: #551a8b; }
 a:hover { color: #06e; }
 a:focus { outline: thin dotted; }
@@ -529,6 +529,7 @@ nav a {
 }
 
 .finish-box {
+  padding: 40px;
   border: 2px solid black;
   left: 30%;
   z-index: 1000;
@@ -549,6 +550,7 @@ nav a {
 }
 
 #login-wrap{
+  z-index: 500;
   background: whitesmoke;
   display: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .4);

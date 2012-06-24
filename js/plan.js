@@ -239,17 +239,18 @@ var
     header = new Common.Header({
         page_title: 'Plan Event'
     }),
-    headerView   = new Common.HeaderView({
+    headerView = new Common.HeaderView({
         model: header
     });
 
 var
-    detailsView  = new DetailsView([
+    detailsView = new DetailsView([
         {}
     ]),
+    finishView = new Common.FinishView();
     optionalView = new OptionalView(),
-    finishButtonView   = new Common.FinishButtonView(),
-    footerView   = new Common.FooterView();
+    finishButtonView = new Common.FinishButtonView(),
+    footerView  = new Common.FooterView();
 
 var
     // Create the Collection representing all times at which the event can happen
@@ -273,7 +274,8 @@ var main = new Backbone.LayoutManager({
         '#times-wrapper': timesView,
         '#optional-wrapper': optionalView,
         '#finish-wrapper': finishButtonView,
-        '#footer': footerView
+        '#footer': footerView,
+        '#finish-view-wrapper': finishView
     }
 });
 
