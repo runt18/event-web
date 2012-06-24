@@ -1,7 +1,15 @@
 <h2>Login or Sign up</h2>
 <span class="hint">If you have an account you can log in here, if not we&apos;ll create one for you</span>
 <form>
-	<input type="text" placeholder="Username">
-	<input type="password" placeholder="Password">
-	<input type="button" value="Login / Sign up">
+	<div class="validation-wrap">
+		<input id="email" type="text" placeholder="Email">
+		<span class="hint validation-response" id="email-vr"></span>
+	</div>
+
+	<div class="validation-wrap">
+		<input id="password" type="password" placeholder="Password">
+		<span class="hint validation-response" id="password-vr"></span>
+	</div>
+
+	<input id="login-submit" type="button" value="Login / Sign up">
 </form>

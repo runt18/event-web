@@ -554,12 +554,24 @@ nav a {
   background: whitesmoke;
   display: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .4);
-  width: 18em;
+  width: 31em;
   position: absolute;
   top: 60px;
   right: 10px;
   border: 1px solid black;
   padding: 10px;
+}
+
+.validation-wrap{
+  position: relative;
+}
+
+.validation-response{
+  color: red;
+}
+
+.valid{
+  color: green !important;
 }
 
 
