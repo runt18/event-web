@@ -34,7 +34,7 @@ var _roundUpTime = function(time, roundTo){
     };
 };
 
-var Timestring = function(d){
+var _formatTimestring = function(d){
     // Create a string representation of the time part of a date object in the format HH:MM
 
     // Create a new Date object representing the current time if nothing was passed in
@@ -94,7 +94,7 @@ var PossibleTime = Backbone.Model.extend({
 
     _updateTime: function(){
         var date = this.get('date');
-        this.set('timestring', Timestring(date));
+        this.set('timestring', _formatTimestring(date));
         this.set('datestring', $.datepicker.formatDate('dd/mm/yy', date));
     },
 
@@ -137,7 +137,6 @@ var PossibleTimes = Backbone.Collection.extend({
     url: '/time',
     model: PossibleTime
 });
-
 
 // Model representing the entire event
 var Event = Backbone.Model.extend({
@@ -188,12 +187,15 @@ var Event = Backbone.Model.extend({
 // Generic class for any view that exists in more than one place
 var ReusableView = Backbone.View.extend({
     render: function(manage){
+        // There should be a way in LayoutManager to override the fetch method to load templates from
+        // external html files rather than script tags in the page.
+        // I couldn't get it to work so for now I'm just AJAXing them in and adding them to the DOM
+        // Not too slow right now, but ideally in future this should be changed.
         return manage(this).render().then(function(el){
             var path = 'templates/' + this.filename + '.html';
             var data = this.serialize();
             $.get(path, function(content){
                 var compiled = _.template(content);
-
                 $(el).html(compiled(data));
             });
         });
@@ -210,7 +212,7 @@ var LoginView = ReusableView.extend({
 });
 
 // Reusable classes for the header and footer of each page
-var Header = Backbone.Model.extend({
+var Title = Backbone.Model.extend({
     defaults: {
         page_title: ""
     }
@@ -219,6 +221,24 @@ var Header = Backbone.Model.extend({
 var Footer = Backbone.Model.extend({
     defaults: {
 
+    }
+});
+
+var TitleView = Backbone.View.extend({
+    tagName: 'title',
+
+    model: new Title(),
+
+    initialize: function(){
+        var content = '<%= page_title %> - Eventual - Easy Event Planning';
+        var compiled = _.template(content);
+        var data = this.serialize();
+        this.$el.html(compiled(data));
+        this.$el.appendTo('head');
+    },
+
+    serialize: function(){
+        return this.model.toJSON();
     }
 });
 
@@ -278,8 +298,10 @@ return {
     PossibleTimes: PossibleTimes,
     Event: Event,
 
+    Title: Title,
+    TitleView: TitleView,
+
     Expander: Expander,
-    Header: Header,
     HeaderView: HeaderView,
     FooterView: FooterView,
 

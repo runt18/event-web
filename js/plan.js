@@ -236,11 +236,11 @@ var OptionalView = Backbone.View.extend({
 var mainEvent = new Common.Event();
 
 var
-    header = new Common.Header({
+    title = new Common.Title({
         page_title: 'Plan Event'
     }),
     headerView = new Common.HeaderView({
-        model: header
+        model: title
     });
 
 var
@@ -253,6 +253,11 @@ var
     finishButtonView = new Common.FinishButtonView(),
     footerView  = new Common.FooterView();
 
+finishButtonView.finish = function(){
+    // TODO Save model and validate it before redirecting
+    window.location.href = "view.html";
+};
+
 var
     // Create the Collection representing all times at which the event can happen
     timesList = new Common.PossibleTimes([{}]);
@@ -262,7 +267,12 @@ var
     timesView = new TimesView();
 
 // Add the list to the wrapper
+// Would be better to define this all in common.js, see issue #1
 timesView.setView('#times', timesListView);
+
+var titleView = new Common.TitleView({
+    model: title
+});
 
 // Main view for the entire page
 var main = new Backbone.LayoutManager({

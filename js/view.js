@@ -258,11 +258,11 @@ $.getJSON('test-data.json', function(data){
 
     // Create the model for the page header and its corresponding View
     var
-        header = new Common.Header({
+        title = new Common.Title({
             page_title: 'View Event'
         }),
         headerView = new Common.HeaderView({
-            model: header
+            model: title
         });
     
     var
@@ -273,6 +273,10 @@ $.getJSON('test-data.json', function(data){
         finishView = new Common.FinishView();
         finishButtonView = new Common.FinishButtonView();
         footerView = new Common.FooterView();
+
+    var titleView = new Common.TitleView({
+        model: title
+    });
 
     //Main view for the entire page
     var main = new Backbone.LayoutManager({
