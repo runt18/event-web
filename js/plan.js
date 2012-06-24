@@ -1,7 +1,6 @@
 /* Author:
 Giles Lavelle
 */
-var map;
 
 require(
 
@@ -22,6 +21,7 @@ var OptionalViewExpander = Common.Expander.extend({
     }
 });
 
+// View representing one row in the list of possible times
 var TimeView = Backbone.View.extend({
     template: '#time-tmpl',
     tagName: 'form',
@@ -43,6 +43,8 @@ var TimeView = Backbone.View.extend({
             .render()
             .then(function(el){
                 //log(el);
+
+                // Cache references to DOM elements for performance
                 this.fields = {
                     timestring: this.$('.start'),
                     duration: this.$('.duration'),
@@ -62,7 +64,7 @@ var TimeView = Backbone.View.extend({
                 });
 
                 // Don't show the remove button if there's only one time range
-                if (timesView.collection.length <= 1){
+                if (timesListView.collection.length <= 1){
                     this.fields.remove.hide();
                 }
             });
@@ -107,8 +109,10 @@ var TimeView = Backbone.View.extend({
 });
 
 var TimesListView = Backbone.View.extend({
-    initialize: function(times){
-        this.collection = new Common.PossibleTimes(times);
+    initialize: function(collection){
+        this.collection = collection;
+
+        // Re-render the view when a time range is added or removed
         this.collection.on('add remove', function(){
             this.render();
         }, this);
@@ -128,25 +132,13 @@ var TimesListView = Backbone.View.extend({
 var TimesView = Backbone.View.extend({
     template: '#times-tmpl',
 
-    initialize: function(times){
-        this.list = new TimesListView(times);
-    },
-
     events: {
         'click #add-time': 'addTime'
     },
 
-    views: {
-        //'#times': new TimesListView()//this.list
-    },
-
     addTime: function(){
         var time = new Common.PossibleTime();
-        this.list.collection.add(time);
-    },
-
-    render: function(manage){
-        return manage(this).render();
+        timesList.add(time);
     }
 });
 
@@ -162,7 +154,9 @@ window.rendermap = function(){
         zoom: 2,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    map = new google.maps.Map($('#map')[0], options);
+    var map = new google.maps.Map($('#map')[0], options);
+    
+    // Google maps needs a global variable for its callback, but it can be deleted when it's finished
     delete rendermap;
 };
 
@@ -238,18 +232,18 @@ var OptionalView = Backbone.View.extend({
     }
 });
 
+// Create the top-level Model representing the entire event
 var mainEvent = new Common.Event();
 
-var header = new Common.Header({
-    page_title: 'Plan Event'
-});
-
-var headerView   = new Common.HeaderView({
-        model: header
+var
+    header = new Common.Header({
+        page_title: 'Plan Event'
     }),
-    timesView    = new TimesView([
-        {}
-    ]),
+    headerView   = new Common.HeaderView({
+        model: header
+    });
+
+var
     detailsView  = new DetailsView([
         {}
     ]),
@@ -257,7 +251,18 @@ var headerView   = new Common.HeaderView({
     finishButtonView   = new Common.FinishButtonView(),
     footerView   = new Common.FooterView();
 
-//Main view for the entire page
+var
+    // Create the Collection representing all times at which the event can happen
+    timesList = new Common.PossibleTimes([{}]);
+    // Create the list View to display this Collection
+    timesListView = new TimesListView(timesList),
+    // Create the wrapper View to hold the list and the add button
+    timesView = new TimesView();
+
+// Add the list to the wrapper
+timesView.setView('#times', timesListView);
+
+// Main view for the entire page
 var main = new Backbone.LayoutManager({
     template: '#main-tmpl',
     id: 'wrapper',

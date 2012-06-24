@@ -241,24 +241,32 @@ var ChatView = Backbone.View.extend({
 });
 
 $.getJSON('test-data.json', function(data){
-    log(data);
+    //log(data);
 
+    // Create the Model representing the entire event from the data loaded from the server
     var mainEvent = new Common.Event(data);
 
-    var mainDetails = new MainDetails({
-        name: data.name,
-        location: data.location
-    });
-
-    var header = new Common.Header({
-        page_title: 'View Event'
-    });
-
-    var headerView = new Common.HeaderView({
-            model: header
+    // Create the model for the main event details and its corresponding View
+    var
+        mainDetails = new MainDetails({
+            name: data.name,
+            location: data.location
         }),
-        details = new DetailsView(),
-        global_attendees =  new AttendeesView(mainEvent.get('invitees')),
+        details = new DetailsView({
+            model: mainDetails
+        });
+
+    // Create the model for the page header and its corresponding View
+    var
+        header = new Common.Header({
+            page_title: 'View Event'
+        }),
+        headerView = new Common.HeaderView({
+            model: header
+        });
+    
+    var
+        global_attendees = new AttendeesView(mainEvent.get('invitees')),
         times = new TimesListView(mainEvent.get('times')),
         chat = new ChatView(),
         finishbutton = new Common.FinishButtonView({
