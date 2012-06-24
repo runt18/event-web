@@ -264,6 +264,7 @@ $.getJSON('test-data.json', function(data){
         headerView = new Common.HeaderView({
             model: header
         });
+    headerView.setView('#login-wrap', new Common.LoginView());
     
     var
         global_attendees = new AttendeesView(mainEvent.get('invitees')),

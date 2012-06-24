@@ -548,7 +548,9 @@ nav a {
   transition: 0.2s all;
 }
 
-#login-container{
+#login-wrap{
+  background: whitesmoke;
+  display: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .4);
   height: 12em;
   width: 18em;

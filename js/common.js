@@ -206,6 +206,12 @@ var ReusableView = Backbone.View.extend({
     }
 });
 
+var LoginView = ReusableView.extend({
+    tagName: 'div',
+    id: 'login-container',
+    filename: 'login'
+});
+
 // Reusable classes for the header and footer of each page
 var Header = Backbone.Model.extend({
     defaults: {
@@ -232,9 +238,8 @@ var HeaderView = ReusableView.extend({
     },
 
     showLogin: function(){
-        var loginView = new LoginView();
-        loginView.$el.appendTo('body');
-        loginView.render();
+        //debugger;
+        this.$('#login-wrap').toggle();
     }
 });
 
@@ -275,12 +280,6 @@ var Expander = Backbone.View.extend({
     }
 });
 
-var LoginView = ReusableView.extend({
-    tagName: 'div',
-    id: 'login-container',
-    filename: 'login'
-});
-
 // Return everything that's needed outside of this module
 return {
     PossibleTime: PossibleTime,
@@ -292,7 +291,7 @@ return {
     HeaderView: HeaderView,
     FooterView: FooterView,
 
-    //LoginView: LoginView,
+    LoginView: LoginView,
 
     FinishView: FinishView,
     FinishButtonView: FinishButtonView
