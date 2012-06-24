@@ -137,7 +137,7 @@ var TimesView = Backbone.View.extend({
     },
 
     views: {
-        '#times': new TimesListView()//this.list
+        //'#times': new TimesListView()//this.list
     },
 
     addTime: function(){

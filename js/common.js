@@ -1,8 +1,8 @@
 define(
 
-['jquery', 'backbone', 'use!layoutmanager', 'jquery-ui'],
-function($, Backbone, LayoutManager){
-log(Backbone);
+['jquery', 'backbone', 'layoutmanager', 'jquery-ui'],
+function($, Backbone){
+
 var _pad = function(num){
     // Pad a number to two digits if it only has one
     return num < 10 ? '0' + num : num;
@@ -224,7 +224,7 @@ var HeaderView = ReusableView.extend({
     filename: 'header',
 
     views: {
-        '#login-wrap': new LoginView()
+        //'#login-wrap': new LoginView()
     },
 
     events: {

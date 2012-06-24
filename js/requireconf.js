@@ -2,7 +2,6 @@ require.config({
     baseUrl: 'js',
     
     paths: {
-        'use': 'libs/use',
         'jquery': 'libs/jquery-1.7.2.min',
         'jquery-ui': 'libs/jquery-ui.min',
         'jquery-ui-timepicker': 'libs/jquery-ui-timepicker',
@@ -15,17 +14,20 @@ require.config({
         'common': 'common'
     },
 
-    use: {
-        "layoutmanager": {
-            attach: "LayoutManager",
-            deps: ['underscore', 'backbone', 'jquery']
-        }
+    shim: {
+        'underscore': {
+            exports: '_'
+        },
 
-       // "backbone": {
-       //      deps: ["use!underscore", "jquery"],
-       //      attach: function(_, $) {
-       //          return Backbone;
-       //      }
-       //  }
+        'backbone': {
+            deps: ['underscore', 'jquery'],
+            exports: 'Backbone'
+        },
+
+        'layoutmanager': ['jquery', 'underscore', 'backbone'],
+
+        'jquery-ui': ['jquery'],
+        'jquery-ui-timepicker': ['jquery-ui', 'jquery']
+
     }
 });
