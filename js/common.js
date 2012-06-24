@@ -187,7 +187,7 @@ var Event = Backbone.Model.extend({
 
 // Generic class for any view that exists in more than one place
 var ReusableView = Backbone.View.extend({
-    render: function(manage) {
+    render: function(manage){
         return manage(this).render().then(function(el){
             var path = 'templates/' + this.filename + '.html';
             var data = this.serialize();
@@ -206,7 +206,6 @@ var ReusableView = Backbone.View.extend({
 
 var LoginView = ReusableView.extend({
     tagName: 'div',
-    id: 'login-container',
     filename: 'login'
 });
 
@@ -227,17 +226,12 @@ var HeaderView = ReusableView.extend({
     tagName: 'header',
     filename: 'header',
 
-    views: {
-        //'#login-wrap': new LoginView()
-    },
-
     events: {
        'click #login-button': 'showLogin'
     },
 
     showLogin: function(){
-        //debugger;
-        this.$('#login-wrap').toggle();
+        $('#login-wrapper').toggle();
     }
 });
 
@@ -289,8 +283,6 @@ return {
     HeaderView: HeaderView,
     FooterView: FooterView,
 
-    // Temporary fix, should not be necessary to export this because it's only needed as
-    // a subview of the header, which is defined in this module. See issue #1
     LoginView: LoginView,
 
     FinishView: FinishView,

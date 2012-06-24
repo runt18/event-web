@@ -264,9 +264,9 @@ $.getJSON('test-data.json', function(data){
         headerView = new Common.HeaderView({
             model: header
         });
-    headerView.setView('#login-wrap', new Common.LoginView());
     
     var
+        loginView = new Common.LoginView();
         globalAttendeesView = new AttendeesView(mainEvent.get('invitees')),
         timesView = new TimesListView(mainEvent.get('times')),
         chatView = new ChatView(),
@@ -282,6 +282,7 @@ $.getJSON('test-data.json', function(data){
         // Add all subviews to the main layout
         views: {
             '#header': headerView,
+            '#login-wrapper': loginView,
             '#details': detailsView,
             '#global-attendees': globalAttendeesView,
             '#times': timesView,

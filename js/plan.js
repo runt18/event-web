@@ -244,6 +244,7 @@ var
     });
 
 var
+    loginView = new Common.LoginView(),
     detailsView = new DetailsView([
         {}
     ]),
@@ -271,6 +272,7 @@ var main = new Backbone.LayoutManager({
     // Add all subviews to the main layout
     views: {
         '#header': headerView,
+        '#login-wrapper': loginView,
         '#main-details': detailsView,
         '#times-wrapper': timesView,
         '#optional-wrapper': optionalView,
