@@ -1,17 +1,21 @@
 @import 'main.css';
 
 #add-time{
+    border-radius: 50%;
     width: 35px;
     height: 35px;
     font-size: 26px;
     font-weight: bold;
-    right: 20px;
+    right: 17px;
 
     position: absolute;
-    top: 0;
-    background: rgb(23, 170, 10);
-    color: #074107;
-    border: 1px solid;
+    top: 3px;
+    background: #000000;
+    color: white;
+}
+
+.time:nth-last-child(1){
+    margin-bottom: 5px;
 }
 
 #description{
@@ -35,14 +39,17 @@
 /* Styles for the Optional view */
 #toggle-map{
   width: 60px;
+  position: absolute;
+  right: 0;
 }
 
 #location{
+  margin-top: 1px;
   width: 80%;
 }
 
 #map{
-  height: 325px;
+  height: 339px;
   width: 491px;
 }
 
