@@ -316,6 +316,8 @@ var FinishView = ReusableView.extend({
 
 var FinishButtonView = ReusableView.extend({
     filename: 'finishbutton',
+    tagName: 'form',
+    className: 'center',
 
     events: {
         'click #finish': 'finish'

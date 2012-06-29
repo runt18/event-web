@@ -42,10 +42,10 @@
 <div role="main" id="main">
     <div id="login-wrapper"></div>
     <div id="name">
-        <div class="banner">
+        <div class="banner" id="banner-">
             <h3>What&apos;s happening?</h3>
         </div>
-        <hr>
+        
 
         <div id="main-details"></div>
     </div>
@@ -66,7 +66,7 @@
         <h3>When can it happen?</h3>
         <input type="button" id="add-time" value="+"></input>
     </div>
-    <hr>
+    
     <div id="times"></div>
 </script>
 
@@ -75,7 +75,7 @@
         <h3>Optional</h3>
         <div class="expander-wrap"></div>
     </div>
-    <hr>
+    
 
     <div class="panels">
         <div class="left-panel">
@@ -90,7 +90,7 @@
             <div id="map-wrap"></div>
         </div>
     </div>
-    <hr>
+    
 </script>
 
 <script type="text/template" id="time-tmpl">
@@ -98,10 +98,6 @@
     <input class="duration" value="<%= duration %>" type="text"></input> minutes on
     <input value="<%= datestring %>" class="date" type="text"></input>
     <input type="button" class="remove" value="X"></input>
-</script>
-
-<script type="text/template" id="finish-tmpl">
-
 </script>
 
 <script type="text/template" id="details-tmpl">

@@ -1,5 +1,4 @@
 div.tagsinput {
-    border: 1px solid #CCC;
     background: #FFF;
     color: #777;
     width: 600px;
@@ -9,7 +8,6 @@ div.tagsinput {
 }
 
 div.tagsinput span.tag {
-    border: 1px solid #a5d24a;
 
     display: block;
     float: left;
