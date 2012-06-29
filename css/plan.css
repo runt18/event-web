@@ -14,6 +14,11 @@
     border: 1px solid;
 }
 
+#description{
+  width: 100%;
+  height: 280px;
+}
+
 /* Text boxes in each row of the time ranges view*/
 .start{
   width: 70px;

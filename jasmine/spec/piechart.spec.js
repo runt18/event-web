@@ -75,4 +75,25 @@ describe("A Backbone view that creates an animated pie chart", function() {
             expect(pie.tagName).toBe('canvas');
         });
     });
+
+    it("should be able to calculate the correct colour for the amount it's displaying", function(){
+                runs(function(){
+            pie = null;
+
+            require(['piechart'], function(PieChartView){
+                pie = new PieChartView();
+            });
+        });
+
+        waitsFor(function(){
+            return pie;
+        }, "A new instance of PieChartView should be created", 1000);
+
+        runs(function(){
+            pie.ratio = 1;
+            expect(pie.colour()).toBe('rgb(0,255,0)');
+            pie.ratio = 0;
+            expect(pie.colour()).toBe('rgb(0,0,0)');
+        });
+    });
 });
