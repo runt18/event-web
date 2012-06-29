@@ -13,7 +13,8 @@ require.config({
         'plugins': 'plugins',
         'common': 'common',
 
-        'piechart': 'libs/piechart'
+        'piechart': 'models/piechart',
+        'event': 'models/event'
     },
 
     shim: {

@@ -63,6 +63,10 @@ require(['piechart'], function(PieChartView){
             expect(new PieChartView().tagName).toBe('canvas');
         });
 
+        it("should be 30px in diameter", function(){
+            expect(new PieChartView().size).toBe(30);
+        });
+
         it("should be able to calculate the correct colour for the amount it's displaying", function(){
             expect(new PieChartView(1).colour()).toBe('rgb(0,255,0)');
             expect(new PieChartView(0).colour()).toBe('rgb(255,0,0)');

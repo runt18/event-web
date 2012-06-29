@@ -4,8 +4,8 @@ Giles Lavelle
 
 require(
 
-['jquery', 'underscore', 'backbone', 'common', 'piechart', 'layoutmanager', 'jquery-ui', 'plugins'],
-function($, _, Backbone, Common, PieChartView){
+['jquery', 'underscore', 'backbone', 'common', 'event', 'piechart', 'layoutmanager', 'jquery-ui', 'plugins'],
+function($, _, Backbone, Common, Event, PieChartView){
 
 var MainDetails = Backbone.Model.extend({
     urlRoot: '/foo',
@@ -158,7 +158,7 @@ $.getJSON('test-data.json', function(data){
     //log(data);
 
     // Create the Model representing the entire event from the data loaded from the server
-    var mainEvent = new Common.Event(data);
+    var mainEvent = new Event(data);
 
     // Create the model for the main event details and its corresponding View
     var

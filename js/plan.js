@@ -4,8 +4,8 @@ Giles Lavelle
 
 require(
 
-['jquery', 'underscore', 'backbone', 'common', 'layoutmanager', 'jquery-ui', 'jquery-ui-timepicker', 'plugins'],
-function($, _, Backbone, Common){
+['jquery', 'underscore', 'backbone', 'common', 'event', 'layoutmanager', 'jquery-ui', 'jquery-ui-timepicker', 'plugins'],
+function($, _, Backbone, Common, Event){
 
 var OptionalViewExpander = Common.Expander.extend({
     initialize: function(){
@@ -241,7 +241,7 @@ var OptionalView = Backbone.View.extend({
 });
 
 // Create the top-level Model representing the entire event
-var mainEvent = new Common.Event();
+var mainEvent = new Event();
 
 var
     title = new Common.Title({
