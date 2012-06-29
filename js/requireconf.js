@@ -11,7 +11,9 @@ require.config({
         'layoutmanager': 'libs/backbone.layoutmanager',
 
         'plugins': 'plugins',
-        'common': 'common'
+        'common': 'common',
+
+        'piechart': 'libs/piechart'
     },
 
     shim: {
