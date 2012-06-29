@@ -57,43 +57,16 @@
 //   });
 // });
 
-describe("A Backbone view that creates an animated pie chart", function() {
-    it("should have a <canvas> tag as its root element", function() {
-        runs(function(){
-            pie = null;
-
-            require(['piechart'], function(PieChartView){
-                pie = new PieChartView();
-            });
+require(['piechart'], function(PieChartView){
+    describe("A Backbone view that creates an animated pie chart", function() {
+        it("should have a <canvas> tag as its root element", function() {
+            expect(new PieChartView().tagName).toBe('canvas');
         });
 
-        waitsFor(function(){
-            return pie;
-        }, "A new instance of PieChartView should be created", 1000);
-
-        runs(function(){
-            expect(pie.tagName).toBe('canvas');
-        });
-    });
-
-    it("should be able to calculate the correct colour for the amount it's displaying", function(){
-                runs(function(){
-            pie = null;
-
-            require(['piechart'], function(PieChartView){
-                pie = new PieChartView();
-            });
-        });
-
-        waitsFor(function(){
-            return pie;
-        }, "A new instance of PieChartView should be created", 1000);
-
-        runs(function(){
-            pie.ratio = 1;
-            expect(pie.colour()).toBe('rgb(0,255,0)');
-            pie.ratio = 0;
-            expect(pie.colour()).toBe('rgb(0,0,0)');
+        it("should be able to calculate the correct colour for the amount it's displaying", function(){
+            expect(new PieChartView(1).colour()).toBe('rgb(0,255,0)');
+            expect(new PieChartView(0).colour()).toBe('rgb(255,0,0)');
         });
     });
 });
+
