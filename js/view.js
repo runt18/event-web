@@ -4,8 +4,19 @@ Giles Lavelle
 
 require(
 
-['jquery', 'underscore', 'backbone', 'common', 'event', 'piechart', 'layoutmanager', 'jquery-ui', 'plugins'],
-function($, _, Backbone, Common, Event, PieChartView){
+['jquery', 'underscore', 'backbone', 'common', 'event', 'auth', 'piechart', 'layoutmanager', 'jquery-ui', 'plugins'],
+function($, _, Backbone, Common, Event, AuthView, PieChartView){
+
+Backbone.LayoutManager.configure({
+    fetch: function(name){
+        //debugger;
+        return _.template(window.JST[name]);
+    },
+
+    render: function(template, context){
+        return template(context);
+    }
+});
 
 var MainDetails = Backbone.Model.extend({
     urlRoot: '/foo',
@@ -30,7 +41,7 @@ var TimeViewExpander = Common.Expander.extend({
 });
 
 var TimeView = Backbone.View.extend({
-    template: '#time-tmpl',
+    template: 'view/time',
     tagName: 'div',
     className: 'time',
 
@@ -82,8 +93,6 @@ var TimeView = Backbone.View.extend({
 });
 
 var TimesListView = Backbone.View.extend({
-    template: '#times-tmpl',
-
     initialize: function(times){
         this.collection = new Common.PossibleTimes(times);
     },
@@ -100,7 +109,7 @@ var TimesListView = Backbone.View.extend({
 });
 
 var DetailsView = Backbone.View.extend({
-    template: '#details-tmpl',
+    template: 'view/details',
     model: new MainDetails(),
     serialize: function(){
         return this.model.toJSON();
@@ -123,16 +132,21 @@ var Attendees = Backbone.Collection.extend({
 
 //View to display one person in a list
 var AttendeeView = Backbone.View.extend({
-    template: '#attendee-tmpl',
+    template: 'view/attendee',
     tagName: 'li',
     serialize: function(){
         return this.model.toJSON();
     }
 });
 
+var FinishView = Backbone.View.extend({
+    tagName: 'div',
+    template: 'view/finishbox',
+    className: 'finish-box'
+});
+
 //View to display entire list of people
 var AttendeesView = Backbone.View.extend({
-    template: '#attendees-tmpl',
     tagName: 'ul',
     initialize: function(attendees){
         this.collection = new Attendees(attendees);
@@ -151,7 +165,7 @@ var AttendeesView = Backbone.View.extend({
 
 //Classes for displaying the chat window
 var ChatView = Backbone.View.extend({
-    template: '#chat-tmpl'
+    template: 'view/chat'
 });
 
 $.getJSON('test-data.json', function(data){
@@ -180,11 +194,11 @@ $.getJSON('test-data.json', function(data){
         });
     
     var
-        loginView = new Common.LoginView();
+        authView = new AuthView();
         globalAttendeesView = new AttendeesView(mainEvent.get('invitees')),
         timesView = new TimesListView(mainEvent.get('times')),
         chatView = new ChatView(),
-        finishView = new Common.FinishView();
+        finishView = new FinishView();
         finishButtonView = new Common.FinishButtonView();
         footerView = new Common.FooterView();
 
@@ -194,13 +208,13 @@ $.getJSON('test-data.json', function(data){
 
     //Main view for the entire page
     var main = new Backbone.LayoutManager({
-        template: '#main-tmpl',
+        template: 'view/main',
         id: 'wrapper',
 
         // Add all subviews to the main layout
         views: {
             '#header': headerView,
-            '#login-wrapper': loginView,
+            '#login-wrapper': authView,
             '#details': detailsView,
             '#global-attendees': globalAttendeesView,
             '#times': timesView,

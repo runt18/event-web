@@ -4,8 +4,19 @@ Giles Lavelle
 
 require(
 
-['jquery', 'underscore', 'backbone', 'common', 'event', 'layoutmanager', 'jquery-ui', 'jquery-ui-timepicker', 'plugins'],
-function($, _, Backbone, Common, Event){
+['jquery', 'underscore', 'backbone', 'common', 'event', 'auth', 'layoutmanager', 'jquery-ui', 'jquery-ui-timepicker', 'plugins'],
+function($, _, Backbone, Common, Event, AuthView){
+
+Backbone.LayoutManager.configure({
+    fetch: function(name){
+        //debugger;
+        return _.template(window.JST[name]);
+    },
+
+    render: function(template, context){
+        return template(context);
+    }
+});
 
 var OptionalViewExpander = Common.Expander.extend({
     initialize: function(){
@@ -19,7 +30,7 @@ var OptionalViewExpander = Common.Expander.extend({
 
 // View representing one row in the list of possible times
 var TimeView = Backbone.View.extend({
-    template: '#time-tmpl',
+    template: 'plan/time',
     tagName: 'form',
     className: 'time',
 
@@ -38,8 +49,6 @@ var TimeView = Backbone.View.extend({
         return manage(this)
             .render()
             .then(function(el){
-                //log(el);
-
                 // Cache references to DOM elements for performance
                 this.fields = {
                     timestring: this.$('.start'),
@@ -126,7 +135,7 @@ var TimesListView = Backbone.View.extend({
 });
 
 var TimesView = Backbone.View.extend({
-    template: '#times-tmpl',
+    template: 'plan/times',
 
     events: {
         'click #add-time': 'addTime'
@@ -135,12 +144,11 @@ var TimesView = Backbone.View.extend({
     addTime: function(){
         var time = new Common.PossibleTime();
         timesList.add(time);
-    }
-});
+    },
 
-var Optional = Backbone.Model.extend({
-    defaults: {
-
+    render: function(manage){
+        this.setView('#times', timesListView);
+        return manage(this).render();
     }
 });
 
@@ -183,11 +191,8 @@ var MapView = Backbone.View.extend({
 });
 
 var DetailsView = Backbone.View.extend({
-    template: '#details-tmpl',
-
-    events: {
-
-    },
+    template: 'plan/details',
+    tagName: 'form',
 
     render: function(manage) {
         return manage(this)
@@ -201,8 +206,7 @@ var DetailsView = Backbone.View.extend({
 });
 
 var OptionalView = Backbone.View.extend({
-    template: '#optional-tmpl',
-    model: new Optional(),
+    template: 'plan/optional',
     id: 'optional',
 
     events: {
@@ -215,12 +219,6 @@ var OptionalView = Backbone.View.extend({
 
     toggleMap: function(){
         this.elems.leftPanel.toggleClass('in');
-    },
-
-    initialize: function(){
-        this.model.bind('change', function(){
-            this.render();
-        }, this);
     },
 
     render: function(manage){
@@ -252,11 +250,11 @@ var
     });
 
 var
-    loginView = new Common.LoginView(),
+    authView = new AuthView(),
+    
     detailsView = new DetailsView([
         {}
     ]),
-    finishView = new Common.FinishView();
     optionalView = new OptionalView(),
     finishButtonView = new Common.FinishButtonView(),
     footerView  = new Common.FooterView();
@@ -274,29 +272,24 @@ var
     // Create the wrapper View to hold the list and the add button
     timesView = new TimesView();
 
-// Add the list to the wrapper
-// Would be better to define this all in common.js, see issue #1
-timesView.setView('#times', timesListView);
-
 var titleView = new Common.TitleView({
     model: title
 });
 
 // Main view for the entire page
 var main = new Backbone.LayoutManager({
-    template: '#main-tmpl',
+    template: 'plan/main',
     id: 'wrapper',
 
     // Add all subviews to the main layout
     views: {
         '#header': headerView,
-        '#login-wrapper': loginView,
+        '#login-wrapper': authView,
         '#main-details': detailsView,
         '#times-wrapper': timesView,
         '#optional-wrapper': optionalView,
         '#finish-button-wrapper': finishButtonView,
-        '#footer': footerView,
-        '#finish-wrapper': finishView
+        '#footer': footerView
     }
 });
 

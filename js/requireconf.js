@@ -14,7 +14,8 @@ require.config({
         'common': 'common',
 
         'piechart': 'models/piechart',
-        'event': 'models/event'
+        'event': 'models/event',
+        'auth': 'models/auth'
     },
 
     shim: {

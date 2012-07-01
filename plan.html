@@ -36,79 +36,8 @@
 <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
    chromium.org/developers/how-tos/chrome-frame-getting-started -->
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-<script type="text/template" id="main-tmpl">
-<div id="header"></div>
 
-<div role="main" id="main">
-    <div id="login-wrapper"></div>
-    <div id="name">
-        <div class="banner" id="banner-">
-            <h3>What&apos;s happening?</h3>
-        </div>
-        
-
-        <div id="main-details"></div>
-    </div>
-
-    <div id="times-wrapper"></div>
-
-    <div id="optional-wrapper"></div>
-
-    <div id="finish-button-wrapper"></div>
-    <div id="finish-wrapper"></div>
-</div>
-
-<div id="footer"></div>
-</script>
-
-<script type="text/template" id="times-tmpl">
-    <div class="banner">
-        <h3>When can it happen?</h3>
-        <input type="button" id="add-time" value="+"></input>
-    </div>
-    
-    <div id="times"></div>
-</script>
-
-<script type="text/template" id="optional-tmpl">
-    <div class="banner">
-        <h3>Optional</h3>
-        <div class="expander-wrap"></div>
-    </div>
-    
-
-    <div class="panels">
-        <div class="left-panel">
-            <input id="location" type=text placeholder="Where is it?"></input>
-            <input type="button" id="toggle-map" value="Map"></input>
-            <br>
-            <span class="hint">A name for the place that your friends will recognise</span>
-            <textarea id="description" placeholder="Other details"></textarea>
-        </div>
-
-        <div class="right-panel">
-            <div id="map-wrap"></div>
-        </div>
-    </div>
-    
-</script>
-
-<script type="text/template" id="time-tmpl">
-    <input value="<%= timestring %>" class="start" type="text"> for
-    <input class="duration" value="<%= duration %>" type="text"></input> minutes on
-    <input value="<%= datestring %>" class="date" type="text"></input>
-    <input type="button" class="remove" value="X"></input>
-</script>
-
-<script type="text/template" id="details-tmpl">
-    <form>
-        <input type=text placeholder="What's it called?"></input>
-
-        <br>
-        <input type=text id="invitees" placeholder="Who's invited?"></input>
-        <span class="hint">A comma separated list of names or email addresses</span>
-    </form>
-</script>
+<script type="text/javascript" src="http://localhost:8080/jst/plan~main,header,footer,auth,plan~optional,plan~details,plan~times,plan~time,finishbutton,signup"></script>
 
 <script src="js/require.js"></script>
 <script src="js/requireconf.js"></script>

@@ -138,83 +138,6 @@ var PossibleTimes = Backbone.Collection.extend({
     model: PossibleTime
 });
 
-
-
-// Generic class for any view that exists in more than one place
-var ReusableView = Backbone.View.extend({
-    cacheElems: function(){
-
-    },
-
-    render: function(manage){
-        // There should be a way in LayoutManager to override the fetch method to load templates from
-        // external html files rather than script tags in the page.
-        // I couldn't get it to work so for now I'm just AJAXing them in and adding them to the DOM
-        // Not too slow right now, but ideally in future this should be changed.
-        return manage(this)
-            .render()
-            .then(function(el){
-                var path = 'templates/' + this.filename + '.html';
-                var data = this.serialize();
-                var that = this;
-                $.get(path, function(content){
-                    var compiled = _.template(content);
-                    $(el).html(compiled(data));
-                    that.cacheElems();
-                });
-            });
-    },
-
-    serialize: function(){
-        return this.model ? this.model.toJSON() : {};
-    }
-});
-
-var LoginView = ReusableView.extend({
-    tagName: 'div',
-    filename: 'login',
-
-    events: {
-        'blur #email': 'checkEmail',
-        'keyup #email': 'validateEmail'
-    },
-
-    validateEmail: function(){
-        //debugger;
-        // TODO: better validation. check if the email is already in the database,
-        // use a better regex etc.
-        if(this.fields.email.val().match(/^.+@[a-zA-Z0-9].+\.[a-zA-Z]{2,}$/)){
-            this.fields.emailValidationResponse
-                .text('Email ok')
-                .addClass('valid');
-        } else {
-            this.fields.emailValidationResponse
-                .text('Email must be in the format user@site.tld')
-                .removeClass('valid');
-        }
-    },
-
-    checkEmail: function(){
-        //debugger;
-        $.get('/checkemail', function(data){
-            if(data.userExists){
-                // The user is logging in
-            } else {
-                // The user is signing up
-                this.setView('#password-confirm', new PasswordFieldView());
-            }
-        });
-    },
-
-    cacheElems: function(){
-        //debugger;
-        this.fields = {
-            email: this.$('#email'),
-            emailValidationResponse: this.$('#email-vr')
-        };
-    }
-});
-
 // Reusable classes for the header and footer of each page
 var Title = Backbone.Model.extend({
     defaults: {
@@ -246,9 +169,9 @@ var TitleView = Backbone.View.extend({
     }
 });
 
-var HeaderView = ReusableView.extend({
+var HeaderView = Backbone.View.extend({
     tagName: 'header',
-    filename: 'header',
+    template: 'header',
 
     events: {
        'click #login-button': 'showLogin'
@@ -256,22 +179,20 @@ var HeaderView = ReusableView.extend({
 
     showLogin: function(){
         $('#login-wrapper').toggle();
+    },
+
+    serialize: function(){
+        return this.model.toJSON();
     }
 });
 
-var FooterView = ReusableView.extend({
+var FooterView = Backbone.View.extend({
     tagName: 'footer',
-    filename: 'footer'
+    template: 'footer'
 });
 
-var FinishView = ReusableView.extend({
-    tagName: 'div',
-    filename: 'finishbox',
-    className: 'finish-box'
-});
-
-var FinishButtonView = ReusableView.extend({
-    filename: 'finishbutton',
+var FinishButtonView = Backbone.View.extend({
+    template: 'finishbutton',
     tagName: 'form',
     className: 'center',
 
@@ -310,9 +231,6 @@ return {
     HeaderView: HeaderView,
     FooterView: FooterView,
 
-    LoginView: LoginView,
-
-    FinishView: FinishView,
     FinishButtonView: FinishButtonView
 };
 

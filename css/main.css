@@ -76,8 +76,9 @@ hr {
   display: block;
   height: 1px;
   border-style: solid;
-  border-width: 1px 0 0 0;
-  border-top-color: black;
+  border-width: 1px 0;
+  border-top-color: #b3b3b3;
+  border-bottom-color: white;
   padding: 0;
 }
 
@@ -159,7 +160,7 @@ legend { border: 0; *margin-left: -7px; padding: 0; white-space: normal; }
  * 3. Define consistent vertical alignment display in all browsers
  */
 
-button, input, select, textarea { font-size: 100%; *vertical-align: middle; }
+button, input, select, textarea { font-size: 100%; margin: 0; *vertical-align: middle; }
 
 /*
  * 1. Define line-height as normal to match FF3/4 (set using !important in the UA stylesheet)
@@ -243,11 +244,11 @@ html, body{
 }
 
 body, .left-panel{
-  background: white;
+  background: #E6E6E6 url(../img/noise.png);
 }
 
 header,footer {
-  background: #000;
+  background: #222;
 
   margin: 0;
 
@@ -260,6 +261,7 @@ header,footer {
 }
 
 header{
+  border-bottom-width: 1px;
   height: 50px;
   line-height: 48px;
 }
@@ -280,6 +282,7 @@ header .left > *{
 }
 
 footer{
+  border-top-width: 1px;
 
   width:100%;
   height:50px;
@@ -291,8 +294,13 @@ footer{
   left:0;
 }
 
-input[type=text], textarea{
-    background: #FFFFFF;
+button{
+  margin: 10px 0;
+  border-radius: 0;
+}
+
+input{
+  height: 35px;
 }
 
 input[type=checkbox]{
@@ -300,25 +308,18 @@ input[type=checkbox]{
 }
 
 .remove{
+  border: 1px solid rgb(95, 10, 10);
   margin: 0;
   background: #E22E2E;
-  width: 36px;
+  width: 35px;
 }
 
 input, textarea{
-  border: none;
-  height: 36px;
-  margin: 0;
-  line-height: 100%;
+  border-color: rgb(199, 199, 199);
+  margin: 4px 0;
   font-size: 20px;
-}
-
-input:focus, textarea:focus{
-  outline: none;
-}
-
-input[type=text]:focus{
-  background: rgb(255, 172, 47);
+  border-width: 1px;
+  border-style: solid;
 }
 
 input:focus, textarea:focus{
@@ -364,7 +365,7 @@ a:hover{
 }
 
 .center{
-  width: 941px;
+  width: 1024px;
   margin: 0 auto;
   position: relative;
 }
@@ -394,54 +395,15 @@ nav a {
 }
 
 .banner{
-  width: 100%;
-  -webkit-transition: .2s background ease-in;
-  font-family: cabin;
-  border-style: solid;
-  color: #020202;
+  margin: 0 0 0 35px;
+  color: #303030;
 
-  padding: 8px 0 8px 25px;
+  padding: 9px 0;
 
+  text-shadow: 0 1px 0 white;
   position: relative;
   z-index: 10;
-  border-width: 0 0 1px 0;
-  border-color: black;
 }
-
-.banner:after{
-  top: 0;
-  position: absolute;
-  content: '';
-  height: 100%;
-  width: 10px;
-  right: 0;
-}
-
-#main > div:nth-child(2) .banner:after{
-  background: red;
-}
-
-#main > div:nth-child(3) .banner:after{
-  background: rgb(190, 124, 1);
-}
-
-#main > div:nth-child(4) .banner:after{
-  background: rgb(62, 173, 0);
-}
-
-#main > div:nth-child(2) .banner:hover{
-  background: #FF5151;
-}
-
-#main > div:nth-child(3) .banner:hover{
-  background: #F0AE21;
-}
-
-#main > div:nth-child(4) .banner:hover{
-  background: #03DB14;
-}
-
-
 
 #main-details{
   margin-left: 35px;
@@ -452,9 +414,7 @@ nav a {
 }
 
 #main{
-  margin-left: 100px;
-  border-left: 5px solid black;
-  min-height: 1000px;
+  height: 100%;
   padding-bottom: 70px;
 }
 
@@ -480,7 +440,7 @@ nav a {
   top: 16px;
   right: 13px;
   border-width: 15px 15px 0 15px;
-  border-top-color: #FFFFFF;
+  border-top-color: #969696;
 }
 
 .expander-small{
@@ -499,8 +459,8 @@ nav a {
 }
 
 #times{
-  border-left: 1px solid black;
-  margin: 0 0 0 35px;
+  margin: -5px 0 0 35px;
+  border-left: 1px solid #c7c7c7;
 }
 
 .time-details, .attendee-details{
@@ -514,8 +474,9 @@ nav a {
 }
 
 .time{
-  padding: 0px;
-  border-bottom: 1px solid #000000;
+  padding: 0 0 4px 10px;
+  border-bottom: 1px solid rgb(199, 199, 199);
+  margin: 4px 0 0 0;
 }
 
 .panels{
@@ -540,20 +501,13 @@ nav a {
 }
 
 #optional .right-panel {
-  border-left: 1px solid black;
-  left: 516px;
+  padding: 10px;
+  left: 511px;
   z-index: -2;
 }
 
 .in{
   width: 510px !important;
-}
-
-#description{
-  padding: 5px 0 5px 10px;
-  border-left: 5px solid;
-  width: 100%;
-  height: 280px;
 }
 
 #finish-wrapper{
@@ -562,20 +516,13 @@ nav a {
 }
 
 #finish{
-  -webkit-transition: .2s all;
-  border-radius: 23px;
   font-size: 19px;
-  color: #FFFFFF;
+  color: rgb(0, 44, 0);
+  border: 1px solid rgb(0, 97, 0);
   font-weight: bold;
-  height: 46px;
+  height: 43px;
   padding: 0 25px;
-  background: #000000;
-}
-
-
-#finish:hover{
-    background: red;
-  -webkit-transform(scale(1.1));
+  background: #2B9600;
 }
 
 .finish-box {
