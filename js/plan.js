@@ -261,7 +261,10 @@ var
 
 finishButtonView.finish = function(){
     // TODO Save model and validate it before redirecting
-    window.location.href = "view.html";
+    
+    mainEvent.save();
+
+    //window.location.href = "view.html";
 };
 
 var
